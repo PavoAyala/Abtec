@@ -1,0 +1,24 @@
+{
+    "name": "abtec",
+    "version": "1.0.0",
+    "private": true,
+    "description": "Abtec Monorepo - Mobile (Expo), Web (Next.js/Turborepo) & Backend (Firebase/Python)",
+    "workspaces": [
+        "apps/mobile",
+        "apps/web"
+    ],
+    "scripts": {
+        "dev": "turbo run dev",
+        "build": "turbo run build",
+        "lint": "turbo run lint",
+        "format": "prettier --write \"**/*.{ts,tsx,md,js,json,py}\"",
+        "firebase:dev": "firebase emulators:start"
+    },
+    "devDependencies": {
+        "prettier": "^3.7.4",
+        "turbo": "^2.8.0"
+    },
+    "engines": {
+        "node": ">=18"
+    }
+}
