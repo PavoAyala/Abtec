@@ -1,0 +1,5 @@
+firebase-functions
+firebase-admin
+fastapi
+flask
+google-cloud-firestore
