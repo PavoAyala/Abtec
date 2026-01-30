@@ -1,5 +1,7 @@
 firebase-functions
 firebase-admin
 fastapi
-flask
+a2wsgi
+uvicorn
 google-cloud-firestore
+flask

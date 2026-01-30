@@ -6,7 +6,6 @@ from a2wsgi import ASGIMiddleware
 
 # 1. Inicializar Firebase Admin (para conectar a la BD)
 initialize_app()
-db = firestore.client()
 
 # 2. Configurar FastAPI
 app = FastAPI(title="API Backend Tecmilenio")
@@ -33,6 +32,7 @@ def leer_item(item_id: int):
 # Ejemplo de lectura de base de datos
 @app.get("/usuarios/{uid}")
 def obtener_usuario(uid: str):
+    db = firestore.client()
     doc_ref = db.collection("users").document(uid)
     doc = doc_ref.get()
     if doc.exists:
