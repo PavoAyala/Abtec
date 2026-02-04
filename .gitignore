@@ -51,6 +51,9 @@ ui-debug.log
 # --- Firebase Cache ---
 .firebase/
 
+# --- Turbo Cache ---
+.turbo/
+
 # --- Sistema Operativo ---
 .DS_Store
 Thumbs.db
