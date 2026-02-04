@@ -81,68 +81,58 @@ const services: Service[] = [
 
 export default function Services(): JSX.Element {
   return (
-    <section id="services" className="py-20 bg-gray-50">
+    <section id="services" className="py-32 bg-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="text-abtec-green-600 font-semibold text-sm uppercase tracking-wider">
-            What We Offer
-          </span>
-          <h2 className="mt-2 text-3xl sm:text-4xl font-bold text-abtec-navy-900">
-            Specialized Solar Solutions
-          </h2>
-          <p className="mt-4 max-w-2xl mx-auto text-abtec-navy-600">
-            From initial consultation to ongoing maintenance, we provide end-to-end solar
-            solutions tailored to your specific needs.
-          </p>
+        <div className="flex flex-col md:flex-row justify-between items-end mb-20 gap-8">
+          <div className="max-w-2xl">
+            <span className="text-[#84cc16] font-bold text-xs tracking-[0.2em] uppercase mb-4 block">
+              What We Do
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-abtec-navy-900 leading-tight">
+              Specialized Solar Solutions
+            </h2>
+          </div>
+          <div className="md:max-w-md">
+            <p className="text-abtec-navy-600 text-lg leading-relaxed text-right md:text-left">
+              Comprehensive services ensuring your transition to renewable energy is seamless, efficient, and profitable.
+            </p>
+          </div>
         </div>
 
         {/* Services Grid */}
         <div className="grid md:grid-cols-3 gap-8">
-          {services.map((service) => (
+          {services.map((service, index) => (
             <div
               key={service.title}
-              className="bg-white rounded-2xl p-8 shadow-lg hover:shadow-xl transition-shadow duration-300 border border-gray-100"
+              className="group bg-[#f8fafc] rounded-3xl p-10 hover:bg-white border border-transparent hover:border-gray-100 hover:shadow-2xl hover:shadow-gray-200/50 transition-all duration-300"
             >
-              {/* Icon */}
-              <div className="w-16 h-16 bg-abtec-green-100 rounded-xl flex items-center justify-center text-abtec-green-600 mb-6">
+              {/* Icon - Maintenance (index 1) gets Navy, others get Green */}
+              <div className={`w-14 h-14 rounded-xl flex items-center justify-center text-white mb-8 group-hover:scale-110 transition-transform duration-300 shadow-lg ${index === 1
+                  ? 'bg-abtec-navy-800 shadow-abtec-navy-900/20'
+                  : 'bg-[#84cc16] shadow-[#84cc16]/20'
+                }`}>
                 {service.icon}
               </div>
 
               {/* Title */}
-              <h3 className="text-xl font-bold text-abtec-navy-900 mb-3">
+              <h3 className="text-2xl font-bold text-abtec-navy-900 mb-4">
                 {service.title}
               </h3>
 
               {/* Description */}
-              <p className="text-abtec-navy-600 mb-6">
+              <p className="text-abtec-navy-600 mb-8 leading-relaxed text-sm">
                 {service.description}
               </p>
 
-              {/* Features */}
-              <ul className="space-y-2">
-                {service.features.map((feature) => (
-                  <li
-                    key={feature}
-                    className="flex items-center text-sm text-abtec-navy-700"
-                  >
-                    <svg
-                      className="w-5 h-5 text-abtec-green-500 mr-2 flex-shrink-0"
-                      fill="none"
-                      stroke="currentColor"
-                      viewBox="0 0 24 24"
-                    >
-                      <path
-                        strokeLinecap="round"
-                        strokeLinejoin="round"
-                        strokeWidth={2}
-                        d="M5 13l4 4L19 7"
-                      />
-                    </svg>
-                    {feature}
-                  </li>
-                ))}
-              </ul>
+              {/* Link */}
+              <a href="#contact" className={`inline-flex items-center font-bold text-sm transition-colors ${index === 1 ? 'text-abtec-navy-800 hover:text-abtec-navy-600' : 'text-[#84cc16] hover:text-[#65a30d]'
+                }`}>
+                Learn more
+                <svg className="w-4 h-4 ml-2 transform group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                </svg>
+              </a>
             </div>
           ))}
         </div>

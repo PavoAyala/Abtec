@@ -31,7 +31,7 @@ export default function Footer(): JSX.Element {
               <div className="w-10 h-10 bg-abtec-green-600 rounded-lg flex items-center justify-center">
                 <span className="text-white font-bold text-xl">A</span>
               </div>
-              <span className="text-xl font-bold">Abtec</span>
+              <span className="text-xl font-bold text-white">Abtec</span>
             </Link>
             <p className="text-abtec-navy-300 text-sm">
               Transforming energy for a sustainable future.

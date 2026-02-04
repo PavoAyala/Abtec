@@ -3,102 +3,95 @@ import Link from 'next/link';
 
 export default function Hero(): JSX.Element {
   return (
-    <section className="relative min-h-screen flex items-center justify-center overflow-hidden">
-      {/* Background gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-abtec-navy-900 via-abtec-navy-800 to-abtec-navy-900" />
-
-      {/* Decorative elements */}
-      <div className="absolute inset-0 opacity-10">
-        <div className="absolute top-20 left-10 w-72 h-72 bg-abtec-green-500 rounded-full blur-3xl" />
-        <div className="absolute bottom-20 right-10 w-96 h-96 bg-abtec-green-400 rounded-full blur-3xl" />
+    <section className="relative min-h-[90vh] flex items-center justify-center overflow-hidden">
+      {/* Background Image with Overlay */}
+      <div
+        className="absolute inset-0 z-0 bg-cover bg-center bg-no-repeat"
+        style={{
+          backgroundImage: 'url("https://images.unsplash.com/photo-1509391366360-2e959784a276?q=80&w=2664&auto=format&fit=crop")',
+        }}
+      >
+        <div className="absolute inset-0 bg-abtec-navy-900/40 mix-blend-multiply" />
+        <div className="absolute inset-0 bg-gradient-to-t from-abtec-navy-900 via-transparent to-transparent opacity-90" />
       </div>
 
-      {/* Solar panel pattern overlay */}
-      <div
-        className="absolute inset-0 opacity-5"
-        style={{
-          backgroundImage: `url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%2322c55e' fill-opacity='1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")`,
-        }}
-      />
-
       {/* Content */}
-      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
-        <div className="space-y-8">
+      <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center pt-20">
+        <div className="space-y-6">
           {/* Badge */}
-          <div className="inline-flex items-center px-4 py-2 rounded-full bg-abtec-green-600/20 border border-abtec-green-500/30">
-            <span className="w-2 h-2 bg-abtec-green-500 rounded-full mr-2 animate-pulse" />
-            <span className="text-abtec-green-400 text-sm font-medium">
-              Sustainable Energy Solutions
+          <div className="inline-flex items-center px-4 py-1.5 rounded-full bg-abtec-green-500/10 border border-abtec-green-500/20 backdrop-blur-sm">
+            <span className="w-2 h-2 bg-abtec-green-500 rounded-full mr-2 shadow-[0_0_10px_rgba(34,197,94,0.5)]" />
+            <span className="text-abtec-green-400 text-sm font-medium tracking-wide uppercase">
+              Solar Innovation
             </span>
           </div>
 
           {/* Main Heading */}
-          <h1 className="text-4xl sm:text-5xl md:text-6xl lg:text-7xl font-extrabold text-white leading-tight">
-            Energia que{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-abtec-green-400 to-abtec-green-600">
+          <div className="space-y-2">
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-white tracking-tight leading-none">
+              Energía que
+            </h1>
+            <h1 className="text-5xl sm:text-6xl md:text-7xl lg:text-8xl font-bold text-abtec-green-500 tracking-tight leading-none underline decoration-4 underline-offset-8 decoration-abtec-green-500/30">
               Transforma
-            </span>
-          </h1>
+            </h1>
+          </div>
 
           {/* Subheading */}
-          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-abtec-navy-200">
-            Transform your energy consumption with cutting-edge solar solutions.
-            We design, install, and maintain solar systems that power your future.
+          <p className="max-w-2xl mx-auto text-lg sm:text-xl text-gray-200 font-light leading-relaxed">
+            Efficient and sustainable solar energy solutions tailored for residential and industrial scaling. Experience the future of energy.
           </p>
 
           {/* CTA Buttons */}
-          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4">
+          <div className="flex flex-col sm:flex-row items-center justify-center gap-4 pt-8">
             <Link
               href="#contact"
-              className="w-full sm:w-auto bg-abtec-green-600 hover:bg-abtec-green-700 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 transform hover:scale-105 shadow-lg shadow-abtec-green-600/30"
+              className="group w-full sm:w-auto bg-[#84cc16] hover:bg-[#65a30d] text-white text-lg font-bold py-4 px-10 rounded-lg transition-all duration-200 flex items-center justify-center shadow-lg shadow-[#84cc16]/25"
             >
-              Request a Quote
+              Request Quote
+              <svg
+                className="w-5 h-5 ml-2 transform group-hover:translate-x-1 transition-transform"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+              </svg>
             </Link>
             <Link
-              href="#services"
-              className="w-full sm:w-auto border-2 border-white/30 hover:border-white/50 text-white font-semibold py-4 px-8 rounded-lg transition-all duration-200 hover:bg-white/10"
+              href="#technology"
+              className="w-full sm:w-auto bg-white/10 hover:bg-white/20 backdrop-blur-md text-white text-lg font-medium py-4 px-10 rounded-lg transition-all duration-200 border border-white/10"
             >
-              Learn More
+              Our Technology
             </Link>
           </div>
 
           {/* Stats */}
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-12 mt-12 border-t border-white/10">
+          {/* <div className="grid grid-cols-2 md:grid-cols-4 gap-8 pt-16 mt-16 border-t border-white/5 mx-auto max-w-5xl">
             {[
               { value: '500+', label: 'Projects Completed' },
               { value: '10MW', label: 'Energy Generated' },
               { value: '98%', label: 'Client Satisfaction' },
               { value: '15+', label: 'Years Experience' },
             ].map((stat) => (
-              <div key={stat.label} className="text-center">
-                <div className="text-3xl sm:text-4xl font-bold text-abtec-green-400">
+              <div key={stat.label} className="text-center group">
+                <div className="text-4xl sm:text-5xl font-bold text-white mb-2 group-hover:text-abtec-green-400 transition-colors">
                   {stat.value}
                 </div>
-                <div className="text-sm text-abtec-navy-300 mt-1">
+                <div className="text-sm text-gray-400 uppercase tracking-widest font-medium">
                   {stat.label}
                 </div>
               </div>
             ))}
-          </div>
+          </div> */}
         </div>
       </div>
 
       {/* Scroll indicator */}
-      <div className="absolute bottom-8 left-1/2 transform -translate-x-1/2 animate-bounce">
-        <svg
-          className="w-6 h-6 text-white/50"
-          fill="none"
-          stroke="currentColor"
-          viewBox="0 0 24 24"
-        >
-          <path
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            strokeWidth={2}
-            d="M19 14l-7 7m0 0l-7-7m7 7V3"
-          />
-        </svg>
-      </div>
+      {/* <div className="absolute bottom-10 left-1/2 transform -translate-x-1/2 animate-bounce">
+        <div className="w-8 h-12 rounded-full border-2 border-white/30 flex items-start justify-center p-2">
+          <div className="w-1 h-3 bg-white rounded-full" />
+        </div>
+      </div> */}
     </section>
   );
 }

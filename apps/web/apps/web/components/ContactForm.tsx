@@ -35,11 +35,17 @@ export default function ContactForm(): JSX.Element {
     setSubmitStatus('idle');
 
     try {
-      // TODO: Integrate with Firebase backend
-      console.log('Form submitted:', formData);
+      // Dynamically import firebase to avoid server-side issues
+      const { db } = await import('../lib/firebase');
+      const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
 
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      await addDoc(collection(db, 'quotes'), {
+        ...formData,
+        createdAt: serverTimestamp(),
+        status: 'new',
+      });
+
+      console.log('Form submitted successfully');
 
       setSubmitStatus('success');
       setFormData({
@@ -49,7 +55,8 @@ export default function ContactForm(): JSX.Element {
         propertyType: 'residential',
         message: '',
       });
-    } catch {
+    } catch (error) {
+      console.error('Error submitting form:', error);
       setSubmitStatus('error');
     } finally {
       setIsSubmitting(false);
@@ -57,171 +64,134 @@ export default function ContactForm(): JSX.Element {
   };
 
   return (
-    <section id="contact" className="py-20 bg-abtec-navy-900">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="grid lg:grid-cols-2 gap-12 items-center">
+    <section id="contact" className="py-32 bg-abtec-navy-900 relative overflow-hidden">
+      {/* Background Blobs */}
+      <div className="absolute top-0 left-0 w-96 h-96 bg-abtec-green-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
+      <div className="absolute bottom-0 right-0 w-96 h-96 bg-abtec-navy-600/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
+
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
+        <div className="grid lg:grid-cols-2 gap-20 items-center">
           {/* Left Content */}
-          <div className="text-white">
-            <span className="text-abtec-green-400 font-semibold text-sm uppercase tracking-wider">
-              Get Started
+          <div className="text-white space-y-6 pt-8">
+            <span className="text-[#84cc16] font-bold text-sm tracking-widest uppercase block">
+              Contact Us
             </span>
-            <h2 className="mt-2 text-3xl sm:text-4xl font-bold">
-              Start Your Energy Transition Today
+            <h2 className="text-4xl sm:text-5xl font-bold leading-tight">
+              Start Your Energy <br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
+                Transition Today
+              </span>
             </h2>
-            <p className="mt-4 text-abtec-navy-200 text-lg">
-              Ready to harness the power of the sun? Fill out the form and our team
-              will get back to you within 24 hours with a personalized quote.
+            <p className="text-gray-400 text-lg leading-relaxed max-w-lg">
+              Ready to take the next step? Fill out the form and our specialized engineers will provide a personalized solar analysis for your property.
             </p>
 
-            {/* Benefits */}
-            <div className="mt-8 space-y-4">
-              {[
-                'Free initial consultation and site assessment',
-                'Competitive pricing with flexible financing',
-                'Professional installation by certified technicians',
-                'Comprehensive warranty and support',
-              ].map((benefit) => (
-                <div key={benefit} className="flex items-start">
-                  <svg
-                    className="w-6 h-6 text-abtec-green-400 mr-3 flex-shrink-0 mt-0.5"
-                    fill="none"
-                    stroke="currentColor"
-                    viewBox="0 0 24 24"
-                  >
-                    <path
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                      strokeWidth={2}
-                      d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"
-                    />
+            <div className="pt-8 space-y-6">
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-abtec-navy-800 rounded-full flex items-center justify-center text-[#84cc16]">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
                   </svg>
-                  <span className="text-abtec-navy-200">{benefit}</span>
                 </div>
-              ))}
+                <div>
+                  <p className="text-xs text-gray-400 uppercase tracking-widest">Phone</p>
+                  <p className="text-white font-semibold text-lg hover:text-[#84cc16] transition-colors">+1 (555) 000-8888</p>
+                </div>
+              </div>
+
+              <div className="flex items-center space-x-4">
+                <div className="w-12 h-12 bg-abtec-navy-800 rounded-full flex items-center justify-center text-[#84cc16]">
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                  </svg>
+                </div>
+                <div>
+                  <p className="text-xs text-gray-400 uppercase tracking-widest">Email</p>
+                  <p className="text-white font-semibold text-lg hover:text-[#84cc16] transition-colors">contact@abtec-energy.com</p>
+                </div>
+              </div>
             </div>
           </div>
 
           {/* Form */}
-          <div className="bg-white rounded-2xl p-8 shadow-xl">
+          <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Name */}
-              <div>
-                <label
-                  htmlFor="name"
-                  className="block text-sm font-medium text-abtec-navy-700 mb-2"
-                >
-                  Full Name
-                </label>
-                <input
-                  type="text"
-                  id="name"
-                  name="name"
-                  required
-                  value={formData.name}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                  placeholder="John Doe"
-                />
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <label htmlFor="name" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Full Name</label>
+                  <input
+                    type="text"
+                    id="name"
+                    name="name"
+                    required
+                    value={formData.name}
+                    onChange={handleChange}
+                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                    placeholder="John Doe"
+                  />
+                </div>
+                <div>
+                  <label htmlFor="email" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Email Address</label>
+                  <input
+                    type="email"
+                    id="email"
+                    name="email"
+                    required
+                    value={formData.email}
+                    onChange={handleChange}
+                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                    placeholder="john@company.com"
+                  />
+                </div>
               </div>
 
-              {/* Email */}
               <div>
-                <label
-                  htmlFor="email"
-                  className="block text-sm font-medium text-abtec-navy-700 mb-2"
-                >
-                  Email Address
-                </label>
-                <input
-                  type="email"
-                  id="email"
-                  name="email"
-                  required
-                  value={formData.email}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                  placeholder="john@example.com"
-                />
+                <label htmlFor="propertyType" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Service Type</label>
+                <div className="relative">
+                  <select
+                    id="propertyType"
+                    name="propertyType"
+                    value={formData.propertyType}
+                    onChange={handleChange}
+                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 font-medium appearance-none"
+                  >
+                    <option value="residential">Residential Installation</option>
+                    <option value="commercial">Commercial Project</option>
+                    <option value="industrial">Industrial Solution</option>
+                  </select>
+                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
+                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
+                  </div>
+                </div>
               </div>
 
-              {/* Phone */}
               <div>
-                <label
-                  htmlFor="phone"
-                  className="block text-sm font-medium text-abtec-navy-700 mb-2"
-                >
-                  Phone Number
-                </label>
-                <input
-                  type="tel"
-                  id="phone"
-                  name="phone"
-                  value={formData.phone}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                  placeholder="+1 (555) 123-4567"
-                />
-              </div>
-
-              {/* Property Type */}
-              <div>
-                <label
-                  htmlFor="propertyType"
-                  className="block text-sm font-medium text-abtec-navy-700 mb-2"
-                >
-                  Property Type
-                </label>
-                <select
-                  id="propertyType"
-                  name="propertyType"
-                  value={formData.propertyType}
-                  onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                >
-                  <option value="residential">Residential</option>
-                  <option value="commercial">Commercial</option>
-                  <option value="industrial">Industrial</option>
-                </select>
-              </div>
-
-              {/* Message */}
-              <div>
-                <label
-                  htmlFor="message"
-                  className="block text-sm font-medium text-abtec-navy-700 mb-2"
-                >
-                  Additional Information
-                </label>
+                <label htmlFor="message" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Message</label>
                 <textarea
                   id="message"
                   name="message"
                   rows={4}
                   value={formData.message}
                   onChange={handleChange}
-                  className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors resize-none text-abtec-navy-900"
-                  placeholder="Tell us about your energy needs..."
+                  className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none resize-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                  placeholder="How can we help you?"
                 />
               </div>
 
-              {/* Submit Button */}
               <button
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-abtec-green-600 hover:bg-abtec-green-700 disabled:bg-abtec-green-400 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
+                className="w-full bg-[#84cc16] hover:bg-[#65a30d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg shadow-[#84cc16]/20"
               >
-                {isSubmitting ? 'Submitting...' : 'Request Quote'}
+                {isSubmitting ? 'Sending Request...' : 'Send Quote Request'}
               </button>
 
-              {/* Status Messages */}
+              {/* Status Messages - Simplified for clean design */}
               {submitStatus === 'success' && (
-                <div className="p-4 bg-green-100 text-green-700 rounded-lg text-center">
-                  Thank you! We&apos;ll be in touch soon.
-                </div>
+                <p className="text-green-600 text-center font-medium bg-green-50 py-2 rounded-lg">Thank you! We&apos;ll be in touch soon.</p>
               )}
               {submitStatus === 'error' && (
-                <div className="p-4 bg-red-100 text-red-700 rounded-lg text-center">
-                  Something went wrong. Please try again.
-                </div>
+                <p className="text-red-600 text-center font-medium bg-red-50 py-2 rounded-lg">Something went wrong. Please try again.</p>
               )}
             </form>
           </div>
