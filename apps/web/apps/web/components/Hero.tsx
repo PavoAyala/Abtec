@@ -1,6 +1,11 @@
+'use client';
+
 import type { JSX } from 'react';
+import { useTranslations } from 'next-intl';
 
 export default function Hero(): JSX.Element {
+    const t = useTranslations('hero');
+
     return (
         <section className="relative w-full min-h-[85vh] flex items-center">
             <div className="absolute inset-0 z-0">
@@ -15,20 +20,20 @@ export default function Hero(): JSX.Element {
                 <div className="max-w-2xl flex flex-col gap-6">
                     <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 w-fit">
                         <span className="material-symbols-outlined text-lg">bolt</span>
-                        <span className="text-xs font-bold tracking-widest uppercase">Solar Innovation</span>
+                        <span className="text-xs font-bold tracking-widest uppercase">{t('badge')}</span>
                     </div>
                     <h1 className="text-white text-6xl md:text-7xl font-bold leading-[1.1] tracking-tight">
-                        Energía que <span className="text-primary underline decoration-primary/30">Transforma</span>
+                        {t('title')} <span className="text-primary underline decoration-primary/30">{t('titleHighlight')}</span>
                     </h1>
                     <p className="text-white/90 text-lg md:text-xl leading-relaxed max-w-xl">
-                        Efficient and sustainable solar energy solutions tailored for residential and industrial scaling. Experience the future of energy.
+                        {t('description')}
                     </p>
                     <div className="flex flex-col sm:flex-row gap-4 mt-4">
                         <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 cursor-pointer">
-                            Request Quote <span className="material-symbols-outlined">trending_flat</span>
+                            {t('requestQuote')} <span className="material-symbols-outlined">trending_flat</span>
                         </button>
                         <button className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center cursor-pointer">
-                            Our Technology
+                            {t('ourTechnology')}
                         </button>
                     </div>
                 </div>

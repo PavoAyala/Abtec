@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "title": "ABTEC - Energy that Transforms",
+    "description": "Efficient and sustainable solar energy solutions tailored for residential and industrial scaling."
+  },
+  "header": {
+    "services": "Services",
+    "products": "Products",
+    "company": "Company",
+    "clientAccess": "Client Access"
+  },
+  "hero": {
+    "badge": "Solar Innovation",
+    "title": "Energy that",
+    "titleHighlight": "Transforms",
+    "description": "Efficient and sustainable solar energy solutions tailored for residential and industrial scaling. Experience the future of energy.",
+    "requestQuote": "Request Quote",
+    "ourTechnology": "Our Technology"
+  },
+  "services": {
+    "subtitle": "What we do",
+    "title": "Specialized Solar Solutions",
+    "description": "Comprehensive services ensuring your transition to renewable energy is seamless, efficient, and profitable.",
+    "learnMore": "Learn more",
+    "installation": {
+      "title": "Installation",
+      "description": "Expert residential and industrial solar setups utilizing Tier 1 hardware and precision engineering for maximum yield."
+    },
+    "maintenance": {
+      "title": "Maintenance",
+      "description": "24/7 monitoring and preventive maintenance to ensure the longevity and peak performance of your energy system."
+    },
+    "consulting": {
+      "title": "Consulting",
+      "description": "Custom energy audits and ROI analysis. We help you make data-driven decisions for your industrial or home investment."
+    }
+  },
+  "contact": {
+    "subtitle": "Contact Us",
+    "title": "Start Your Energy Transition Today",
+    "description": "Ready to take the next step? Fill out the form and our specialized engineers will provide a personalized solar analysis for your property.",
+    "phone": "Phone",
+    "email": "Email",
+    "form": {
+      "fullName": "Full Name",
+      "fullNamePlaceholder": "John Doe",
+      "emailAddress": "Email Address",
+      "emailPlaceholder": "john@company.com",
+      "serviceType": "Service Type",
+      "industrialInstallation": "Industrial Installation",
+      "residentialInstallation": "Residential Installation",
+      "maintenanceMonitoring": "Maintenance & Monitoring",
+      "energyConsulting": "Energy Consulting",
+      "message": "Message",
+      "messagePlaceholder": "How can we help you?",
+      "submit": "Send Quote Request"
+    }
+  },
+  "footer": {
+    "copyright": "ABTEC © 2024",
+    "privacyPolicy": "Privacy Policy",
+    "termsOfService": "Terms of Service",
+    "sustainabilityReport": "Sustainability Report"
+  },
+  "clientAccess": {
+    "title": "Client Access",
+    "subtitle": "Sign in to access your client portal",
+    "emailLabel": "Email Address",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "signIn": "Sign In",
+    "signingIn": "Signing in...",
+    "backToHome": "Back to Home",
+    "welcome": "Welcome, {email}",
+    "loggedInMessage": "You are logged into your client portal.",
+    "systemStatus": {
+      "title": "System Status",
+      "description": "View your solar system performance and energy production data."
+    },
+    "supportTickets": {
+      "title": "Support Tickets",
+      "description": "Create and track support requests for your installation."
+    },
+    "signOut": "Sign Out"
+  },
+  "languageSwitcher": {
+    "label": "Language",
+    "en": "English",
+    "es": "Spanish"
+  }
+}

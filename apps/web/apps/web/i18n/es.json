@@ -1,0 +1,92 @@
+{
+  "metadata": {
+    "title": "ABTEC - Energía que Transforma",
+    "description": "Soluciones de energía solar eficientes y sostenibles adaptadas para escalamiento residencial e industrial."
+  },
+  "header": {
+    "services": "Servicios",
+    "products": "Productos",
+    "company": "Empresa",
+    "clientAccess": "Acceso Cliente"
+  },
+  "hero": {
+    "badge": "Innovación Solar",
+    "title": "Energía que",
+    "titleHighlight": "Transforma",
+    "description": "Soluciones de energía solar eficientes y sostenibles adaptadas para escalamiento residencial e industrial. Experimenta el futuro de la energía.",
+    "requestQuote": "Solicitar Cotización",
+    "ourTechnology": "Nuestra Tecnología"
+  },
+  "services": {
+    "subtitle": "Lo que hacemos",
+    "title": "Soluciones Solares Especializadas",
+    "description": "Servicios integrales que aseguran que tu transición a energía renovable sea fluida, eficiente y rentable.",
+    "learnMore": "Saber más",
+    "installation": {
+      "title": "Instalación",
+      "description": "Instalaciones solares residenciales e industriales expertas utilizando hardware Tier 1 e ingeniería de precisión para máximo rendimiento."
+    },
+    "maintenance": {
+      "title": "Mantenimiento",
+      "description": "Monitoreo 24/7 y mantenimiento preventivo para asegurar la longevidad y el rendimiento óptimo de tu sistema de energía."
+    },
+    "consulting": {
+      "title": "Consultoría",
+      "description": "Auditorías energéticas personalizadas y análisis de ROI. Te ayudamos a tomar decisiones basadas en datos para tu inversión industrial o residencial."
+    }
+  },
+  "contact": {
+    "subtitle": "Contáctanos",
+    "title": "Comienza tu Transición Energética Hoy",
+    "description": "¿Listo para dar el siguiente paso? Completa el formulario y nuestros ingenieros especializados te proporcionarán un análisis solar personalizado para tu propiedad.",
+    "phone": "Teléfono",
+    "email": "Correo",
+    "form": {
+      "fullName": "Nombre Completo",
+      "fullNamePlaceholder": "Juan Pérez",
+      "emailAddress": "Correo Electrónico",
+      "emailPlaceholder": "juan@empresa.com",
+      "serviceType": "Tipo de Servicio",
+      "industrialInstallation": "Instalación Industrial",
+      "residentialInstallation": "Instalación Residencial",
+      "maintenanceMonitoring": "Mantenimiento y Monitoreo",
+      "energyConsulting": "Consultoría Energética",
+      "message": "Mensaje",
+      "messagePlaceholder": "¿Cómo podemos ayudarte?",
+      "submit": "Enviar Solicitud de Cotización"
+    }
+  },
+  "footer": {
+    "copyright": "ABTEC © 2024",
+    "privacyPolicy": "Política de Privacidad",
+    "termsOfService": "Términos de Servicio",
+    "sustainabilityReport": "Reporte de Sostenibilidad"
+  },
+  "clientAccess": {
+    "title": "Acceso Cliente",
+    "subtitle": "Inicia sesión para acceder a tu portal de cliente",
+    "emailLabel": "Correo Electrónico",
+    "emailPlaceholder": "tu@ejemplo.com",
+    "passwordLabel": "Contraseña",
+    "passwordPlaceholder": "Ingresa tu contraseña",
+    "signIn": "Iniciar Sesión",
+    "signingIn": "Iniciando sesión...",
+    "backToHome": "Volver al Inicio",
+    "welcome": "Bienvenido, {email}",
+    "loggedInMessage": "Has iniciado sesión en tu portal de cliente.",
+    "systemStatus": {
+      "title": "Estado del Sistema",
+      "description": "Visualiza el rendimiento de tu sistema solar y datos de producción de energía."
+    },
+    "supportTickets": {
+      "title": "Tickets de Soporte",
+      "description": "Crea y da seguimiento a solicitudes de soporte para tu instalación."
+    },
+    "signOut": "Cerrar Sesión"
+  },
+  "languageSwitcher": {
+    "label": "Idioma",
+    "en": "Inglés",
+    "es": "Español"
+  }
+}
