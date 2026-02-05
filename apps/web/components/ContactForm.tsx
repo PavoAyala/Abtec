@@ -6,8 +6,7 @@ import { useState } from 'react';
 interface FormData {
   name: string;
   email: string;
-  phone: string;
-  propertyType: string;
+  serviceType: string;
   message: string;
 }
 
@@ -15,8 +14,7 @@ export default function ContactForm(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    phone: '',
-    propertyType: 'residential',
+    serviceType: 'Industrial Installation',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -25,6 +23,21 @@ export default function ContactForm(): JSX.Element {
   const handleChange = (
     e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ): void => {
+    const { title, value } = e.target;
+    // The HTML inputs don't have name attributes in the snippet, I'll add them.
+    // Wait, the snippet uses labels. I will ensure inputs have proper names.
+    // If e.target.name is undefined, I need to make sure I add name props to inputs.
+    // Assuming standard behavior.
+
+    // Actually, I'll just use the name attribute which I will add to the inputs.
+    const name = e.target.getAttribute('name');
+    if (name) {
+      setFormData((prev) => ({ ...prev, [name]: value }));
+    }
+  };
+
+  // Re-implementing simplified handleChange for React inputs with name prop
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
@@ -51,8 +64,7 @@ export default function ContactForm(): JSX.Element {
       setFormData({
         name: '',
         email: '',
-        phone: '',
-        propertyType: 'residential',
+        serviceType: 'Industrial Installation',
         message: '',
       });
     } catch (error) {
@@ -64,134 +76,103 @@ export default function ContactForm(): JSX.Element {
   };
 
   return (
-    <section id="contact" className="py-32 bg-abtec-navy-900 relative overflow-hidden">
-      {/* Background Blobs */}
-      <div className="absolute top-0 left-0 w-96 h-96 bg-abtec-green-600/10 rounded-full blur-3xl -translate-x-1/2 -translate-y-1/2 pointer-events-none" />
-      <div className="absolute bottom-0 right-0 w-96 h-96 bg-abtec-navy-600/20 rounded-full blur-3xl translate-x-1/2 translate-y-1/2 pointer-events-none" />
-
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
-        <div className="grid lg:grid-cols-2 gap-20 items-center">
-          {/* Left Content */}
-          <div className="text-white space-y-6 pt-8">
-            <span className="text-[#84cc16] font-bold text-sm tracking-widest uppercase block">
-              Contact Us
-            </span>
-            <h2 className="text-4xl sm:text-5xl font-bold leading-tight">
-              Start Your Energy <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400">
-                Transition Today
-              </span>
-            </h2>
-            <p className="text-gray-400 text-lg leading-relaxed max-w-lg">
+    <section className="py-24 bg-secondary text-white relative overflow-hidden">
+      {/* Decorative light effect */}
+      <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 blur-[120px] rounded-full translate-x-1/2"></div>
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+          <div>
+            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4">Contact Us</h2>
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Start Your Energy <br />Transition Today</h3>
+            <p className="text-white/70 text-lg mb-10 max-w-md leading-relaxed">
               Ready to take the next step? Fill out the form and our specialized engineers will provide a personalized solar analysis for your property.
             </p>
-
-            <div className="pt-8 space-y-6">
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-abtec-navy-800 rounded-full flex items-center justify-center text-[#84cc16]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z" />
-                  </svg>
+            <div className="flex flex-col gap-6">
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined">call</span>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest">Phone</p>
-                  <p className="text-white font-semibold text-lg hover:text-[#84cc16] transition-colors">+1 (555) 000-8888</p>
+                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Phone</p>
+                  <p className="text-lg font-medium">+1 (555) 000-8888</p>
                 </div>
               </div>
-
-              <div className="flex items-center space-x-4">
-                <div className="w-12 h-12 bg-abtec-navy-800 rounded-full flex items-center justify-center text-[#84cc16]">
-                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
+              <div className="flex items-center gap-4">
+                <div className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-primary">
+                  <span className="material-symbols-outlined">mail</span>
                 </div>
                 <div>
-                  <p className="text-xs text-gray-400 uppercase tracking-widest">Email</p>
-                  <p className="text-white font-semibold text-lg hover:text-[#84cc16] transition-colors">contact@abtec-energy.com</p>
+                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Email</p>
+                  <p className="text-lg font-medium">contact@abtec-energy.com</p>
                 </div>
               </div>
             </div>
           </div>
-
-          {/* Form */}
-          <div className="bg-white rounded-[2rem] p-8 md:p-12 shadow-2xl">
+          <div className="bg-white p-8 md:p-10 rounded-2xl shadow-2xl">
             <form onSubmit={handleSubmit} className="space-y-6">
-              <div className="grid md:grid-cols-2 gap-6">
-                <div>
-                  <label htmlFor="name" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Full Name</label>
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Full Name</label>
                   <input
-                    type="text"
-                    id="name"
                     name="name"
-                    required
                     value={formData.name}
-                    onChange={handleChange}
-                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                    onChange={handleInputChange}
+                    className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
                     placeholder="John Doe"
-                  />
-                </div>
-                <div>
-                  <label htmlFor="email" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Email Address</label>
-                  <input
-                    type="email"
-                    id="email"
-                    name="email"
+                    type="text"
                     required
+                  />
+                </div>
+                <div className="flex flex-col gap-2">
+                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Email Address</label>
+                  <input
+                    name="email"
                     value={formData.email}
-                    onChange={handleChange}
-                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                    onChange={handleInputChange}
+                    className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
                     placeholder="john@company.com"
+                    type="email"
+                    required
                   />
                 </div>
               </div>
-
-              <div>
-                <label htmlFor="propertyType" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Service Type</label>
-                <div className="relative">
-                  <select
-                    id="propertyType"
-                    name="propertyType"
-                    value={formData.propertyType}
-                    onChange={handleChange}
-                    className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none text-abtec-navy-900 font-medium appearance-none"
-                  >
-                    <option value="residential">Residential Installation</option>
-                    <option value="commercial">Commercial Project</option>
-                    <option value="industrial">Industrial Solution</option>
-                  </select>
-                  <div className="absolute inset-y-0 right-0 flex items-center px-4 pointer-events-none text-gray-500">
-                    <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 9l-7 7-7-7" /></svg>
-                  </div>
-                </div>
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Service Type</label>
+                <select
+                  name="serviceType"
+                  value={formData.serviceType}
+                  onChange={handleInputChange}
+                  className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary w-full"
+                >
+                  <option>Industrial Installation</option>
+                  <option>Residential Installation</option>
+                  <option>Maintenance & Monitoring</option>
+                  <option>Energy Consulting</option>
+                </select>
               </div>
-
-              <div>
-                <label htmlFor="message" className="block text-[10px] font-extrabold text-abtec-navy-900 uppercase tracking-widest mb-2">Message</label>
+              <div className="flex flex-col gap-2">
+                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Message</label>
                 <textarea
-                  id="message"
                   name="message"
-                  rows={4}
                   value={formData.message}
-                  onChange={handleChange}
-                  className="w-full px-4 py-4 bg-[#f8fafc] rounded-lg focus:ring-2 focus:ring-[#84cc16] transition-all outline-none resize-none text-abtec-navy-900 placeholder-gray-400 font-medium"
+                  onChange={handleInputChange}
+                  className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
                   placeholder="How can we help you?"
-                />
+                  rows={4}
+                ></textarea>
               </div>
-
               <button
+                className="w-full bg-primary hover:bg-primary/90 text-white font-bold py-4 rounded-xl transition-all shadow-xl shadow-primary/20 disabled:opacity-50 disabled:cursor-not-allowed"
                 type="submit"
                 disabled={isSubmitting}
-                className="w-full bg-[#84cc16] hover:bg-[#65a30d] disabled:bg-gray-300 disabled:cursor-not-allowed text-white font-bold py-4 px-6 rounded-xl transition-all duration-200 transform hover:scale-[1.02] shadow-lg shadow-[#84cc16]/20"
               >
-                {isSubmitting ? 'Sending Request...' : 'Send Quote Request'}
+                {isSubmitting ? 'Sending...' : 'Send Quote Request'}
               </button>
-
-              {/* Status Messages - Simplified for clean design */}
               {submitStatus === 'success' && (
-                <p className="text-green-600 text-center font-medium bg-green-50 py-2 rounded-lg">Thank you! We&apos;ll be in touch soon.</p>
+                <p className="text-green-600 text-center font-bold">Message sent successfully!</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-600 text-center font-medium bg-red-50 py-2 rounded-lg">Something went wrong. Please try again.</p>
+                <p className="text-red-500 text-center font-bold">Failed to send message. Please try again.</p>
               )}
             </form>
           </div>

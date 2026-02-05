@@ -8,14 +8,19 @@ export const metadata: Metadata = {
   keywords: ["solar energy", "solar panels", "renewable energy", "solar installation", "energy consulting"],
 };
 
+
 export default function RootLayout({
   children,
 }: Readonly<{
   children: ReactNode;
 }>): JSX.Element {
   return (
-    <html lang="en">
-      <body className="antialiased">
+    <html lang="es" className="light">
+      <head>
+        <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+        <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200&display=swap" rel="stylesheet" />
+      </head>
+      <body className="bg-background-light dark:bg-background-dark text-secondary dark:text-white antialiased">
         {children}
       </body>
     </html>
