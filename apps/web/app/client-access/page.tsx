@@ -53,28 +53,28 @@ export default function ClientAccess(): JSX.Element {
                 </svg>
               </div>
               <h1 className="text-2xl font-bold text-abtec-navy-900">
-                Welcome, {user.email}
+                Bienvenido, {user.email}
               </h1>
               <p className="text-abtec-navy-600 mt-2">
-                You are logged into your client portal.
+                Has iniciado sesión en tu portal de cliente.
               </p>
             </div>
 
             <div className="grid md:grid-cols-2 gap-6 mb-8">
               <div className="p-6 bg-gray-50 rounded-xl">
                 <h3 className="font-semibold text-abtec-navy-900 mb-2">
-                  System Status
+                  Estado del Sistema
                 </h3>
                 <p className="text-abtec-navy-600 text-sm">
-                  View your solar system performance and energy production data.
+                  Consulta el rendimiento de tu sistema solar y los datos de producción de energía.
                 </p>
               </div>
               <div className="p-6 bg-gray-50 rounded-xl">
                 <h3 className="font-semibold text-abtec-navy-900 mb-2">
-                  Support Tickets
+                  Tickets de Soporte
                 </h3>
                 <p className="text-abtec-navy-600 text-sm">
-                  Create and track support requests for your installation.
+                  Crea y realiza el seguimiento de las solicitudes de soporte para tu instalación.
                 </p>
               </div>
             </div>
@@ -84,13 +84,13 @@ export default function ClientAccess(): JSX.Element {
                 onClick={signOut}
                 className="px-6 py-3 border-2 border-abtec-navy-200 text-abtec-navy-700 font-semibold rounded-lg hover:bg-abtec-navy-50 transition-colors"
               >
-                Sign Out
+                Cerrar Sesión
               </button>
               <Link
                 href="/"
                 className="px-6 py-3 bg-abtec-green-600 text-white font-semibold rounded-lg hover:bg-abtec-green-700 transition-colors text-center"
               >
-                Back to Home
+                Volver al Inicio
               </Link>
             </div>
           </div>
@@ -109,9 +109,9 @@ export default function ClientAccess(): JSX.Element {
             </div>
             <span className="text-2xl font-bold text-abtec-navy-900">Abtec</span>
           </Link>
-          <h1 className="text-2xl font-bold text-abtec-navy-900">Client Access</h1>
+          <h1 className="text-2xl font-bold text-abtec-navy-900">Acceso Cliente</h1>
           <p className="text-abtec-navy-600 mt-2">
-            Sign in to access your client portal
+            Inicia sesión para acceder a tu portal de cliente
           </p>
         </div>
 
@@ -122,7 +122,7 @@ export default function ClientAccess(): JSX.Element {
                 htmlFor="email"
                 className="block text-sm font-medium text-abtec-navy-700 mb-2"
               >
-                Email Address
+                Correo Electrónico
               </label>
               <input
                 type="email"
@@ -131,7 +131,7 @@ export default function ClientAccess(): JSX.Element {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                placeholder="you@example.com"
+                placeholder="tu@ejemplo.com"
               />
             </div>
 
@@ -140,7 +140,7 @@ export default function ClientAccess(): JSX.Element {
                 htmlFor="password"
                 className="block text-sm font-medium text-abtec-navy-700 mb-2"
               >
-                Password
+                Contraseña
               </label>
               <input
                 type="password"
@@ -149,7 +149,7 @@ export default function ClientAccess(): JSX.Element {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 className="w-full px-4 py-3 rounded-lg border border-gray-300 focus:ring-2 focus:ring-abtec-green-500 focus:border-transparent transition-colors text-abtec-navy-900"
-                placeholder="Enter your password"
+                placeholder="Ingresa tu contraseña"
               />
             </div>
 
@@ -164,7 +164,7 @@ export default function ClientAccess(): JSX.Element {
               disabled={isSubmitting}
               className="w-full bg-abtec-green-600 hover:bg-abtec-green-700 disabled:bg-abtec-green-400 text-white font-semibold py-4 px-6 rounded-lg transition-colors duration-200"
             >
-              {isSubmitting ? 'Signing in...' : 'Sign In'}
+              {isSubmitting ? 'Iniciando sesión...' : 'Iniciar Sesión'}
             </button>
           </form>
 
@@ -173,7 +173,7 @@ export default function ClientAccess(): JSX.Element {
               href="/"
               className="text-abtec-green-600 hover:text-abtec-green-700 font-medium text-sm"
             >
-              &larr; Back to Home
+              &larr; Volver al Inicio
             </Link>
           </div>
         </div>
