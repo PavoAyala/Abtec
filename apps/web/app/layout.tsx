@@ -3,9 +3,9 @@ import type { JSX, ReactNode } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
-  title: "Abtec - Energia que Transforma",
-  description: "Transform your energy consumption with cutting-edge solar solutions. Professional solar installation, maintenance, and consulting services.",
-  keywords: ["solar energy", "solar panels", "renewable energy", "solar installation", "energy consulting"],
+  title: "Abtec - Energía que Transforma",
+  description: "Transforma tu consumo de energía con soluciones solares de vanguardia. Servicios profesionales de instalación, mantenimiento y consultoría solar.",
+  keywords: ["energía solar", "paneles solares", "energía renovable", "instalación solar", "consultoría energética"],
 };
 
 

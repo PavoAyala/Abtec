@@ -15,13 +15,13 @@ export default function Header(): JSX.Element {
           <h1 className="text-secondary text-2xl font-bold tracking-tight">ABTEC</h1>
         </div>
         <nav className="hidden md:flex items-center gap-10">
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Services</a>
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Products</a>
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Company</a>
+          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Servicios</a>
+          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Productos</a>
+          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Nosotros</a>
         </nav>
         <div className="flex items-center gap-4">
           <button className="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:bg-secondary/90">
-            Client Access
+            Acceso Clientes
           </button>
           <div className="h-10 w-10 rounded-full bg-primary/20 flex items-center justify-center text-primary">
             <span className="material-symbols-outlined">person</span>

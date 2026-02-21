@@ -13,9 +13,9 @@ export default function Footer(): JSX.Element {
             <span className="text-secondary/40 font-bold uppercase tracking-tighter">ABTEC © 2024</span>
           </div>
           <div className="flex gap-8">
-            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Privacy Policy</a>
-            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Terms of Service</a>
-            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Sustainability Report</a>
+            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Política de Privacidad</a>
+            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Términos de Servicio</a>
+            <a className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium" href="#">Reporte de Sostenibilidad</a>
           </div>
           <div className="flex gap-4">
             <div className="w-10 h-10 rounded-full bg-background-light flex items-center justify-center text-secondary/40 hover:bg-primary/20 hover:text-primary transition-all cursor-pointer">
