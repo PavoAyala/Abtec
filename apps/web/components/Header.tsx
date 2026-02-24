@@ -1,6 +1,7 @@
 'use client';
 import type { JSX } from 'react';
 import Image from 'next/image';
+import Link from 'next/link';
 
 export default function Header(): JSX.Element {
   return (
@@ -15,7 +16,7 @@ export default function Header(): JSX.Element {
           <h1 className="text-secondary text-2xl font-bold tracking-tight">ABTEC</h1>
         </div>
         <nav className="hidden md:flex items-center gap-10">
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Servicios</a>
+          <Link className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/servicios">Servicios</Link>
           <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Productos</a>
           <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Nosotros</a>
         </nav>
