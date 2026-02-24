@@ -14,9 +14,10 @@ export default function Header(): JSX.Element {
           <h1 className="text-secondary text-2xl font-bold tracking-tight">ABTEC</h1>
         </Link>
         <nav className="hidden md:flex items-center gap-10">
+          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Nosotros</a>
           <Link className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/servicios">Servicios</Link>
           <Link className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/productos">Productos</Link>
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Nosotros</a>
+          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/financiamiento">Financiamiento</a>
         </nav>
         <div className="flex items-center gap-4">
           <button className="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:bg-secondary/90">
