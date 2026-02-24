@@ -76,7 +76,7 @@ export default function ContactForm(): JSX.Element {
   };
 
   return (
-    <section className="py-24 bg-secondary text-white relative overflow-hidden">
+    <section id="contacto" className="py-24 bg-secondary text-white relative overflow-hidden scroll-mt-20">
       {/* Decorative light effect */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 blur-[120px] rounded-full translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
