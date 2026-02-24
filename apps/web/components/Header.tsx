@@ -15,7 +15,7 @@ export default function Header(): JSX.Element {
         </Link>
         <nav className="hidden md:flex items-center gap-10">
           <Link className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/servicios">Servicios</Link>
-          <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Productos</a>
+          <Link className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="/productos">Productos</Link>
           <a className="text-secondary/80 hover:text-primary transition-colors text-sm font-semibold uppercase tracking-wider" href="#">Nosotros</a>
         </nav>
         <div className="flex items-center gap-4">
