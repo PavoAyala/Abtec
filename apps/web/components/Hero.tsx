@@ -20,12 +20,12 @@ export default function Hero(): JSX.Element {
             Soluciones de energía solar eficientes y sostenibles adaptadas para escala residencial e industrial. Experimenta el futuro de la energía.
           </p>
           <div className="flex flex-col sm:flex-row gap-4 mt-4">
-            <button className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2">
+            <a href="#contacto" className="bg-primary hover:bg-primary/90 text-white px-8 py-4 rounded-xl text-lg font-bold transition-all shadow-lg shadow-primary/20 flex items-center justify-center gap-2 scroll-smooth">
               Solicitar Cotización <span className="material-symbols-outlined">trending_flat</span>
-            </button>
-            <button className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center">
+            </a>
+            <a href="#servicios" className="bg-white/10 hover:bg-white/20 text-white backdrop-blur-md border border-white/30 px-8 py-4 rounded-xl text-lg font-bold transition-all flex items-center justify-center scroll-smooth">
               Nuestra Tecnología
-            </button>
+            </a>
           </div>
         </div>
       </div>
