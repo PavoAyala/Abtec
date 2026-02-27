@@ -20,21 +20,7 @@ export default function ContactForm(): JSX.Element {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<'idle' | 'success' | 'error'>('idle');
 
-  const handleChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
-  ): void => {
-    const { title, value } = e.target;
-    // The HTML inputs don't have name attributes in the snippet, I'll add them.
-    // Wait, the snippet uses labels. I will ensure inputs have proper names.
-    // If e.target.name is undefined, I need to make sure I add name props to inputs.
-    // Assuming standard behavior.
-
-    // Actually, I'll just use the name attribute which I will add to the inputs.
-    const name = e.target.getAttribute('name');
-    if (name) {
-      setFormData((prev) => ({ ...prev, [name]: value }));
-    }
-  };
+  // Removed unused handleChange
 
   // Re-implementing simplified handleChange for React inputs with name prop
   const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
@@ -94,7 +80,7 @@ export default function ContactForm(): JSX.Element {
                 </div>
                 <div>
                   <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Teléfono</p>
-                  <p className="text-lg font-medium">+1 (555) 000-8888</p>
+                  <p className="text-lg font-medium">(+52) 81 9688.1365</p>
                 </div>
               </div>
               <div className="flex items-center gap-4">
@@ -103,7 +89,7 @@ export default function ContactForm(): JSX.Element {
                 </div>
                 <div>
                   <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Correo Electrónico</p>
-                  <p className="text-lg font-medium">contacto@abtec-energy.com</p>
+                  <p className="text-lg font-medium">ventas@abtec.mx</p>
                 </div>
               </div>
             </div>
@@ -112,9 +98,10 @@ export default function ContactForm(): JSX.Element {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Nombre Completo</label>
+                  <label htmlFor="name" className="text-secondary text-sm font-bold uppercase tracking-wide">Nombre Completo</label>
                   <input
                     name="name"
+                    id="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
@@ -124,9 +111,10 @@ export default function ContactForm(): JSX.Element {
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Correo Electrónico</label>
+                  <label htmlFor="email" className="text-secondary text-sm font-bold uppercase tracking-wide">Correo Electrónico</label>
                   <input
                     name="email"
+                    id="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
@@ -137,9 +125,10 @@ export default function ContactForm(): JSX.Element {
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Tipo de Servicio</label>
+                <label htmlFor="serviceType" className="text-secondary text-sm font-bold uppercase tracking-wide">Tipo de Servicio</label>
                 <select
                   name="serviceType"
+                  id="serviceType"
                   value={formData.serviceType}
                   onChange={handleInputChange}
                   className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary w-full"
@@ -151,9 +140,10 @@ export default function ContactForm(): JSX.Element {
                 </select>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Mensaje</label>
+                <label htmlFor="message" className="text-secondary text-sm font-bold uppercase tracking-wide">Mensaje</label>
                 <textarea
                   name="message"
+                  id="message"
                   value={formData.message}
                   onChange={handleInputChange}
                   className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
