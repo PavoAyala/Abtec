@@ -14,7 +14,7 @@ export default function ContactForm(): JSX.Element {
   const [formData, setFormData] = useState<FormData>({
     name: '',
     email: '',
-    serviceType: 'Industrial Installation',
+    serviceType: 'Instalación Industrial',
     message: '',
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
@@ -64,7 +64,7 @@ export default function ContactForm(): JSX.Element {
       setFormData({
         name: '',
         email: '',
-        serviceType: 'Industrial Installation',
+        serviceType: 'Instalación Industrial',
         message: '',
       });
     } catch (error) {
@@ -76,16 +76,16 @@ export default function ContactForm(): JSX.Element {
   };
 
   return (
-    <section className="py-24 bg-secondary text-white relative overflow-hidden">
+    <section id="contacto" className="py-24 bg-secondary text-white relative overflow-hidden scroll-mt-20">
       {/* Decorative light effect */}
       <div className="absolute top-0 right-0 w-1/3 h-full bg-primary/10 blur-[120px] rounded-full translate-x-1/2"></div>
       <div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
           <div>
-            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4">Contact Us</h2>
-            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Start Your Energy <br />Transition Today</h3>
+            <h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4">Contáctanos</h2>
+            <h3 className="text-4xl md:text-5xl font-bold tracking-tight mb-6">Inicia tu Transición <br />Energética Hoy</h3>
             <p className="text-white/70 text-lg mb-10 max-w-md leading-relaxed">
-              Ready to take the next step? Fill out the form and our specialized engineers will provide a personalized solar analysis for your property.
+              ¿Listo para dar el siguiente paso? Completa el formulario y nuestros ingenieros especializados realizarán un análisis solar personalizado para tu propiedad.
             </p>
             <div className="flex flex-col gap-6">
               <div className="flex items-center gap-4">
@@ -93,7 +93,7 @@ export default function ContactForm(): JSX.Element {
                   <span className="material-symbols-outlined">call</span>
                 </div>
                 <div>
-                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Phone</p>
+                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Teléfono</p>
                   <p className="text-lg font-medium">+1 (555) 000-8888</p>
                 </div>
               </div>
@@ -102,8 +102,8 @@ export default function ContactForm(): JSX.Element {
                   <span className="material-symbols-outlined">mail</span>
                 </div>
                 <div>
-                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Email</p>
-                  <p className="text-lg font-medium">contact@abtec-energy.com</p>
+                  <p className="text-sm text-white/50 uppercase font-bold tracking-wider">Correo Electrónico</p>
+                  <p className="text-lg font-medium">contacto@abtec-energy.com</p>
                 </div>
               </div>
             </div>
@@ -112,52 +112,52 @@ export default function ContactForm(): JSX.Element {
             <form onSubmit={handleSubmit} className="space-y-6">
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Full Name</label>
+                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Nombre Completo</label>
                   <input
                     name="name"
                     value={formData.name}
                     onChange={handleInputChange}
                     className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
-                    placeholder="John Doe"
+                    placeholder="Juan Pérez"
                     type="text"
                     required
                   />
                 </div>
                 <div className="flex flex-col gap-2">
-                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Email Address</label>
+                  <label className="text-secondary text-sm font-bold uppercase tracking-wide">Correo Electrónico</label>
                   <input
                     name="email"
                     value={formData.email}
                     onChange={handleInputChange}
                     className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
-                    placeholder="john@company.com"
+                    placeholder="juan@empresa.com"
                     type="email"
                     required
                   />
                 </div>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Service Type</label>
+                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Tipo de Servicio</label>
                 <select
                   name="serviceType"
                   value={formData.serviceType}
                   onChange={handleInputChange}
                   className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary w-full"
                 >
-                  <option>Industrial Installation</option>
-                  <option>Residential Installation</option>
-                  <option>Maintenance & Monitoring</option>
-                  <option>Energy Consulting</option>
+                  <option>Instalación Industrial</option>
+                  <option>Instalación Residencial</option>
+                  <option>Mantenimiento y Monitoreo</option>
+                  <option>Consultoría Energética</option>
                 </select>
               </div>
               <div className="flex flex-col gap-2">
-                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Message</label>
+                <label className="text-secondary text-sm font-bold uppercase tracking-wide">Mensaje</label>
                 <textarea
                   name="message"
                   value={formData.message}
                   onChange={handleInputChange}
                   className="bg-background-light border-none rounded-lg p-4 focus:ring-2 focus:ring-primary text-secondary placeholder:text-secondary/30 w-full"
-                  placeholder="How can we help you?"
+                  placeholder="¿Cómo podemos ayudarte?"
                   rows={4}
                 ></textarea>
               </div>
@@ -166,13 +166,13 @@ export default function ContactForm(): JSX.Element {
                 type="submit"
                 disabled={isSubmitting}
               >
-                {isSubmitting ? 'Sending...' : 'Send Quote Request'}
+                {isSubmitting ? 'Enviando...' : 'Enviar Solicitud de Cotización'}
               </button>
               {submitStatus === 'success' && (
-                <p className="text-green-600 text-center font-bold">Message sent successfully!</p>
+                <p className="text-green-600 text-center font-bold">¡Mensaje enviado con éxito!</p>
               )}
               {submitStatus === 'error' && (
-                <p className="text-red-500 text-center font-bold">Failed to send message. Please try again.</p>
+                <p className="text-red-500 text-center font-bold">Error al enviar el mensaje. Por favor, inténtalo de nuevo.</p>
               )}
             </form>
           </div>
