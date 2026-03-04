@@ -26,7 +26,13 @@ public class PostgresConfig : BaseServiceConfig
 {
     public string Database { get; set; } = string.Empty;
 
-    public string ConnectionString => $"User ID={UserName};Password={Password};Server={Server};Port={Port};Database={Database};Pooling=true;";
+    // Additional raw connection string options (eg. "SSL Mode=Require;Trust Server Certificate=true;")
+    // Useful when connecting to Neon or other hosts that require SSL.
+    public string AdditionalOptions { get; set; } = string.Empty;
+
+    public string ConnectionString =>
+        $"User ID={UserName};Password={Password};Server={Server};Port={Port};Database={Database};Pooling=true;" +
+        (string.IsNullOrWhiteSpace(AdditionalOptions) ? string.Empty : AdditionalOptions);
 }
 
 public class ElasticConfig : BaseServiceConfig
