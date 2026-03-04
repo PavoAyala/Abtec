@@ -57,6 +57,67 @@ O inicia servicios específicos:
 - **Móvil**: `npm run dev --workspace=abtec-mobile`
 - **Firebase**: `npm run firebase:dev`
 
+
+
+---
+
+## 🧩 LeadCMS local (CMS/CRM)
+
+El proyecto incluye una configuración de **LeadCMS** basada en el arranque original de `Next-LeadCMS-starter`. Puedes levantar el CMS (y su base de datos PostgreSQL) junto a la web usando Docker.
+
+1. Copia la plantilla de entorno y edita las claves en `apps/leadcms/docker-compose/.env`:
+```dotenv
+# valores de ejemplo – sustituye por tus credenciales
+JWT__SECRET=clave-muy-larga-32+
+JWT__ISSUER=leadcms-issuer
+JWT__AUDIENCE=leadcms-audience
+
+DEFAULTUSERS__0__USERNAME=admin
+DEFAULTUSERS__0__PASSWORD=admin
+
+POSTGRES__SERVER=postgres          # o tu endpoint Neon, sin "-pooler"
+POSTGRES__PORT=5432
+POSTGRES__USERNAME=postgres
+POSTGRES__PASSWORD=secret
+POSTGRES__DATABASE=LeadCMS
+
+CORS__ALLOWEDORIGINS__0=http://localhost:8080
+CORS__ALLOWEDORIGINS__1=http://localhost:3000
+```
+
+2. El servicio LeadCMS en Docker se expone como **`Abtec-LeadCMS`** y el Postgres como **`Abtec-LeadCMS-postgres`**. Esto ya está configurado en `apps/leadcms/docker-compose/docker-compose.yml`.
+
+3. Si deseas orquestar también la web desde la raíz, usa el archivo `docker-compose.yml` en la raíz del repositorio. Levanta todo con:
+```powershell
+# desde la raíz del repo
+docker compose up -d
+```
+
+   - `http://localhost:8080` → LeadCMS admin (usuario `admin` / contraseña según .env).
+   - `http://localhost:3000` → web pública Next.js que consume LeadCMS.
+
+4. Para levantar únicamente el CMS (sin web) puedes ejecutar:
+```powershell
+cd apps/leadcms/docker-compose
+docker compose up -d
+```
+
+5. Cuando trabajes sin Docker en la web, configura `apps/web/.env` apuntando a la URL/clave del CMS:
+```dotenv
+LEADCMS_URL=http://Abtec-LeadCMS:80
+LEADCMS_API_KEY=<mismo JWT__SECRET>
+```
+
+> ⚠️ **Importante**: nunca uses un host Neon con `-pooler` en `POSTGRES__SERVER`, ya que puede producir bloqueos de advisory locks.
+>
+> ❗ **Si cambias entre Neon y clave local**, recuerda que el contenedor PostgreSQL conserva su volumen `postgres-data` y carga la configuración inicial que tuvo la primera vez que se creó. Si el usuario/contraseña no coincide con el valor actual de `.env` verás errores `password authentication failed` o `role "postgres" does not exist`.
+>   * Solución rápida: elimina el volumen antes de reiniciar el stack:
+>     ```powershell
+>     docker compose down -v    # borra datos de Postgres
+>     docker compose up -d      # volver a levantar con las nuevas credenciales
+>     ```
+>   * Alternativa: cambia el `.env` para usar el mismo usuario/clave que ya existe en el volumen, o crea la rol manualmente dentro de la BD.
+
 ---
 
 ## 📜 Scripts Disponibles

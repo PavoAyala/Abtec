@@ -1,11 +1,10 @@
-# version directive removed - Compose v2 ignores it
+# root compose orchestration that brings up the CMS (with Postgres)
+# and optionally the web frontend. Containers are prefixed with "Abtec".
 
 services:
-
   postgres:
-    # optional: give the Postgres instance a predictable name
-    container_name: Abtec-LeadCMS-postgres
     image: postgres:14.5
+    container_name: Abtec-LeadCMS-postgres
     environment:
       TZ: 'UTC'
       PGTZ: 'UTC'
@@ -24,21 +23,36 @@ services:
     restart: unless-stopped
 
   leadcms:
-    # build from the local Dockerfile (pins version 1.3.17-pre)
+    # build the LeadCMS core image from the local Dockerfile included in apps/leadcms
     build:
-      context: ../
+      context: ./apps/leadcms
       dockerfile: Dockerfile
-    # alternatively: image: leadcms/core:1.3.17-pre
     container_name: Abtec-LeadCMS
     ports:
       - "8080:80"
     env_file:
-      - .env
+      - ./apps/leadcms/docker-compose/.env
     depends_on:
       postgres:
         condition: service_healthy
     command: ["dotnet", "LeadCMS.dll"]
     restart: unless-stopped
 
+  # optional: the public Next.js web frontend
+  web:
+    build:
+      context: ./apps/web
+    container_name: Abtec-Web
+    ports:
+      - "3000:3000"
+    env_file:
+      - ./apps/web/.env
+    depends_on:
+      - leadcms
+
 volumes:
   postgres-data:
+
+networks:
+  default:
+    name: Abtec-LeadCMS-net
