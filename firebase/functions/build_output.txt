@@ -1,0 +1,47 @@
+
+> build
+> tsc
+
+node_modules/@types/rimraf/index.d.ts(33,21): error TS2694: Namespace '"C:/VS_StudioLocal/Abtec/firebase/functions/node_modules/glob/dist/commonjs/index"' has no exported member 'IOptions'.
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts(973,5): error TS2416: Property 'entries' in type 'LRUCache<K, V, FC>' is not assignable to the same property in base type 'Map<K, V>'.
+  Type '() => Generator<[K, V], void, unknown>' is not assignable to type '() => MapIterator<[K, V]>'.
+    Call signature return types 'Generator<[K, V], void, unknown>' and 'MapIterator<[K, V]>' are incompatible.
+      The types returned by 'next(...)' are incompatible between these types.
+        Type 'IteratorResult<[K, V], void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+          Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+            Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorReturnResult<undefined>'.
+              Type 'void' is not assignable to type 'undefined'.
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts(985,5): error TS2416: Property 'keys' in type 'LRUCache<K, V, FC>' is not assignable to the same property in base type 'Map<K, V>'.
+  Type '() => Generator<K, void, unknown>' is not assignable to type '() => MapIterator<K>'.
+    Call signature return types 'Generator<K, void, unknown>' and 'MapIterator<K>' are incompatible.
+      The types returned by 'next(...)' are incompatible between these types.
+        Type 'IteratorResult<K, void>' is not assignable to type 'IteratorResult<K, undefined>'.
+          Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorResult<K, undefined>'.
+            Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorReturnResult<undefined>'.
+              Type 'void' is not assignable to type 'undefined'.
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts(997,5): error TS2416: Property 'values' in type 'LRUCache<K, V, FC>' is not assignable to the same property in base type 'Map<K, V>'.
+  Type '() => Generator<V, void, unknown>' is not assignable to type '() => MapIterator<V>'.
+    Call signature return types 'Generator<V, void, unknown>' and 'MapIterator<V>' are incompatible.
+      The types returned by 'next(...)' are incompatible between these types.
+        Type 'IteratorResult<V, void>' is not assignable to type 'IteratorResult<V, undefined>'.
+          Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorResult<V, undefined>'.
+            Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorReturnResult<undefined>'.
+              Type 'void' is not assignable to type 'undefined'.
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts(1009,5): error TS2416: Property '[Symbol.iterator]' in type 'LRUCache<K, V, FC>' is not assignable to the same property in base type 'Map<K, V>'.
+  Type '() => Generator<[K, V], void, unknown>' is not assignable to type '() => MapIterator<[K, V]>'.
+    Call signature return types 'Generator<[K, V], void, unknown>' and 'MapIterator<[K, V]>' are incompatible.
+      The types returned by 'next(...)' are incompatible between these types.
+        Type 'IteratorResult<[K, V], void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+          Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+            Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorReturnResult<undefined>'.
+              Type 'void' is not assignable to type 'undefined'.
+node_modules/path-scurry/node_modules/lru-cache/dist/commonjs/index.d.ts(1032,5): error TS2416: Property 'forEach' in type 'LRUCache<K, V, FC>' is not assignable to the same property in base type 'Map<K, V>'.
+  Type '(fn: (v: V, k: K, self: LRUCache<K, V, FC>) => any, thisp?: any) => void' is not assignable to type '(callbackfn: (value: V, key: K, map: Map<K, V>) => void, thisArg?: any) => void'.
+    Types of parameters 'fn' and 'callbackfn' are incompatible.
+      Types of parameters 'map' and 'self' are incompatible.
+        Type 'LRUCache<K, V, FC>' is not assignable to type 'Map<K, V>'.
+          The types returned by 'entries().next(...)' are incompatible between these types.
+            Type 'IteratorResult<[K, V], void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+              Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorResult<[K, V], undefined>'.
+                Type 'IteratorReturnResult<void>' is not assignable to type 'IteratorReturnResult<undefined>'.
+                  Type 'void' is not assignable to type 'undefined'.
