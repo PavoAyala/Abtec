@@ -7,6 +7,7 @@ export interface Activity {
   contactId?: string;
   dealId?: string;
   companyId?: string;
+  ticketId?: string;
   description: string;
   dueDate?: Timestamp;
   completedAt?: Timestamp;
