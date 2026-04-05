@@ -75,7 +75,8 @@ jobs:
           args: --all-projects --detection-depth=4 --severity-threshold=high --org=${{ env.SNYK_ORG }} --sarif-file-output=snyk.sarif
 
       - name: Upload Snyk results to GitHub Code Scanning
-        uses: github/codeql-action/upload-sarif@v3
+        uses: github/codeql-action/upload-sarif@v4
         if: always()
+        continue-on-error: true
         with:
           sarif_file: snyk.sarif
