@@ -155,6 +155,10 @@ export const onDealStageChanged = functions.firestore
     const auditRef = db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
 
+    if (Object.keys(updates).length > 0) {
+      batch.update(change.after.ref, updates);
+    }
+
     return batch.commit();
   });
 
