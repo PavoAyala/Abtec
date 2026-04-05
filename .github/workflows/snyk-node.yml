@@ -36,6 +36,8 @@ jobs:
   snyk:
     name: Snyk Open Source Scan
     runs-on: ubuntu-latest
+    env:
+      SNYK_ORG: pavoayala
 
     steps:
       - name: Checkout repository
@@ -55,13 +57,22 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Validate Snyk token
+        run: |
+          if [ -z "${SNYK_TOKEN}" ]; then
+            echo "SNYK_TOKEN is not configured for this workflow."
+            exit 1
+          fi
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
       - name: Run Snyk scan
         uses: snyk/actions/node@master
         continue-on-error: true
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          args: --all-projects --detection-depth=4 --severity-threshold=high --sarif-file-output=snyk.sarif
+          args: --all-projects --detection-depth=4 --severity-threshold=high --org=${{ env.SNYK_ORG }} --sarif-file-output=snyk.sarif
 
       - name: Upload Snyk results to GitHub Code Scanning
         uses: github/codeql-action/upload-sarif@v3
