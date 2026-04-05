@@ -3,7 +3,8 @@ name: Snyk Node Security Scan
 on:
   push:
     branches:
-      - main, dev
+      - main
+      - dev
     paths:
       - 'package.json'
       - 'pnpm-lock.yaml'
@@ -14,7 +15,8 @@ on:
       - '.github/workflows/snyk-node.yml'
   pull_request:
     branches:
-      - main, dev
+      - main
+      - dev
     paths:
       - 'package.json'
       - 'pnpm-lock.yaml'
