@@ -343,16 +343,16 @@ Agregar campos:
 
 Objetivo: alinear el repositorio con la realidad tecnica antes de agregar mas producto.
 
-- [ ] Eliminar referencias obsoletas a LeadCMS:
-  - [ ] `README.md`
-  - [ ] `docker-compose.yml`
-  - [ ] variables de entorno relacionadas
-  - [ ] carpeta `apps/leadcms/` si aun existe fuera del listado actual
-- [ ] Actualizar documentacion raiz con arquitectura real:
-  - [ ] `CRM/`
-  - [ ] `apps/web`
-  - [ ] `apps/mobile`
-  - [ ] `apps/firebase`
+- [x] Eliminar referencias obsoletas a LeadCMS:
+  - [x] `README.md`
+  - [x] `docker-compose.yml`
+  - [x] variables de entorno relacionadas
+  - [x] carpeta `apps/leadcms/` si aun existe fuera del listado actual
+- [x] Actualizar documentacion raiz con arquitectura real:
+  - [x] `CRM/`
+  - [x] `apps/web`
+  - [x] `apps/mobile`
+  - [x] `apps/firebase`
 - [ ] Decidir si `CRM/` se mantiene en raiz o se mueve a `apps/crm/`
 - [ ] Si se mueve:
   - [ ] actualizar `package.json`
@@ -615,7 +615,7 @@ Solo si entra en uso:
 
 ### Sprint 1
 
-- [ ] Limpiar LeadCMS del repo y documentacion
+- [x] Limpiar LeadCMS del repo y documentacion
 - [ ] cerrar auth y proteccion de rutas del CRM
 - [ ] endurecer `firestore.rules`
 

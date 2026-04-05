@@ -2,7 +2,7 @@
     "name": "abtec",
     "version": "1.0.0",
     "private": true,
-    "description": "Abtec Monorepo - Mobile (Expo), Web (Next.js/Turborepo) & Backend (Firebase/Python)",
+    "description": "Abtec Monorepo - CRM, web, mobile y backend en Firebase",
     "workspaces": [
         "apps/mobile",
         "apps/web",
