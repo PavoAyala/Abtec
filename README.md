@@ -9,6 +9,8 @@ Monorepo del ecosistema Abtec. El estado actual del repositorio gira alrededor d
 
 ## Arquitectura actual
 
+Decision vigente de estructura: el CRM interno se mantiene en `CRM/` durante el MVP. Una migracion futura a `apps/crm/` no se considera cambio cosmetico; requerira un refactor controlado de workspace, scripts, CI y documentacion.
+
 ### `CRM/`
 
 Aplicacion Next.js independiente para uso interno del equipo.

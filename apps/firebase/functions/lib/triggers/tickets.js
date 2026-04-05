@@ -6,7 +6,7 @@ const admin = require("firebase-admin");
 const models_1 = require("../models");
 const models_2 = require("../models");
 const models_3 = require("../models");
-const db = admin.firestore();
+const firebase_1 = require("../config/firebase");
 // SLA deadlines by priority (in hours)
 const SLA_HOURS = {
     [models_1.TicketPriority.Low]: 72,
@@ -25,7 +25,7 @@ exports.onTicketCreated = functions.firestore
     .document('tickets/{ticketId}')
     .onCreate(async (snap, context) => {
     const ticket = snap.data();
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     functions.logger.info(`New ticket created: ${ticket.title}`, {
         ticketId: context.params.ticketId,
     });
@@ -60,7 +60,7 @@ exports.onTicketCreated = functions.firestore
         ownerId: ticket.assigneeId || updates.assigneeId,
         createdAt: admin.firestore.Timestamp.now(),
     };
-    const activityRef = db.collection('activities').doc();
+    const activityRef = firebase_1.db.collection('activities').doc();
     batch.set(activityRef, createActivity);
     // Create audit log
     const auditLog = {
@@ -71,7 +71,7 @@ exports.onTicketCreated = functions.firestore
         changes: { ticket: { before: null, after: ticket } },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    const auditRef = db.collection('auditLog').doc();
+    const auditRef = firebase_1.db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
     if (Object.keys(updates).length > 0) {
         batch.update(snap.ref, updates);
@@ -88,7 +88,7 @@ exports.onTicketStatusChanged = functions.firestore
     .onUpdate(async (change, context) => {
     const before = change.before.data();
     const after = change.after.data();
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     // Only proceed if status changed
     if (before.status === after.status) {
         return null;
@@ -113,7 +113,7 @@ exports.onTicketStatusChanged = functions.firestore
         ownerId: after.assigneeId,
         createdAt: admin.firestore.Timestamp.now(),
     };
-    const activityRef = db.collection('activities').doc();
+    const activityRef = firebase_1.db.collection('activities').doc();
     batch.set(activityRef, statusActivity);
     // Create audit log
     const auditLog = {
@@ -127,7 +127,7 @@ exports.onTicketStatusChanged = functions.firestore
         },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    const auditRef = db.collection('auditLog').doc();
+    const auditRef = firebase_1.db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
     if (Object.keys(updates).length > 0) {
         batch.update(change.after.ref, updates);
@@ -163,7 +163,7 @@ exports.onTicketUpdated = functions.firestore
             changes,
             timestamp: admin.firestore.Timestamp.now(),
         };
-        return db.collection('auditLog').add(auditLog);
+        return firebase_1.db.collection('auditLog').add(auditLog);
     }
     return null;
 });
@@ -171,7 +171,7 @@ exports.onTicketUpdated = functions.firestore
  * getNextAssignee - Gets the next available support agent using round-robin
  */
 async function getNextAssignee() {
-    const usersRef = db.collection('users');
+    const usersRef = firebase_1.db.collection('users');
     const usersQuery = usersRef
         .where('isActive', '==', true)
         .where('role', 'in', ['support', 'manager', 'admin']);
@@ -184,7 +184,7 @@ async function getNextAssignee() {
     userIds.forEach((id) => {
         ticketCounts[id] = 0;
     });
-    const ticketsQuery = await db
+    const ticketsQuery = await firebase_1.db
         .collection('tickets')
         .where('assigneeId', 'in', userIds)
         .where('status', 'in', [models_1.TicketStatus.Open, models_1.TicketStatus.InProgress])

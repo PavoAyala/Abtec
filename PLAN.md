@@ -189,6 +189,19 @@ abtec/
 - Si despues se decide moverlo a `apps/crm/`, eso debe tratarse como refactor controlado, no como cambio cosmético.
 - En `apps/web` conviene separar explicitamente lo publico de lo autenticado para evitar mezclar landing y portal cliente.
 
+### Decision formal sobre ubicacion del CRM
+
+- Decision vigente: `CRM/` se mantiene en la raiz del repo durante el MVP.
+- Alcance de la decision: no se migra a `apps/crm/` en esta etapa.
+- Criterio principal:
+  - moverlo hoy no cambia capacidades de producto, seguridad, datos ni despliegue;
+  - si se hiciera ahora, introduciria churn en workspace, rutas, scripts, CI y documentacion sin reducir riesgo operativo del MVP;
+  - el CRM actual ya esta integrado al monorepo via `package.json`, `pnpm-workspace.yaml` y Turbo sin bloqueo tecnico inmediato.
+- Impacto tecnico:
+  - se conserva `CRM/` como convencion estable del monorepo;
+  - no se requieren cambios en `package.json`, `pnpm-workspace.yaml` ni `turbo.json`;
+  - cualquier futura migracion a `apps/crm/` debe tratarse como refactor controlado con actualizacion coordinada de imports, scripts, CI, paths y documentacion.
+
 ---
 
 ## 6. Modelo de datos objetivo
@@ -353,11 +366,13 @@ Objetivo: alinear el repositorio con la realidad tecnica antes de agregar mas pr
   - [x] `apps/web`
   - [x] `apps/mobile`
   - [x] `apps/firebase`
-- [ ] Decidir si `CRM/` se mantiene en raiz o se mueve a `apps/crm/`
-- [ ] Si se mueve:
-  - [ ] actualizar `package.json`
-  - [ ] actualizar `pnpm-workspace.yaml`
-  - [ ] actualizar scripts de Turbo
+- [x] Decidir si `CRM/` se mantiene en raiz o se mueve a `apps/crm/`
+- [x] Decision tomada: `CRM/` se mantiene en raiz durante el MVP
+- [x] Si se mueve en el futuro:
+  - [x] tratarlo como refactor controlado
+  - [x] actualizar `package.json`
+  - [x] actualizar `pnpm-workspace.yaml`
+  - [x] actualizar scripts de Turbo
 
 ### Criterio de salida
 
@@ -602,7 +617,8 @@ Solo si entra en uso:
 
 ## 10. Riesgos y decisiones pendientes
 
-- [ ] Definir si `CRM/` se renombra o se deja como esta.
+- [x] Definir si `CRM/` se renombra o se deja como esta.
+  Se deja como `CRM/` durante el MVP para evitar refactor estructural sin retorno funcional inmediato.
 - [ ] Definir si el CRM seguira consultando Firestore directo desde cliente o si ciertas operaciones pasaran por backend.
 - [ ] Resolver convivencia entre `contacts` y `customers` para evitar duplicidad y confusion operativa.
 - [ ] Decidir si contratos, garantias e instalaciones entran al MVP movil o quedan para iteracion 2.

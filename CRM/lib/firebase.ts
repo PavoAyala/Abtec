@@ -57,7 +57,8 @@ if (typeof window !== 'undefined') {
     !globalForFirebase.__abtecCrmFirebaseEmulatorsConnected
   ) {
     connectFirestoreEmulator(db, '127.0.0.1', 8080);
-    connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099');
+    console.info('[Firebase][CRM] Usando emuladores: Firestore(127.0.0.1:8080), Auth(127.0.0.1:9099)');
     globalForFirebase.__abtecCrmFirebaseEmulatorsConnected = true;
   }
 }

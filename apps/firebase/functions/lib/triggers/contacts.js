@@ -5,7 +5,7 @@ const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const models_1 = require("../models");
 const models_2 = require("../models");
-const db = admin.firestore();
+const firebase_1 = require("../config/firebase");
 /**
  * onContactCreated - Trigger when a new contact is created
  * - Assigns owner (round-robin)
@@ -18,7 +18,7 @@ exports.onContactCreated = functions.firestore
     .onCreate(async (snap, context) => {
     const contact = snap.data();
     const updates = {};
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     functions.logger.info(`New contact created: ${contact.email}`, {
         contactId: context.params.contactId,
     });
@@ -44,7 +44,7 @@ exports.onContactCreated = functions.firestore
         ownerId: contact.ownerId || updates.ownerId,
         createdAt: admin.firestore.Timestamp.now(),
     };
-    const activityRef = db.collection('activities').doc();
+    const activityRef = firebase_1.db.collection('activities').doc();
     batch.set(activityRef, welcomeActivity);
     // Create audit log
     const auditLog = {
@@ -55,7 +55,7 @@ exports.onContactCreated = functions.firestore
         changes: { contact: { before: null, after: contact } },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    const auditRef = db.collection('auditLog').doc();
+    const auditRef = firebase_1.db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
     // Apply updates
     if (Object.keys(updates).length > 0) {
@@ -73,7 +73,7 @@ exports.onContactUpdated = functions.firestore
     .onUpdate(async (change, context) => {
     const before = change.before.data();
     const after = change.after.data();
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     functions.logger.info(`Contact updated: ${context.params.contactId}`);
     // Track lifecycle stage changes
     if (before.lifecycleStage !== after.lifecycleStage) {
@@ -107,7 +107,7 @@ exports.onContactUpdated = functions.firestore
             changes,
             timestamp: admin.firestore.Timestamp.now(),
         };
-        const auditRef = db.collection('auditLog').doc();
+        const auditRef = firebase_1.db.collection('auditLog').doc();
         batch.set(auditRef, auditLog);
     }
     return batch.commit();
@@ -116,7 +116,7 @@ exports.onContactUpdated = functions.firestore
  * getNextOwner - Gets the next available owner using round-robin
  */
 async function getNextOwner() {
-    const usersRef = db.collection('users');
+    const usersRef = firebase_1.db.collection('users');
     const usersQuery = usersRef
         .where('isActive', '==', true)
         .where('role', 'in', ['sales', 'manager', 'admin'])
@@ -130,7 +130,7 @@ async function getNextOwner() {
     users.forEach((user) => {
         ownerCounts[user.id] = 0;
     });
-    const contactsQuery = await db
+    const contactsQuery = await firebase_1.db
         .collection('contacts')
         .where('ownerId', 'in', Object.keys(ownerCounts))
         .get();

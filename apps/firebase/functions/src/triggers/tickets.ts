@@ -3,8 +3,7 @@ import * as admin from 'firebase-admin';
 import { Ticket, TicketStatus, TicketPriority } from '../models';
 import { Activity, ActivityType } from '../models';
 import { AuditLog, AuditAction } from '../models';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 // SLA deadlines by priority (in hours)
 const SLA_HOURS: Record<string, number> = {

@@ -4,7 +4,7 @@ exports.onCompanyUpdated = exports.onCompanyCreated = void 0;
 const functions = require("firebase-functions");
 const admin = require("firebase-admin");
 const models_1 = require("../models");
-const db = admin.firestore();
+const firebase_1 = require("../config/firebase");
 /**
  * onCompanyCreated - Trigger when a new company is created
  * - Logs audit
@@ -25,7 +25,7 @@ exports.onCompanyCreated = functions.firestore
         changes: { company: { before: null, after: company } },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    return db.collection('auditLog').add(auditLog);
+    return firebase_1.db.collection('auditLog').add(auditLog);
 });
 /**
  * onCompanyUpdated - Trigger when a company is updated
@@ -53,7 +53,7 @@ exports.onCompanyUpdated = functions.firestore
             changes,
             timestamp: admin.firestore.Timestamp.now(),
         };
-        return db.collection('auditLog').add(auditLog);
+        return firebase_1.db.collection('auditLog').add(auditLog);
     }
     return null;
 });

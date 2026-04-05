@@ -3,8 +3,7 @@ import * as admin from 'firebase-admin';
 import { Deal, DealStage } from '../models';
 import { Activity, ActivityType } from '../models';
 import { AuditLog, AuditAction } from '../models';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 /**
  * onDealCreated - Trigger when a new deal is created
