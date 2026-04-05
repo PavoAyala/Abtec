@@ -5,14 +5,17 @@
     "description": "Abtec Monorepo - Mobile (Expo), Web (Next.js/Turborepo) & Backend (Firebase/Python)",
     "workspaces": [
         "apps/mobile",
-        "apps/web"
+        "apps/web",
+        "CRM"
     ],
     "scripts": {
-        "dev": "turbo run dev",
+        "dev": "turbo run dev --filter=web --filter=abtec-crm",
         "build": "turbo run build",
         "lint": "turbo run lint",
         "format": "prettier --write \"**/*.{ts,tsx,md,js,json,py}\"",
-        "firebase:dev": "firebase emulators:start"
+        "firebase:dev": "firebase emulators:start --config apps/firebase/firebase.json --project abtec-8f31e",
+        "firebase:dev:import": "firebase emulators:start --config apps/firebase/firebase.json --project abtec-8f31e --import=apps/firebase/.emulator-data --export-on-exit",
+        "firebase:dev:ui": "firebase emulators:start --only auth,firestore,functions --config apps/firebase/firebase.json --project abtec-8f31e"
     },
     "devDependencies": {
         "firebase-tools": "^15.11.0",

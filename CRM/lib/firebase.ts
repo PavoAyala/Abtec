@@ -2,6 +2,7 @@ import { initializeApp, getApps, FirebaseApp } from 'firebase/app';
 import {
   getFirestore,
   Firestore,
+  connectFirestoreEmulator,
   collection,
   doc,
   getDocs,
@@ -20,6 +21,7 @@ import {
 import {
   getAuth,
   Auth,
+  connectAuthEmulator,
   signInWithEmailAndPassword,
   createUserWithEmailAndPassword,
   signOut,
@@ -41,11 +43,23 @@ const firebaseConfig = {
 let app: FirebaseApp;
 let db: Firestore;
 let auth: Auth;
+const globalForFirebase = globalThis as typeof globalThis & {
+  __abtecCrmFirebaseEmulatorsConnected?: boolean;
+};
 
 if (typeof window !== 'undefined') {
   app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
   db = getFirestore(app);
   auth = getAuth(app);
+
+  if (
+    process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === 'true' &&
+    !globalForFirebase.__abtecCrmFirebaseEmulatorsConnected
+  ) {
+    connectFirestoreEmulator(db, '127.0.0.1', 8080);
+    connectAuthEmulator(auth, 'http://127.0.0.1:9099', { disableWarnings: true });
+    globalForFirebase.__abtecCrmFirebaseEmulatorsConnected = true;
+  }
 }
 
 // Funciones de autenticación
