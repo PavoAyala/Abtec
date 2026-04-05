@@ -6,7 +6,7 @@ const admin = require("firebase-admin");
 const models_1 = require("../models");
 const models_2 = require("../models");
 const models_3 = require("../models");
-const db = admin.firestore();
+const firebase_1 = require("../config/firebase");
 /**
  * onDealCreated - Trigger when a new deal is created
  * - Sets initial probability based on stage
@@ -17,7 +17,7 @@ exports.onDealCreated = functions.firestore
     .document('deals/{dealId}')
     .onCreate(async (snap, context) => {
     const deal = snap.data();
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     functions.logger.info(`New deal created: ${deal.title}`, {
         dealId: context.params.dealId,
     });
@@ -47,7 +47,7 @@ exports.onDealCreated = functions.firestore
         ownerId: deal.ownerId,
         createdAt: admin.firestore.Timestamp.now(),
     };
-    const activityRef = db.collection('activities').doc();
+    const activityRef = firebase_1.db.collection('activities').doc();
     batch.set(activityRef, createActivity);
     // Create audit log
     const auditLog = {
@@ -58,7 +58,7 @@ exports.onDealCreated = functions.firestore
         changes: { deal: { before: null, after: deal } },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    const auditRef = db.collection('auditLog').doc();
+    const auditRef = firebase_1.db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
     if (Object.keys(updates).length > 0) {
         batch.update(snap.ref, updates);
@@ -77,7 +77,7 @@ exports.onDealStageChanged = functions.firestore
     .onUpdate(async (change, context) => {
     const before = change.before.data();
     const after = change.after.data();
-    const batch = db.batch();
+    const batch = firebase_1.db.batch();
     // Only proceed if stage actually changed
     if (before.stage === after.stage) {
         return null;
@@ -107,11 +107,11 @@ exports.onDealStageChanged = functions.firestore
         ownerId: after.ownerId,
         createdAt: admin.firestore.Timestamp.now(),
     };
-    const activityRef = db.collection('activities').doc();
+    const activityRef = firebase_1.db.collection('activities').doc();
     batch.set(activityRef, stageActivity);
     // Update contact lifecycle if deal is Won or Lost
     if (after.contactId && (after.stage === models_1.DealStage.Won || after.stage === models_1.DealStage.Lost)) {
-        const contactRef = db.collection('contacts').doc(after.contactId);
+        const contactRef = firebase_1.db.collection('contacts').doc(after.contactId);
         const contactUpdate = {
             lifecycleStage: after.stage === models_1.DealStage.Won ? 'customer' : 'lost',
         };
@@ -132,8 +132,11 @@ exports.onDealStageChanged = functions.firestore
         },
         timestamp: admin.firestore.Timestamp.now(),
     };
-    const auditRef = db.collection('auditLog').doc();
+    const auditRef = firebase_1.db.collection('auditLog').doc();
     batch.set(auditRef, auditLog);
+    if (Object.keys(updates).length > 0) {
+        batch.update(change.after.ref, updates);
+    }
     return batch.commit();
 });
 /**
@@ -165,7 +168,7 @@ exports.onDealUpdated = functions.firestore
             changes,
             timestamp: admin.firestore.Timestamp.now(),
         };
-        return db.collection('auditLog').add(auditLog);
+        return firebase_1.db.collection('auditLog').add(auditLog);
     }
     return null;
 });

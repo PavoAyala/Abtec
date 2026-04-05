@@ -3,8 +3,7 @@ import * as admin from 'firebase-admin';
 import { Contact } from '../models';
 import { Activity, ActivityType } from '../models';
 import { AuditLog, AuditAction } from '../models';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 /**
  * onContactCreated - Trigger when a new contact is created

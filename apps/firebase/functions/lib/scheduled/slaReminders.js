@@ -4,7 +4,7 @@ exports.checkOverdueTasks = exports.checkSlaDeadlines = void 0;
 const functions = require("firebase-functions/v2");
 const admin = require("firebase-admin");
 const models_1 = require("../models");
-const db = admin.firestore();
+const firebase_1 = require("../config/firebase");
 /**
  * checkSlaDeadlines - Runs every 15 minutes
  * Checks for tickets approaching SLA deadline and logs warnings
@@ -13,7 +13,7 @@ exports.checkSlaDeadlines = functions.scheduler
     .onSchedule('every 15 minutes', async () => {
     functions.logger.info('Running SLA deadline check');
     const now = admin.firestore.Timestamp.now();
-    const atRiskQuery = db
+    const atRiskQuery = firebase_1.db
         .collection('tickets')
         .where('status', 'in', [models_1.TicketStatus.Open, models_1.TicketStatus.InProgress])
         .where('slaDeadline', '<=', admin.firestore.Timestamp.fromDate(new Date(now.toDate().getTime() + 60 * 60 * 1000)));
@@ -44,7 +44,7 @@ exports.checkOverdueTasks = functions.scheduler
     .onSchedule('every 60 minutes', async () => {
     functions.logger.info('Running overdue tasks check');
     const now = admin.firestore.Timestamp.now();
-    const overdueQuery = db
+    const overdueQuery = firebase_1.db
         .collection('activities')
         .where('type', '==', 'Task')
         .where('dueDate', '<=', now)

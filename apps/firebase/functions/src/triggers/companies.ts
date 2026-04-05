@@ -2,8 +2,7 @@ import * as functions from 'firebase-functions';
 import * as admin from 'firebase-admin';
 import { Company } from '../models';
 import { AuditLog, AuditAction } from '../models';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 /**
  * onCompanyCreated - Trigger when a new company is created

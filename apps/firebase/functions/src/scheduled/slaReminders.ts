@@ -1,8 +1,7 @@
 import * as functions from 'firebase-functions/v2';
 import * as admin from 'firebase-admin';
 import { TicketStatus } from '../models';
-
-const db = admin.firestore();
+import { db } from '../config/firebase';
 
 /**
  * checkSlaDeadlines - Runs every 15 minutes
