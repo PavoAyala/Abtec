@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import type { JSX, ReactNode } from "react";
+import type { JSX } from "react";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -12,7 +12,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: ReactNode;
+  children: any;
 }>): JSX.Element {
   return (
     <html lang="es" className="light">
