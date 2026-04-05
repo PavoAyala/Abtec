@@ -7,7 +7,7 @@ import {
   signOut as firebaseSignOut,
   onAuthStateChanged,
 } from 'firebase/auth';
-import { auth } from '../lib/firebase';
+import { getClientAuth } from '../lib/firebase';
 
 interface UseAuthReturn {
   user: User | null;
@@ -24,6 +24,7 @@ export function useAuth(): UseAuthReturn {
   const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
+    const auth = getClientAuth();
     const unsubscribe = onAuthStateChanged(auth, (user) => {
       setUser(user);
       setLoading(false);
@@ -35,6 +36,7 @@ export function useAuth(): UseAuthReturn {
   const signIn = async (email: string, password: string) => {
     setError(null);
     try {
+      const auth = getClientAuth();
       const result = await signInWithEmailAndPassword(auth, email, password);
       return result.user;
     } catch (err) {
@@ -47,6 +49,7 @@ export function useAuth(): UseAuthReturn {
   const signOut = async () => {
     setError(null);
     try {
+      const auth = getClientAuth();
       await firebaseSignOut(auth);
     } catch (err) {
       const message = err instanceof Error ? err.message : 'Sign out failed';
