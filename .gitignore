@@ -2,7 +2,6 @@
 node_modules/
 npm-debug.log
 yarn-error.log
-pnpm-lock.yaml
 package-lock.json 
 # (Opcional: puedes quitar package-lock.json de aquí si quieres versionar versiones exactas, 
 # pero en monorepos a veces causa conflictos si no usas workspaces).

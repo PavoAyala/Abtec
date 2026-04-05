@@ -1,0 +1,52 @@
+name: Deploy Firebase Functions
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'apps/firebase/functions/**'
+      - 'apps/firebase/firebase.json'
+      - 'apps/firebase/.firebaserc'
+      - '.github/workflows/check-firebase-functions.yml'
+      - '.github/workflows/deploy-firebase-functions.yml'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 18
+          cache: 'npm'
+          cache-dependency-path: apps/firebase/functions/package-lock.json
+
+      - name: Install Firebase Functions dependencies
+        run: npm ci
+        working-directory: apps/firebase/functions
+
+      - name: Build Firebase Functions
+        run: npm run build
+        working-directory: apps/firebase/functions
+
+      - name: Verify build output
+        run: |
+          if [ -f "apps/firebase/functions/lib/index.js" ]; then
+            echo "Functions build output found."
+          else
+            echo "ERROR: apps/firebase/functions/lib/index.js was not generated."
+            find apps/firebase/functions -maxdepth 3 -type f | sort
+            exit 1
+          fi
+
+      - name: Deploy Firebase Functions
+        uses: w9jds/firebase-action@master
+        with:
+          args: deploy --only functions --project abtec-8f31e --config apps/firebase/firebase.json
+        env:
+          GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}
