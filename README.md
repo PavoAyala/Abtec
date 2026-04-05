@@ -1,74 +1,163 @@
-# 🚀 Abtec Monorepo
+# Abtec Monorepo
 
-¡Bienvenido al ecosistema **Abtec**! Este repositorio es un monorepo híbrido que centraliza la aplicación móvil, la plataforma web y el backend escalable.
+Monorepo del ecosistema Abtec. El estado actual del repositorio gira alrededor de cuatro superficies activas:
 
----
+- `CRM/`: CRM interno para operacion comercial y postventa.
+- `apps/web`: sitio publico y portal web para clientes.
+- `apps/mobile`: aplicacion movil de cliente con Expo.
+- `apps/firebase`: backend y configuracion de Firebase.
 
-## 🏗️ Arquitectura del Proyecto
+## Arquitectura actual
 
-El proyecto está organizado para maximizar la reutilización de código y la velocidad de desarrollo:
+### `CRM/`
 
-- **`apps/mobile`**: Aplicación móvil nativa desarrollada con **Expo** (React Native) y **Expo Router**.
-- **`apps/web`**: Un sub-monorepo gestionado por **Turborepo** que contiene:
-  - `apps/web`: Aplicación web principal (Next.js).
-  - `apps/docs`: Sitio de documentación técnica.
-  - `packages/*`: Componentes UI y configuraciones compartidas.
-- **`firebase`**: Infraestructura de backend:
-  - **Firestore**: Base de datos NoSQL.
-  - **Functions**: Lógica de servidor desarrollada en **Python**.
+Aplicacion Next.js independiente para uso interno del equipo.
 
----
+- Dashboard operativo.
+- Modulos de `contacts`, `companies`, `deals`, `tickets` y `activities`.
+- Conexion a Firebase para datos y autenticacion.
+- Corre localmente en el puerto `3001`.
 
-## 🛠️ Tecnologías Principales
+### `apps/web`
 
-| Categoría | Tecnología |
-| :--- | :--- |
-| **Mobile** | Expo, React Native, TypeScript |
-| **Web** | Next.js, Turborepo, Tailwind CSS |
-| **Backend** | Firebase Cloud Functions (Python), Firestore |
-| **Orquestación** | Turborepo, NPM Workspaces |
-| **Formateo** | Prettier, ESLint |
+Aplicacion Next.js para la experiencia web externa.
 
----
+- Landing publica.
+- Base para portal autenticado de clientes.
+- Integracion con Firebase Auth, Firestore y Analytics.
+- Corre localmente en el puerto `3000`.
 
-## 🚀 Inicio Rápido
+### `apps/mobile`
 
-Sigue estos pasos para poner en marcha tu entorno de desarrollo local:
+Aplicacion Expo / React Native para clientes.
 
-### 1. Requisitos Previos
-- Node.js (v18 o superior)
-- Firebase CLI (`npm install -g firebase-tools`)
-- Python (v3.10 o superior) para las funciones.
+- Scaffold funcional con Expo Router.
+- Comparte el dominio funcional con el portal web.
+- Punto de partida para login, perfil y tickets del cliente.
 
-### 2. Instalación
-Desde la raíz del proyecto, instala todas las dependencias:
-```bash
-npm install
+### `apps/firebase`
+
+Backend y configuracion de Firebase del proyecto.
+
+- `firebase.json` para emuladores y despliegue local.
+- `functions/` con Cloud Functions en TypeScript.
+- Reglas e indices de Firestore.
+
+### `packages/*`
+
+Paquetes compartidos para UI y configuraciones del monorepo.
+
+## Estructura
+
+```text
+abtec/
+├── apps/
+│   ├── firebase/
+│   ├── mobile/
+│   └── web/
+├── CRM/
+├── packages/
+├── CRM.md
+├── PLAN.md
+├── README.md
+├── docker-compose.yml
+├── package.json
+└── turbo.json
 ```
 
-### 3. Desarrollo
-Inicia todos los servicios (Web, Mobile y Emuladores) con un solo comando:
+## Requisitos
+
+- Node.js 20.x
+- pnpm 8.x
+- Firebase CLI para emuladores y despliegues locales
+- Expo CLI o herramientas equivalentes si trabajas en `apps/mobile`
+
+## Instalacion
+
+Desde la raiz:
+
 ```bash
-npm run dev
+pnpm install
 ```
 
-O inicia servicios específicos:
-- **Web**: `npm run dev --workspace=abtec-web`
-- **Móvil**: `npm run dev --workspace=abtec-mobile`
-- **Firebase**: `npm run firebase:dev`
+## Desarrollo local
 
----
+### Monorepo
 
-## 📜 Scripts Disponibles
+```bash
+pnpm dev
+```
 
-Ejecuta estos comandos desde la raíz:
+Este comando levanta los proyectos configurados actualmente en Turbo:
 
-- `npm run dev`: Inicia el desarrollo en todo el monorepo.
-- `npm run build`: Compila todas las aplicaciones para producción.
-- `npm run lint`: Ejecuta el análisis de código en todo el proyecto.
-- `npm run format`: Formatea automáticamente todos los archivos (`.ts`, `.tsx`, `.py`, `.json`, etc).
-- `npm run firebase:dev`: Inicia los emuladores locales de Firebase (Firestore + Auth + Functions).
+- `apps/web`
+- `CRM/`
 
----
+### Web publica
 
-Desarrollado con ❤️ para el equipo de **Abtec**.
+```bash
+pnpm --filter web dev
+```
+
+### CRM interno
+
+```bash
+pnpm --filter abtec-crm dev
+```
+
+### Mobile
+
+```bash
+pnpm --filter abtec-mobil start
+```
+
+### Firebase emulators
+
+```bash
+pnpm firebase:dev
+```
+
+Opciones adicionales:
+
+- `pnpm firebase:dev:import`
+- `pnpm firebase:dev:ui`
+
+## Variables de entorno
+
+### Raiz
+
+La raiz del repo ya contiene variables publicas de Firebase en [`.env`](.env). Se usan como referencia comun del proyecto.
+
+### `apps/web`
+
+La web usa variables `NEXT_PUBLIC_FIREBASE_*` y puede conectarse a emuladores con:
+
+```dotenv
+NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
+```
+
+La plantilla actual vive en [`apps/web/.env`](apps/web/.env).
+
+### `CRM/`
+
+El CRM usa el mismo set de variables publicas de Firebase en `CRM/.env.local`.
+
+## Docker
+
+Actualmente el flujo principal del repo no depende de contenedores como parte obligatoria de desarrollo.
+
+- `docker-compose.yml` se conserva solo como placeholder para orquestacion futura.
+- El desarrollo activo se hace con `pnpm` y los emuladores de Firebase.
+
+## Scripts utiles
+
+- `pnpm dev`: inicia `apps/web` y `CRM/`.
+- `pnpm build`: compila los paquetes del monorepo.
+- `pnpm lint`: ejecuta lint en los proyectos configurados.
+- `pnpm format`: formatea archivos soportados.
+- `pnpm firebase:dev`: inicia emuladores de Firebase.
+
+## Documentacion relacionada
+
+- [PLAN.md](PLAN.md)
+- [CRM.md](CRM.md)

@@ -13,7 +13,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: ReactNode;
+  children: any;
 }>): JSX.Element {
   return (
     <html lang="es" className="light">

@@ -35,8 +35,9 @@ export default function ContactForm(): JSX.Element {
 
     try {
       // Dynamically import firebase to avoid server-side issues
-      const { db } = await import('../lib/firebase');
+      const { getClientDb } = await import('../lib/firebase');
       const { collection, addDoc, serverTimestamp } = await import('firebase/firestore');
+      const db = getClientDb();
 
       await addDoc(collection(db, 'quotes'), {
         ...formData,
