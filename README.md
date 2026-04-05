@@ -126,7 +126,7 @@ Opciones adicionales:
 
 ### Raiz
 
-La raiz del repo ya contiene variables publicas de Firebase en [`.env`](/home/robertoayala/Documentos/VS_CodeLocal/Abtec/.env). Se usan como referencia comun del proyecto.
+La raiz del repo ya contiene variables publicas de Firebase en [`.env`](.env). Se usan como referencia comun del proyecto.
 
 ### `apps/web`
 
@@ -136,7 +136,7 @@ La web usa variables `NEXT_PUBLIC_FIREBASE_*` y puede conectarse a emuladores co
 NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
 ```
 
-La plantilla actual vive en [`apps/web/.env`](/home/robertoayala/Documentos/VS_CodeLocal/Abtec/apps/web/.env).
+La plantilla actual vive en [`apps/web/.env`](apps/web/.env).
 
 ### `CRM/`
 
@@ -159,5 +159,5 @@ Actualmente el flujo principal del repo no depende de contenedores como parte ob
 
 ## Documentacion relacionada
 
-- [PLAN.md](/home/robertoayala/Documentos/VS_CodeLocal/Abtec/PLAN.md)
-- [CRM.md](/home/robertoayala/Documentos/VS_CodeLocal/Abtec/CRM.md)
+- [PLAN.md](PLAN.md)
+- [CRM.md](CRM.md)
