@@ -1,58 +1,6 @@
-# root compose orchestration that brings up the CMS (with Postgres)
-# and optionally the web frontend. Containers are prefixed with "Abtec".
+services: {}
 
-services:
-  postgres:
-    image: postgres:14.5
-    container_name: Abtec-LeadCMS-postgres
-    environment:
-      TZ: 'UTC'
-      PGTZ: 'UTC'
-      POSTGRES_DB: ${POSTGRES__DATABASE}
-      POSTGRES_USER: ${POSTGRES__USERNAME}
-      POSTGRES_PASSWORD: ${POSTGRES__PASSWORD}
-    ports:
-      - "5432:5432"
-    volumes:
-      - postgres-data:/var/lib/postgresql/data
-    healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES__USERNAME}"]
-      interval: 10s
-      timeout: 5s
-      retries: 5
-    restart: unless-stopped
-
-  leadcms:
-    # build the LeadCMS core image from the local Dockerfile included in apps/leadcms
-    build:
-      context: ./apps/leadcms
-      dockerfile: Dockerfile
-    container_name: Abtec-LeadCMS
-    ports:
-      - "8080:80"
-    env_file:
-      - ./apps/leadcms/docker-compose/.env
-    depends_on:
-      postgres:
-        condition: service_healthy
-    command: ["dotnet", "LeadCMS.dll"]
-    restart: unless-stopped
-
-  # optional: the public Next.js web frontend
-  web:
-    build:
-      context: ./apps/web
-    container_name: Abtec-Web
-    ports:
-      - "3000:3000"
-    env_file:
-      - ./apps/web/.env
-    depends_on:
-      - leadcms
-
-volumes:
-  postgres-data:
-
-networks:
-  default:
-    name: Abtec-LeadCMS-net
+# El flujo activo del repositorio no usa servicios Docker
+# como dependencia principal. La orquestacion local actual se hace con:
+# - `pnpm dev` para `apps/web` y `CRM/`
+# - `pnpm firebase:dev` para emuladores de Firebase

@@ -1,6 +1,6 @@
 # Abtec CRM - Estado del Proyecto
 
-> Sistema CRM + Postventa basado en Firebase, inspirado en LeadCMS y HubSpot.
+> Sistema CRM + Postventa basado en Firebase, inspirado en flujos de CRM modernos.
 
 ---
 
