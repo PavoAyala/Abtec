@@ -1,7 +1,7 @@
 import { FirebaseApp, getApps, initializeApp } from 'firebase/app';
 import { getAnalytics } from 'firebase/analytics';
 import { Auth, connectAuthEmulator, getAuth } from 'firebase/auth';
-import { connectFirestoreEmulator, Firestore, getFirestore } from 'firebase/firestore';
+import { connectFirestoreEmulator, Firestore, getFirestore, initializeFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_API_KEY,
@@ -54,7 +54,19 @@ export function getClientDb(): Firestore {
     return existingDb;
   }
 
-  const db = getFirestore(getApp());
+  const app = getApp();
+  const useEmulators = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === 'true';
+  
+  let db: Firestore;
+  if (useEmulators) {
+    console.info('[Firebase][Web] Inicializando Firestore com experimentalForceLongPolling');
+    db = initializeFirestore(app, {
+      experimentalForceLongPolling: true,
+    });
+  } else {
+    db = getFirestore(app);
+  }
+
   const auth = getClientAuth();
   connectEmulatorsIfNeeded(db, auth);
   globalForFirebase.__abtecWebFirestore = db;
