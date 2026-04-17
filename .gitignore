@@ -45,7 +45,10 @@ web-build/
 serviceAccountKey.json
 firebase-debug.log
 firestore-debug.log
+database-debug.log
+pubsub-debug.log
 ui-debug.log
+functions-debug.log
 
 # --- Firebase Cache ---
 .firebase/
