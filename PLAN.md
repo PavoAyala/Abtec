@@ -566,6 +566,7 @@ Objetivo: agregar realtime solo donde aporte valor inmediato.
 
 Objetivo: medir operacion despues de cerrar el flujo transaccional.
 
+- [ ] Integrar extensión **Stream Firestore to BigQuery** para mover carga operativa y derivarlo a BI (Looker).
 - [ ] `calculateDailyReports`
 - [ ] `calculateMonthlyReports`
 - [ ] colecciones resumen:
@@ -624,6 +625,7 @@ Solo si entra en uso:
 - [ ] Decidir si contratos, garantias e instalaciones entran al MVP movil o quedan para iteracion 2.
 - [ ] Validar si RTDB realmente aporta valor antes de abrir una segunda base operativa.
 - [ ] Alinear versiones de Next/React si se busca consolidacion real de plataforma.
+- [ ] Investigar extensiones de Firebase (ej. Trigger Email, Stripe, Search) y Google Cloud para evaluar su viabilidad y aportes al CRM antes de construir soluciones custom.
 
 ---
 
@@ -632,6 +634,7 @@ Solo si entra en uso:
 ### Sprint 1
 
 - [x] Limpiar LeadCMS del repo y documentacion
+- [x] Investigar extensiones de Firebase y Google Cloud aplicables al flujo comercial/CRM.
 - [ ] cerrar auth y proteccion de rutas del CRM
 - [ ] endurecer `firestore.rules`
 
@@ -647,11 +650,14 @@ Solo si entra en uso:
 - [ ] habilitar portal cliente web con login + lista de tickets + crear ticket
 - [ ] convertir app movil de scaffold a login + lista de tickets + crear ticket
 - [ ] conectar customer auth en ambos canales
+- [ ] Configurar extensión **Trigger Email from Firestore** para correos transaccionales (bienvenidas, estatus).
 
 ### Sprint 4
 
 - [ ] detalle de customer en CRM
-- [ ] vencimientos de contratos y garantias
+- [ ] vencimientos de contratos y garantias (apoyado mediante **Cloud Scheduler** y **Cloud Tasks**)
+- [ ] Integrar extensión **Search with Typesense** para búsqueda global veloz en el CRM.
+- [ ] Integrar extensión **Resize Images** para optimizar cargas de fotos en instalaciones.
 - [ ] decidir si se agrega RTDB o si Firestore listeners bastan
 
 ---
