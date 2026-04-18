@@ -6,7 +6,7 @@
 	"workspaces": [
 		"apps/mobile",
 		"apps/web",
-		"CRM"
+		"apps/CRM"
 	],
 	"scripts": {
 		"dev": "turbo run dev --filter=web --filter=abtec-crm",
