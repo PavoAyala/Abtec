@@ -97,8 +97,8 @@ export function AuthProvider({
 	);
 
 	return (
-		<AuthContext value={contextValue}>{children}</AuthContext>
-	);
+		<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+	) as React.ReactElement;
 }
 
 export function useAuth(): AuthContextType {
