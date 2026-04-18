@@ -75,12 +75,12 @@ const DotMap = () => {
 		let startTime = Date.now();
 
 		function drawDots() {
-			ctx!.clearRect(0, 0, dimensions.width, dimensions.height);
+			ctx.clearRect(0, 0, dimensions.width, dimensions.height);
 			for (const dot of dots) {
-				ctx!.beginPath();
-				ctx!.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-				ctx!.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
-				ctx!.fill();
+				ctx.beginPath();
+				ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+				ctx.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
+				ctx.fill();
 			}
 		}
 
@@ -97,33 +97,33 @@ const DotMap = () => {
 				const x = route.start.x + (route.end.x - route.start.x) * progress;
 				const y = route.start.y + (route.end.y - route.start.y) * progress;
 
-				ctx!.beginPath();
-				ctx!.moveTo(route.start.x, route.start.y);
-				ctx!.lineTo(x, y);
-				ctx!.strokeStyle = route.color;
-				ctx!.lineWidth = 1.5;
-				ctx!.stroke();
+				ctx.beginPath();
+				ctx.moveTo(route.start.x, route.start.y);
+				ctx.lineTo(x, y);
+				ctx.strokeStyle = route.color;
+				ctx.lineWidth = 1.5;
+				ctx.stroke();
 
-				ctx!.beginPath();
-				ctx!.arc(route.start.x, route.start.y, 3, 0, Math.PI * 2);
-				ctx!.fillStyle = route.color;
-				ctx!.fill();
+				ctx.beginPath();
+				ctx.arc(route.start.x, route.start.y, 3, 0, Math.PI * 2);
+				ctx.fillStyle = route.color;
+				ctx.fill();
 
-				ctx!.beginPath();
-				ctx!.arc(x, y, 3, 0, Math.PI * 2);
-				ctx!.fillStyle = "#a3d430";
-				ctx!.fill();
+				ctx.beginPath();
+				ctx.arc(x, y, 3, 0, Math.PI * 2);
+				ctx.fillStyle = "#a3d430";
+				ctx.fill();
 
-				ctx!.beginPath();
-				ctx!.arc(x, y, 6, 0, Math.PI * 2);
-				ctx!.fillStyle = "rgba(120, 179, 9, 0.3)";
-				ctx!.fill();
+				ctx.beginPath();
+				ctx.arc(x, y, 6, 0, Math.PI * 2);
+				ctx.fillStyle = "rgba(120, 179, 9, 0.3)";
+				ctx.fill();
 
 				if (progress === 1) {
-					ctx!.beginPath();
-					ctx!.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2);
-					ctx!.fillStyle = route.color;
-					ctx!.fill();
+					ctx.beginPath();
+					ctx.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2);
+					ctx.fillStyle = route.color;
+					ctx.fill();
 				}
 			}
 		}
