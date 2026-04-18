@@ -1,16 +1,16 @@
-import * as functions from 'firebase-functions';
-import * as admin from 'firebase-admin';
-import { Ticket, TicketStatus, TicketPriority } from '../models';
-import { Activity, ActivityType } from '../models';
-import { AuditLog, AuditAction } from '../models';
-import { db } from '../config/firebase';
+import * as functions from "firebase-functions";
+import * as admin from "firebase-admin";
+import { Ticket, TicketStatus, TicketPriority } from "../models";
+import { Activity, ActivityType } from "../models";
+import { AuditLog, AuditAction } from "../models";
+import { db } from "../config/firebase";
 
 // SLA deadlines by priority (in hours)
 const SLA_HOURS: Record<string, number> = {
-  [TicketPriority.Low]: 72,
-  [TicketPriority.Medium]: 48,
-  [TicketPriority.High]: 24,
-  [TicketPriority.Critical]: 4,
+	[TicketPriority.Low]: 72,
+	[TicketPriority.Medium]: 48,
+	[TicketPriority.High]: 24,
+	[TicketPriority.Critical]: 4,
 };
 
 /**
@@ -21,73 +21,78 @@ const SLA_HOURS: Record<string, number> = {
  * - Logs audit
  */
 export const onTicketCreated = functions.firestore
-  .document('tickets/{ticketId}')
-  .onCreate(async (snap, context) => {
-    const ticket = snap.data() as Ticket;
-    const batch = db.batch();
+	.document("tickets/{ticketId}")
+	.onCreate(async (snap, context) => {
+		const ticket = snap.data() as Ticket;
+		const batch = db.batch();
 
-    functions.logger.info(`New ticket created: ${ticket.title}`, {
-      ticketId: context.params.ticketId,
-    });
+		functions.logger.info(`New ticket created: ${ticket.title}`, {
+			ticketId: context.params.ticketId,
+		});
 
-    const updates: Partial<Ticket> = {};
+		const updates: Partial<Ticket> = {};
 
-    // Calculate SLA deadline based on priority
-    if (!ticket.slaDeadline) {
-      const slaHours = SLA_HOURS[ticket.priority] || SLA_HOURS[TicketPriority.Medium];
-      const deadline = new Date();
-      deadline.setHours(deadline.getHours() + slaHours);
-      updates.slaDeadline = admin.firestore.Timestamp.fromDate(deadline);
-      functions.logger.info(`SLA deadline set: ${deadline.toISOString()} for priority ${ticket.priority}`);
-    }
+		// Calculate SLA deadline based on priority
+		if (!ticket.slaDeadline) {
+			const slaHours =
+				SLA_HOURS[ticket.priority] || SLA_HOURS[TicketPriority.Medium];
+			const deadline = new Date();
+			deadline.setHours(deadline.getHours() + slaHours);
+			updates.slaDeadline = admin.firestore.Timestamp.fromDate(deadline);
+			functions.logger.info(
+				`SLA deadline set: ${deadline.toISOString()} for priority ${ticket.priority}`,
+			);
+		}
 
-    // Set default status if not provided
-    if (!ticket.status) {
-      updates.status = TicketStatus.Open;
-    }
+		// Set default status if not provided
+		if (!ticket.status) {
+			updates.status = TicketStatus.Open;
+		}
 
-    // Round-robin assignee if not assigned
-    if (!ticket.assigneeId) {
-      const assigneeId = await getNextAssignee();
-      if (assigneeId) {
-        updates.assigneeId = assigneeId;
-        functions.logger.info(`Assigned ticket ${context.params.ticketId} to ${assigneeId}`);
-      }
-    }
+		// Round-robin assignee if not assigned
+		if (!ticket.assigneeId) {
+			const assigneeId = await getNextAssignee();
+			if (assigneeId) {
+				updates.assigneeId = assigneeId;
+				functions.logger.info(
+					`Assigned ticket ${context.params.ticketId} to ${assigneeId}`,
+				);
+			}
+		}
 
-    // Create ticket creation activity
-    const createActivity: Partial<Activity> = {
-      type: ActivityType.Note,
-      ticketId: context.params.ticketId,
-      contactId: ticket.contactId,
-      companyId: ticket.companyId,
-      description: `Ticket "${ticket.title}" creado con prioridad ${ticket.priority}`,
-      ownerId: ticket.assigneeId || updates.assigneeId as string,
-      createdAt: admin.firestore.Timestamp.now(),
-    };
+		// Create ticket creation activity
+		const createActivity: Partial<Activity> = {
+			type: ActivityType.Note,
+			ticketId: context.params.ticketId,
+			contactId: ticket.contactId,
+			companyId: ticket.companyId,
+			description: `Ticket "${ticket.title}" creado con prioridad ${ticket.priority}`,
+			ownerId: ticket.assigneeId || (updates.assigneeId as string),
+			createdAt: admin.firestore.Timestamp.now(),
+		};
 
-    const activityRef = db.collection('activities').doc();
-    batch.set(activityRef, createActivity);
+		const activityRef = db.collection("activities").doc();
+		batch.set(activityRef, createActivity);
 
-    // Create audit log
-    const auditLog: Partial<AuditLog> = {
-      userId: 'system',
-      action: AuditAction.Create,
-      collection: 'tickets',
-      documentId: context.params.ticketId,
-      changes: { ticket: { before: null, after: ticket } },
-      timestamp: admin.firestore.Timestamp.now(),
-    };
+		// Create audit log
+		const auditLog: Partial<AuditLog> = {
+			userId: "system",
+			action: AuditAction.Create,
+			collection: "tickets",
+			documentId: context.params.ticketId,
+			changes: { ticket: { before: null, after: ticket } },
+			timestamp: admin.firestore.Timestamp.now(),
+		};
 
-    const auditRef = db.collection('auditLog').doc();
-    batch.set(auditRef, auditLog);
+		const auditRef = db.collection("auditLog").doc();
+		batch.set(auditRef, auditLog);
 
-    if (Object.keys(updates).length > 0) {
-      batch.update(snap.ref, updates);
-    }
+		if (Object.keys(updates).length > 0) {
+			batch.update(snap.ref, updates);
+		}
 
-    return batch.commit();
-  });
+		return batch.commit();
+	});
 
 /**
  * onTicketStatusChanged - Trigger when ticket status changes
@@ -95,152 +100,163 @@ export const onTicketCreated = functions.firestore
  * - Creates activity for status change
  */
 export const onTicketStatusChanged = functions.firestore
-  .document('tickets/{ticketId}')
-  .onUpdate(async (change, context) => {
-    const before = change.before.data() as Ticket;
-    const after = change.after.data() as Ticket;
-    const batch = db.batch();
+	.document("tickets/{ticketId}")
+	.onUpdate(async (change, context) => {
+		const before = change.before.data() as Ticket;
+		const after = change.after.data() as Ticket;
+		const batch = db.batch();
 
-    // Only proceed if status changed
-    if (before.status === after.status) {
-      return null;
-    }
+		// Only proceed if status changed
+		if (before.status === after.status) {
+			return null;
+		}
 
-    functions.logger.info(`Ticket ${context.params.ticketId} status changed: ${before.status} -> ${after.status}`);
+		functions.logger.info(
+			`Ticket ${context.params.ticketId} status changed: ${before.status} -> ${after.status}`,
+		);
 
-    const updates: Partial<Ticket> = {};
+		const updates: Partial<Ticket> = {};
 
-    // Set resolvedAt when resolved
-    if (after.status === TicketStatus.Resolved && !after.resolvedAt) {
-      updates.resolvedAt = admin.firestore.Timestamp.now();
+		// Set resolvedAt when resolved
+		if (after.status === TicketStatus.Resolved && !after.resolvedAt) {
+			updates.resolvedAt = admin.firestore.Timestamp.now();
 
-      const createdAt = after.createdAt.toDate();
-      const resolvedAt = new Date();
-      const resolutionHours = (resolvedAt.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
-      functions.logger.info(`Ticket ${context.params.ticketId} resolved in ${resolutionHours.toFixed(2)} hours`);
-    }
+			const createdAt = after.createdAt.toDate();
+			const resolvedAt = new Date();
+			const resolutionHours =
+				(resolvedAt.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
+			functions.logger.info(
+				`Ticket ${context.params.ticketId} resolved in ${resolutionHours.toFixed(2)} hours`,
+			);
+		}
 
-    // Create status change activity
-    const statusActivity: Partial<Activity> = {
-      type: ActivityType.Note,
-      ticketId: context.params.ticketId,
-      contactId: after.contactId,
-      companyId: after.companyId,
-      description: `Ticket movido de "${before.status}" a "${after.status}"`,
-      ownerId: after.assigneeId,
-      createdAt: admin.firestore.Timestamp.now(),
-    };
+		// Create status change activity
+		const statusActivity: Partial<Activity> = {
+			type: ActivityType.Note,
+			ticketId: context.params.ticketId,
+			contactId: after.contactId,
+			companyId: after.companyId,
+			description: `Ticket movido de "${before.status}" a "${after.status}"`,
+			ownerId: after.assigneeId,
+			createdAt: admin.firestore.Timestamp.now(),
+		};
 
-    const activityRef = db.collection('activities').doc();
-    batch.set(activityRef, statusActivity);
+		const activityRef = db.collection("activities").doc();
+		batch.set(activityRef, statusActivity);
 
-    // Create audit log
-    const auditLog: Partial<AuditLog> = {
-      userId: 'system',
-      action: AuditAction.Update,
-      collection: 'tickets',
-      documentId: context.params.ticketId,
-      changes: {
-        status: { before: before.status, after: after.status },
-        resolvedAt: { before: before.resolvedAt, after: updates.resolvedAt },
-      },
-      timestamp: admin.firestore.Timestamp.now(),
-    };
+		// Create audit log
+		const auditLog: Partial<AuditLog> = {
+			userId: "system",
+			action: AuditAction.Update,
+			collection: "tickets",
+			documentId: context.params.ticketId,
+			changes: {
+				status: { before: before.status, after: after.status },
+				resolvedAt: { before: before.resolvedAt, after: updates.resolvedAt },
+			},
+			timestamp: admin.firestore.Timestamp.now(),
+		};
 
-    const auditRef = db.collection('auditLog').doc();
-    batch.set(auditRef, auditLog);
+		const auditRef = db.collection("auditLog").doc();
+		batch.set(auditRef, auditLog);
 
-    if (Object.keys(updates).length > 0) {
-      batch.update(change.after.ref, updates);
-    }
+		if (Object.keys(updates).length > 0) {
+			batch.update(change.after.ref, updates);
+		}
 
-    return batch.commit();
-  });
+		return batch.commit();
+	});
 
 /**
  * onTicketUpdated - General update trigger for tickets
  * - Logs changes to audit
  */
 export const onTicketUpdated = functions.firestore
-  .document('tickets/{ticketId}')
-  .onUpdate(async (change, context) => {
-    const before = change.before.data() as Ticket;
-    const after = change.after.data() as Ticket;
+	.document("tickets/{ticketId}")
+	.onUpdate(async (change, context) => {
+		const before = change.before.data() as Ticket;
+		const after = change.after.data() as Ticket;
 
-    // Skip if status changed (handled by onTicketStatusChanged)
-    if (before.status !== after.status) {
-      return null;
-    }
+		// Skip if status changed (handled by onTicketStatusChanged)
+		if (before.status !== after.status) {
+			return null;
+		}
 
-    const changes: Record<string, { before: unknown; after: unknown }> = {};
-    const fieldsToTrack: (keyof Ticket)[] = ['title', 'description', 'priority', 'assigneeId', 'category'];
+		const changes: Record<string, { before: unknown; after: unknown }> = {};
+		const fieldsToTrack: (keyof Ticket)[] = [
+			"title",
+			"description",
+			"priority",
+			"assigneeId",
+			"category",
+		];
 
-    fieldsToTrack.forEach((field) => {
-      if (JSON.stringify(before[field]) !== JSON.stringify(after[field])) {
-        changes[field] = { before: before[field], after: after[field] };
-      }
-    });
+		fieldsToTrack.forEach((field) => {
+			if (JSON.stringify(before[field]) !== JSON.stringify(after[field])) {
+				changes[field] = { before: before[field], after: after[field] };
+			}
+		});
 
-    if (Object.keys(changes).length > 0) {
-      const auditLog: Partial<AuditLog> = {
-        userId: 'system',
-        action: AuditAction.Update,
-        collection: 'tickets',
-        documentId: context.params.ticketId,
-        changes,
-        timestamp: admin.firestore.Timestamp.now(),
-      };
+		if (Object.keys(changes).length > 0) {
+			const auditLog: Partial<AuditLog> = {
+				userId: "system",
+				action: AuditAction.Update,
+				collection: "tickets",
+				documentId: context.params.ticketId,
+				changes,
+				timestamp: admin.firestore.Timestamp.now(),
+			};
 
-      return db.collection('auditLog').add(auditLog);
-    }
+			return db.collection("auditLog").add(auditLog);
+		}
 
-    return null;
-  });
+		return null;
+	});
 
 /**
  * getNextAssignee - Gets the next available support agent using round-robin
  */
 async function getNextAssignee(): Promise<string | null> {
-  const usersRef = db.collection('users');
-  const usersQuery = usersRef
-    .where('isActive', '==', true)
-    .where('role', 'in', ['support', 'manager', 'admin']);
+	const usersRef = db.collection("users");
+	const usersQuery = usersRef
+		.where("isActive", "==", true)
+		.where("role", "in", ["support", "manager", "admin"]);
 
-  const users = await usersQuery.get();
+	const users = await usersQuery.get();
 
-  if (users.empty) {
-    return null;
-  }
+	if (users.empty) {
+		return null;
+	}
 
-  const userIds = users.docs.map((doc) => doc.id);
+	const userIds = users.docs.map((doc) => doc.id);
 
-  const ticketCounts: Record<string, number> = {};
-  userIds.forEach((id) => {
-    ticketCounts[id] = 0;
-  });
+	const ticketCounts: Record<string, number> = {};
+	userIds.forEach((id) => {
+		ticketCounts[id] = 0;
+	});
 
-  const ticketsQuery = await db
-    .collection('tickets')
-    .where('assigneeId', 'in', userIds)
-    .where('status', 'in', [TicketStatus.Open, TicketStatus.InProgress])
-    .get();
+	const ticketsQuery = await db
+		.collection("tickets")
+		.where("assigneeId", "in", userIds)
+		.where("status", "in", [TicketStatus.Open, TicketStatus.InProgress])
+		.get();
 
-  ticketsQuery.forEach((doc) => {
-    const assigneeId = doc.data().assigneeId;
-    if (assigneeId && ticketCounts[assigneeId] !== undefined) {
-      ticketCounts[assigneeId]++;
-    }
-  });
+	ticketsQuery.forEach((doc) => {
+		const assigneeId = doc.data().assigneeId;
+		if (assigneeId && ticketCounts[assigneeId] !== undefined) {
+			ticketCounts[assigneeId]++;
+		}
+	});
 
-  let minAssignee = userIds[0];
-  let minCount = ticketCounts[minAssignee];
+	let minAssignee = userIds[0];
+	let minCount = ticketCounts[minAssignee];
 
-  Object.entries(ticketCounts).forEach(([userId, count]) => {
-    if (count < minCount) {
-      minCount = count;
-      minAssignee = userId;
-    }
-  });
+	Object.entries(ticketCounts).forEach(([userId, count]) => {
+		if (count < minCount) {
+			minCount = count;
+			minAssignee = userId;
+		}
+	});
 
-  return minAssignee;
+	return minAssignee;
 }
