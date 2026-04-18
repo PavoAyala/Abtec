@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState } from "react";
 
 export default function SettingsPage() {
 	const [settings, setSettings] = useState({
@@ -23,8 +23,9 @@ export default function SettingsPage() {
 			<div className="card">
 				<form onSubmit={handleSubmit}>
 					<div className="form-group">
-						<label>Nombre de la Empresa</label>
+						<label htmlFor="company-name">Nombre de la Empresa</label>
 						<input
+							id="company-name"
 							type="text"
 							value={settings.companyName}
 							onChange={(e) =>
@@ -33,8 +34,9 @@ export default function SettingsPage() {
 						/>
 					</div>
 					<div className="form-group">
-						<label>Email de Contacto</label>
+						<label htmlFor="contact-email">Email de Contacto</label>
 						<input
+							id="contact-email"
 							type="email"
 							value={settings.email}
 							onChange={(e) =>
@@ -43,8 +45,9 @@ export default function SettingsPage() {
 						/>
 					</div>
 					<div className="form-group">
-						<label>Zona Horaria</label>
+						<label htmlFor="timezone-select">Zona Horaria</label>
 						<select
+							id="timezone-select"
 							value={settings.timezone}
 							onChange={(e) =>
 								setSettings({ ...settings, timezone: e.target.value })
@@ -68,13 +71,23 @@ export default function SettingsPage() {
 					Conecta tu CRM con otras herramientas:
 				</p>
 				<div style={{ marginTop: "15px" }}>
-					<button className="btn btn-secondary" style={{ marginRight: "10px" }}>
+					<button
+						type="button"
+						className="btn btn-secondary"
+						style={{ marginRight: "10px" }}
+					>
 						Firebase
 					</button>
-					<button className="btn btn-secondary" style={{ marginRight: "10px" }}>
+					<button
+						type="button"
+						className="btn btn-secondary"
+						style={{ marginRight: "10px" }}
+					>
 						Slack
 					</button>
-					<button className="btn btn-secondary">WhatsApp</button>
+					<button type="button" className="btn btn-secondary">
+						WhatsApp
+					</button>
 				</div>
 			</div>
 

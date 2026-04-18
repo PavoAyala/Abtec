@@ -1,8 +1,8 @@
 "use client";
 
 import useSWR from "swr";
-import { SWRKeys, fetcher } from "@/lib/swr";
-import { Deal, DealStage } from "@/types";
+import { fetcher, SWRKeys } from "@/lib/swr";
+import { type Deal, DealStage } from "@/types";
 
 const STAGE_CONFIG: Record<DealStage, { color: string; label: string }> = {
 	[DealStage.Lead]: { color: "lead", label: "Lead" },
@@ -42,7 +42,7 @@ export default function DealsPage() {
 					<p>Gestiona tus oportunidades de venta</p>
 				</div>
 				<div className="page-actions">
-					<button className="btn btn-primary">
+					<button type="button" className="btn btn-primary">
 						<svg
 							width="16"
 							height="16"
@@ -50,6 +50,7 @@ export default function DealsPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="M12 5v14M5 12h14" />
 						</svg>
@@ -100,6 +101,7 @@ export default function DealsPage() {
 									fill="none"
 									stroke="currentColor"
 									strokeWidth="1.5"
+									aria-hidden="true"
 								>
 									<rect width="18" height="18" x="3" y="3" rx="2" />
 									<path d="M12 8v8M8 12h8" />

@@ -1,7 +1,7 @@
 "use client";
 
-import Sidebar from "@/components/Sidebar";
 import CommandPalette, { useCommandPalette } from "@/components/CommandPalette";
+import Sidebar from "@/components/Sidebar";
 import "./globals.css";
 
 import { usePathname } from "next/navigation";
@@ -26,7 +26,7 @@ export default function RootLayout({
 					crossOrigin="anonymous"
 				/>
 				<link
-					href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
+					href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@400;500;600;700&display=swap"
 					rel="stylesheet"
 				/>
 			</head>
@@ -55,6 +55,7 @@ function CommandPaletteWrapper({
 			{children}
 			<CommandPalette isOpen={isOpen} onClose={() => setIsOpen(false)} />
 			<button
+				type="button"
 				onClick={() => setIsOpen(true)}
 				style={{
 					position: "fixed",
@@ -83,6 +84,7 @@ function CommandPaletteWrapper({
 					fill="none"
 					stroke="currentColor"
 					strokeWidth="2"
+					aria-hidden="true"
 				>
 					<circle cx="11" cy="11" r="8" />
 					<path d="m21 21-4.3-4.3" />

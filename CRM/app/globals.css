@@ -1,3 +1,19 @@
+@import "tailwindcss";
+
+@theme {
+	--color-primary: #78b309;
+	--color-secondary: #1a2a5a;
+	--color-background-light: #f7f8f5;
+	--color-background-dark: #1c2210;
+
+	--font-display: "Space Grotesk", sans-serif;
+
+	--radius-DEFAULT: 0.25rem;
+	--radius-lg: 0.5rem;
+	--radius-xl: 0.75rem;
+	--radius-full: 9999px;
+}
+
 :root {
 	--bg-primary: #ffffff;
 	--bg-secondary: #f8fafc;
@@ -7,11 +23,11 @@
 	--text-muted: #829ab1;
 	--border: #e2e8f0;
 	--border-light: #f1f5f9;
-	--accent: #22c55e;
-	--accent-hover: #16a34a;
-	--accent-light: #f0fdf4;
-	--accent-dark: #15803d;
-	--navy: #243b53;
+	--accent: #78b309;
+	--accent-hover: #6ea308;
+	--accent-light: #f7f8f5;
+	--accent-dark: #1c2210;
+	--navy: #1a2a5a;
 	--navy-dark: #102a43;
 	--success: #22c55e;
 	--success-light: #f0fdf4;
@@ -71,28 +87,6 @@ body {
 	overflow: hidden;
 }
 
-.sidebar.collapsed .sidebar-nav {
-	overflow: visible;
-}
-
-.sidebar.collapsed .nav-section-title {
-	opacity: 0;
-	height: 0;
-	margin: 0;
-	padding: 0;
-	overflow: hidden;
-}
-
-.sidebar.collapsed .nav-item-text {
-	opacity: 0;
-	width: 0;
-	overflow: hidden;
-}
-
-.sidebar.collapsed .nav-item-badge {
-	display: none;
-}
-
 .sidebar-header {
 	height: var(--header-height);
 	padding: 0 16px;
@@ -139,6 +133,10 @@ body {
 	overflow-y: auto;
 }
 
+.sidebar.collapsed .sidebar-nav {
+	overflow: visible;
+}
+
 .nav-section {
 	margin-bottom: 24px;
 }
@@ -157,6 +155,10 @@ body {
 
 .sidebar.collapsed .nav-section-title {
 	opacity: 0;
+	height: 0;
+	margin: 0;
+	padding: 0;
+	overflow: hidden;
 }
 
 .nav-item {
@@ -180,6 +182,12 @@ body {
 	transition:
 		opacity var(--transition),
 		width var(--transition);
+	overflow: hidden;
+}
+
+.sidebar.collapsed .nav-item-text {
+	opacity: 0;
+	width: 0;
 	overflow: hidden;
 }
 
@@ -225,6 +233,10 @@ body {
 	min-width: 20px;
 	text-align: center;
 	transition: opacity var(--transition);
+}
+
+.sidebar.collapsed .nav-item-badge {
+	display: none;
 }
 
 .sidebar-footer {
@@ -836,13 +848,21 @@ body {
 .command-palette-overlay {
 	position: fixed;
 	inset: 0;
-	background: rgba(0, 0, 0, 0.5);
-	backdrop-filter: blur(4px);
 	z-index: 100;
 	display: flex;
 	align-items: flex-start;
 	justify-content: center;
 	padding-top: 15vh;
+}
+
+.command-palette-backdrop {
+	position: absolute;
+	inset: 0;
+	background: rgba(0, 0, 0, 0.5);
+	backdrop-filter: blur(4px);
+	border: none;
+	width: 100%;
+	height: 100%;
 }
 
 .command-palette {
@@ -852,6 +872,7 @@ body {
 	border-radius: var(--radius-lg);
 	box-shadow: var(--shadow-lg);
 	overflow: hidden;
+	animation: fadeIn 0.15s ease-out;
 }
 
 .command-input-wrapper {
@@ -954,10 +975,6 @@ body {
 		opacity: 1;
 		transform: translateY(0);
 	}
-}
-
-.command-palette {
-	animation: fadeIn 0.15s ease-out;
 }
 
 @media (max-width: 768px) {

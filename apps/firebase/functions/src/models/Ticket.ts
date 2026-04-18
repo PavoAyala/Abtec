@@ -1,5 +1,5 @@
-import { Timestamp } from "firebase-admin/firestore";
-import { TicketPriority, TicketStatus } from "./types";
+import type { Timestamp } from "firebase-admin/firestore";
+import type { TicketPriority, TicketStatus } from "./types";
 
 export interface Ticket {
 	id?: string;

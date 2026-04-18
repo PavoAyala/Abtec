@@ -1,15 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
-import type { ReactNode } from "react";
 import {
-	User,
-	onAuthStateChanged,
 	signOut as firebaseSignOut,
+	onAuthStateChanged,
+	type User,
 } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
+import { usePathname, useRouter } from "next/navigation";
+import type { ReactNode } from "react";
+import {
+	createContext,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
 import { auth, db } from "../lib/firebase";
-import { useRouter, usePathname } from "next/navigation";
 
 interface AuthContextType {
 	user: User | null;
@@ -74,14 +81,14 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 		return () => unsubscribe();
 	}, [pathname, router]);
 
-	const signOut = async () => {
+	const signOut = useCallback(async () => {
 		await firebaseSignOut(auth);
 		router.push("/login");
-	};
+	}, [router]);
 
 	const contextValue = useMemo(
 		() => ({ user, loading, isStaff, signOut }),
-		[user, loading, isStaff],
+		[user, loading, isStaff, signOut],
 	);
 
 	// Only render children if loading is done and they are either authenticated staff or on the login page.

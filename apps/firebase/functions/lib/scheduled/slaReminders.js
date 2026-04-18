@@ -1,4 +1,3 @@
-"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkOverdueTasks = exports.checkSlaDeadlines = void 0;
 const functions = require("firebase-functions/v2");

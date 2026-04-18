@@ -1,9 +1,9 @@
 "use client";
 
 import useSWR from "swr";
-import { SWRKeys, fetcher } from "@/lib/swr";
-import { TicketStatus, TicketPriority } from "@/types";
 import { DataTable } from "@/components/StatsAndTables";
+import { fetcher, SWRKeys } from "@/lib/swr";
+import { TicketPriority, TicketStatus } from "@/types";
 
 const statusColors: Record<string, string> = {
 	[TicketStatus.Open]: "badge-yellow",
@@ -67,7 +67,7 @@ export default function TicketsPage() {
 					<p>Sistema de soporte postventa</p>
 				</div>
 				<div className="page-actions">
-					<button className="btn btn-primary">
+					<button type="button" className="btn btn-primary">
 						<svg
 							width="16"
 							height="16"
@@ -75,6 +75,7 @@ export default function TicketsPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="M12 5v14M5 12h14" />
 						</svg>

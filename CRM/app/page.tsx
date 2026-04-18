@@ -2,8 +2,8 @@
 
 import Link from "next/link";
 import useSWR from "swr";
-import { SWRKeys, fetcher } from "@/lib/swr";
 import StatCard from "@/components/StatsAndTables";
+import { fetcher, SWRKeys } from "@/lib/swr";
 
 export default function DashboardPage() {
 	const { data: contacts } = useSWR(SWRKeys.contacts, fetcher.contacts, {
@@ -21,11 +21,7 @@ export default function DashboardPage() {
 		revalidateOnReconnect: false,
 		dedupingInterval: 60000,
 	});
-	const { data: tickets } = useSWR(SWRKeys.tickets, fetcher.tickets, {
-		revalidateOnFocus: false,
-		revalidateOnReconnect: false,
-		dedupingInterval: 60000,
-	});
+
 	const { data: ticketStats } = useSWR(
 		SWRKeys.ticketsStats,
 		fetcher.ticketsStats,
@@ -102,6 +98,7 @@ export default function DashboardPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
 							<circle cx="9" cy="7" r="4" />
@@ -122,6 +119,7 @@ export default function DashboardPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="m11 17 2 2a1 1 0 1 0 3-3" />
 							<path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
@@ -141,6 +139,7 @@ export default function DashboardPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<line x1="12" y1="1" x2="12" y2="23" />
 							<path d="M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6" />
@@ -159,6 +158,7 @@ export default function DashboardPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0" />
 							<circle cx="12" cy="17" r="5" />
@@ -185,6 +185,7 @@ export default function DashboardPage() {
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="2"
+											aria-hidden="true"
 										>
 											<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
 											<circle cx="9" cy="7" r="4" />
@@ -200,6 +201,7 @@ export default function DashboardPage() {
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="2"
+											aria-hidden="true"
 										>
 											<path d="M3 21h18" />
 											<path d="M5 21V7l8-4v18" />
@@ -214,6 +216,7 @@ export default function DashboardPage() {
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="2"
+											aria-hidden="true"
 										>
 											<path d="m11 17 2 2a1 1 0 1 0 3-3" />
 											<path d="m14 14 2.5 2.5a1 1 0 1 0 3-3" />
@@ -227,6 +230,7 @@ export default function DashboardPage() {
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="2"
+											aria-hidden="true"
 										>
 											<path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0" />
 											<circle cx="12" cy="17" r="5" />
@@ -240,6 +244,7 @@ export default function DashboardPage() {
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="2"
+											aria-hidden="true"
 										>
 											<rect width="18" height="18" x="3" y="4" rx="2" />
 											<path d="M16 2v4" />

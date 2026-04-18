@@ -1,6 +1,0 @@
-services: {}
-
-# El flujo activo del repositorio no usa servicios Docker
-# como dependencia principal. La orquestacion local actual se hace con:
-# - `pnpm dev` para `apps/web` y `CRM/`
-# - `pnpm firebase:dev` para emuladores de Firebase

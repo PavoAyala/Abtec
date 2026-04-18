@@ -1,6 +1,7 @@
 "use client";
-import type { JSX } from "react";
+import Image from "next/image";
 import Link from "next/link";
+import type { JSX } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Header(): JSX.Element {
@@ -11,11 +12,12 @@ export default function Header(): JSX.Element {
 			<div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
 				<Link href="/" className="flex items-center gap-3">
 					<div className="relative flex items-center justify-center">
-						{/* eslint-disable-next-line @next/next/no-img-element */}
-						<img
+						<Image
 							src="/logo.png"
 							alt="ABTEC Logo"
-							className="w-8 h-8 object-contain"
+							width={32}
+							height={32}
+							className="object-contain"
 						/>
 					</div>
 					<h1 className="text-secondary text-2xl font-bold tracking-tight">
@@ -58,6 +60,7 @@ export default function Header(): JSX.Element {
 						</Link>
 					) : (
 						<button
+							type="button"
 							onClick={openAuthModal}
 							className="bg-secondary text-white px-5 py-2.5 rounded-lg text-sm font-bold transition-all hover:bg-secondary/90"
 						>

@@ -1,7 +1,7 @@
 import type { JSX } from "react";
+import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import Products from "../../../components/Products";
-import Footer from "../../../components/Footer";
 
 export const metadata = {
 	title: "Productos | ABTEC",

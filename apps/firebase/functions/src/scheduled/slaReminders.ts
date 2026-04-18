@@ -1,7 +1,7 @@
-import * as functions from "firebase-functions/v2";
 import * as admin from "firebase-admin";
-import { TicketStatus } from "../models";
+import * as functions from "firebase-functions/v2";
 import { db } from "../config/firebase";
+import { TicketStatus } from "../models";
 
 /**
  * checkSlaDeadlines - Runs every 15 minutes

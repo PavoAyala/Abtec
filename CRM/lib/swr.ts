@@ -1,8 +1,8 @@
-import { getContacts } from "./contacts";
-import { getCompanies } from "./companies";
-import { getDeals, getPipelineStats } from "./deals";
-import { getTickets, getTicketStats } from "./tickets";
 import { getActivities } from "./activities";
+import { getCompanies } from "./companies";
+import { getContacts } from "./contacts";
+import { getDeals, getPipelineStats } from "./deals";
+import { getTicketStats, getTickets } from "./tickets";
 
 // SWR Fetcher para Firestore
 export const fetcher = {

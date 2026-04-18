@@ -1,17 +1,17 @@
 // Funciones CRUD para Tickets
+
+import { type Ticket, TicketPriority, TicketStatus } from "@/types";
 import {
+	createDocument,
+	deleteDocument,
 	getCollection,
 	getDocument,
-	createDocument,
-	updateDocument,
-	deleteDocument,
-	query,
-	where,
 	orderBy,
+	type QueryConstraint,
 	subscribeToCollection,
-	QueryConstraint,
+	updateDocument,
+	where,
 } from "./firebase";
-import { Ticket, TicketStatus, TicketPriority } from "@/types";
 
 export const getTickets = (filters?: {
 	assigneeId?: string;

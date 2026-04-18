@@ -1,4 +1,3 @@
-"use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onDealUpdated =
 	exports.onDealStageChanged =

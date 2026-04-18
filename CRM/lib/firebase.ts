@@ -1,33 +1,33 @@
-import { initializeApp, getApps, FirebaseApp } from "firebase/app";
+import { type FirebaseApp, getApps, initializeApp } from "firebase/app";
 import {
-	getFirestore,
-	Firestore,
-	connectFirestoreEmulator,
-	collection,
-	doc,
-	getDocs,
-	getDoc,
-	addDoc,
-	updateDoc,
-	deleteDoc,
-	query,
-	where,
-	orderBy,
-	onSnapshot,
-	DocumentData,
-	QueryConstraint,
-	Timestamp,
-} from "firebase/firestore";
-import {
-	getAuth,
-	Auth,
+	type Auth,
 	connectAuthEmulator,
-	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
-	signOut,
+	getAuth,
 	onAuthStateChanged,
-	User,
+	signInWithEmailAndPassword,
+	signOut,
+	type User,
 } from "firebase/auth";
+import {
+	addDoc,
+	collection,
+	connectFirestoreEmulator,
+	type DocumentData,
+	deleteDoc,
+	doc,
+	type Firestore,
+	getDoc,
+	getDocs,
+	getFirestore,
+	onSnapshot,
+	orderBy,
+	QueryConstraint,
+	query,
+	Timestamp,
+	updateDoc,
+	where,
+} from "firebase/firestore";
 
 // Configuración de Firebase - usar variables de entorno en producción
 const firebaseConfig = {
@@ -164,13 +164,13 @@ export const convertTimestamp = (
 };
 
 export {
-	db,
 	auth,
 	collection,
+	db,
 	doc,
-	query,
-	where,
 	orderBy,
-	Timestamp,
 	QueryConstraint,
+	query,
+	Timestamp,
+	where,
 };

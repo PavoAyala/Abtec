@@ -1,8 +1,8 @@
 "use client";
 
 import useSWR from "swr";
-import { SWRKeys, fetcher } from "@/lib/swr";
 import { DataTable } from "@/components/StatsAndTables";
+import { fetcher, SWRKeys } from "@/lib/swr";
 
 export default function CompaniesPage() {
 	const { data: companies } = useSWR(SWRKeys.companies, fetcher.companies, {
@@ -54,7 +54,7 @@ export default function CompaniesPage() {
 					<p>Administra empresas y cuentas</p>
 				</div>
 				<div className="page-actions">
-					<button className="btn btn-primary">
+					<button type="button" className="btn btn-primary">
 						<svg
 							width="16"
 							height="16"
@@ -62,6 +62,7 @@ export default function CompaniesPage() {
 							fill="none"
 							stroke="currentColor"
 							strokeWidth="2"
+							aria-hidden="true"
 						>
 							<path d="M12 5v14M5 12h14" />
 						</svg>

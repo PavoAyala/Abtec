@@ -1,8 +1,10 @@
 "use client";
 
-import { useState, createContext, useContext, type ReactNode } from "react";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import type { ReactNode } from "react";
+import { createContext, useContext, useState } from "react";
 
 interface SidebarContextType {
 	collapsed: boolean;
@@ -41,6 +43,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<rect x="3" y="3" width="7" height="7" rx="1" />
 				<rect x="14" y="3" width="7" height="7" rx="1" />
@@ -58,6 +61,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
 				<circle cx="9" cy="7" r="4" />
@@ -75,6 +79,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="M3 21h18" />
 				<path d="M5 21V7l8-4v18" />
@@ -95,6 +100,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="m11 17 2 2a1 1 0 1 0 3-3" />
 				<path d="m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4" />
@@ -113,6 +119,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0" />
 				<circle cx="12" cy="17" r="5" />
@@ -129,6 +136,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="M8 2v4" />
 				<path d="M16 2v4" />
@@ -147,6 +155,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="M12.22 2h-.44a2 2 0 0 0-2 2v.18a2 2 0 0 1-1 1.73l-.43.25a2 2 0 0 1-2 0l-.15-.08a2 2 0 0 0-2.73.73l-.22.38a2 2 0 0 0 .73 2.73l.15.1a2 2 0 0 1 1 1.72v.51a2 2 0 0 1-1 1.74l-.15.09a2 2 0 0 0-.73 2.73l.22.38a2 2 0 0 0 2.73.73l.15-.08a2 2 0 0 1 2 0l.43.25a2 2 0 0 1 1 1.73V20a2 2 0 0 0 2 2h.44a2 2 0 0 0 2-2v-.18a2 2 0 0 1 1-1.73l.43-.25a2 2 0 0 1 2 0l.15.08a2 2 0 0 0 2.73-.73l.22-.39a2 2 0 0 0-.73-2.73l-.15-.08a2 2 0 0 1-1-1.74v-.5a2 2 0 0 1 1-1.74l.15-.09a2 2 0 0 0 .73-2.73l-.22-.38a2 2 0 0 0-2.73-.73l-.15.08a2 2 0 0 1-2 0l-.43-.25a2 2 0 0 1-1-1.73V4a2 2 0 0 0-2-2z" />
 				<circle cx="12" cy="12" r="3" />
@@ -162,6 +171,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="m15 18-6-6 6-6" />
 			</svg>
@@ -176,6 +186,7 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				strokeWidth="2"
 				strokeLinecap="round"
 				strokeLinejoin="round"
+				aria-hidden="true"
 			>
 				<path d="m9 18 6-6-6-6" />
 			</svg>
@@ -185,7 +196,9 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 	return icons[name] || null;
 }
 
-export default function Sidebar({ children }: { children: ReactNode }) {
+export default function Sidebar({
+	children,
+}: Readonly<{ children: ReactNode }>) {
 	const [collapsed, setCollapsed] = useState(false);
 	const pathname = usePathname();
 
@@ -194,13 +207,18 @@ export default function Sidebar({ children }: { children: ReactNode }) {
 		return pathname.startsWith(href);
 	};
 
+	const contextValue = useMemo(
+		() => ({ collapsed, setCollapsed }),
+		[collapsed],
+	);
+
 	return (
-		<SidebarContext.Provider value={{ collapsed, setCollapsed }}>
+		<SidebarContext.Provider value={contextValue}>
 			<div className="app-layout">
 				<aside className={`sidebar ${collapsed ? "collapsed" : ""}`}>
 					<div className="sidebar-header">
 						<div className="sidebar-logo">
-							<img
+							<Image
 								src="/logo.png"
 								alt="Abtec"
 								width={24}
@@ -250,6 +268,7 @@ export default function Sidebar({ children }: { children: ReactNode }) {
 
 					<div className="sidebar-footer">
 						<button
+							type="button"
 							className="sidebar-toggle"
 							onClick={() => setCollapsed(!collapsed)}
 						>

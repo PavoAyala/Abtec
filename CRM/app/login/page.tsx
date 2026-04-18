@@ -1,13 +1,14 @@
 "use client";
-import { useState, Suspense } from "react";
 import {
+	GoogleAuthProvider,
 	signInWithEmailAndPassword,
 	signInWithPopup,
-	GoogleAuthProvider,
 } from "firebase/auth";
-import { auth, db } from "../../lib/firebase";
 import { doc, getDoc } from "firebase/firestore";
+import Image from "next/image";
 import { useRouter, useSearchParams } from "next/navigation";
+import { Suspense, useState } from "react";
+import { auth, db } from "../../lib/firebase";
 
 function LoginForm() {
 	const [email, setEmail] = useState("");
@@ -56,8 +57,6 @@ function LoginForm() {
 				password,
 			);
 
-			// Verify if user is in 'staff' collection. AuthProvider handles the redirect
-			// if valid, but we should handle error display early.
 			const staffRef = doc(db, "staff", userCredential.user.uid);
 			const staffSnap = await getDoc(staffRef);
 
@@ -66,9 +65,8 @@ function LoginForm() {
 			}
 
 			router.push("/");
-		} catch (err: any) {
+		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
-			// Ensure they don't remain logged in locally as standard user
 			await auth.signOut();
 		} finally {
 			setLoading(false);
@@ -93,7 +91,7 @@ function LoginForm() {
 			}
 
 			router.push("/");
-		} catch (err: any) {
+		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
 			await auth.signOut();
 		} finally {
@@ -102,99 +100,144 @@ function LoginForm() {
 	};
 
 	return (
-		<div className="bg-white p-8 rounded-2xl shadow-xl w-full max-w-md">
-			<div className="text-center mb-8">
-				<div className="w-16 h-16 bg-(--accent) text-white rounded-xl flex items-center justify-center mx-auto mb-4 text-2xl font-bold">
-					A
-				</div>
-				<h1 className="text-2xl font-bold text-gray-900">Abtec CRM</h1>
-				<p className="text-gray-500 mt-2">Acceso de Personal Autorizado</p>
-			</div>
-
-			{(error || queryError === "not_staff") && (
-				<div className="bg-red-50 text-red-600 p-4 rounded-lg mb-6 text-sm flex gap-2">
-					<span>⚠️</span>
-					<p>
-						{error ||
-							"Acceso denegado: esta cuenta no pertenece al personal interno."}
+		<div className="w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-700">
+			<div className="bg-white/80 backdrop-blur-xl p-8 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.1)] border border-white/20">
+				<div className="text-center mb-10">
+					<div className="relative inline-block mb-6">
+						<div className="w-20 h-20 bg-primary rounded-2xl rotate-3 shadow-lg shadow-primary/30 flex items-center justify-center mx-auto transition-transform hover:rotate-6 duration-300">
+							<span className="text-white text-3xl font-bold -rotate-3">A</span>
+						</div>
+						<div className="absolute -bottom-1 -right-1 w-6 h-6 bg-secondary rounded-full border-4 border-white"></div>
+					</div>
+					<h1 className="text-3xl font-bold text-secondary tracking-tight font-display">
+						Abtec <span className="text-primary">CRM</span>
+					</h1>
+					<p className="text-slate-500 mt-2 font-medium">
+						Panel de Control Corporativo
 					</p>
 				</div>
-			)}
 
-			<form onSubmit={handleLogin} className="space-y-5">
-				<div>
-					<label
-						htmlFor="crm-email"
-						className="block text-sm font-medium text-gray-700 mb-1"
+				{(error || queryError === "not_staff") && (
+					<div className="bg-red-50 border border-red-100 text-red-600 p-4 rounded-2xl mb-6 text-sm flex gap-3 items-center animate-shake">
+						<span className="bg-red-100 p-1 rounded-full">⚠️</span>
+						<p className="font-medium">
+							{error ||
+								"Acceso denegado: esta cuenta no pertenece al personal interno."}
+						</p>
+					</div>
+				)}
+
+				<form onSubmit={handleLogin} className="space-y-6">
+					<div className="space-y-2">
+						<label
+							htmlFor="crm-email"
+							className="text-sm font-semibold text-secondary ml-1"
+						>
+							Correo Corporativo
+						</label>
+						<div className="relative group">
+							<input
+								id="crm-email"
+								type="email"
+								required
+								value={email}
+								onChange={(e) => setEmail(e.target.value)}
+								className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all duration-300 placeholder:text-slate-400"
+								placeholder="nombre@abtec.com"
+							/>
+						</div>
+					</div>
+					<div className="space-y-2">
+						<label
+							htmlFor="crm-password"
+							className="text-sm font-semibold text-secondary ml-1"
+						>
+							Contraseña
+						</label>
+						<div className="relative group">
+							<input
+								id="crm-password"
+								type="password"
+								required
+								value={password}
+								onChange={(e) => setPassword(e.target.value)}
+								className="w-full px-5 py-4 bg-slate-50 border border-slate-200 rounded-2xl focus:bg-white focus:ring-4 focus:ring-primary/10 focus:border-primary outline-none transition-all duration-300 placeholder:text-slate-400"
+								placeholder="••••••••"
+							/>
+						</div>
+					</div>
+					
+					<button
+						type="submit"
+						disabled={loading}
+						className="w-full bg-secondary hover:bg-[#243b7a] active:scale-[0.98] text-white font-bold py-4 px-6 rounded-2xl shadow-lg shadow-secondary/20 transition-all duration-300 disabled:opacity-70 disabled:cursor-not-allowed group flex items-center justify-center gap-2"
 					>
-						Correo Electrónico
-					</label>
-					<input
-						id="crm-email"
-						type="email"
-						required
-						value={email}
-						onChange={(e) => setEmail(e.target.value)}
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-(--accent) outline-none transition-all"
-						placeholder="admin@abtec.com"
-					/>
+						{loading ? (
+							<div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>
+						) : (
+							<>
+								<span>Iniciar Sesión</span>
+								<svg className="w-5 h-5 transition-transform group-hover:translate-x-1" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+									<path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M13 7l5 5m0 0l-5 5m5-5H6" />
+								</svg>
+							</>
+						)}
+					</button>
+				</form>
+
+				<div className="mt-8 relative">
+					<div className="absolute inset-0 flex items-center">
+						<div className="w-full border-t border-slate-200"></div>
+					</div>
+					<div className="relative flex justify-center text-xs uppercase">
+						<span className="bg-white px-4 text-slate-400 font-bold tracking-widest">
+							o continuar con
+						</span>
+					</div>
 				</div>
-				<div>
-					<label
-						htmlFor="crm-password"
-						className="block text-sm font-medium text-gray-700 mb-1"
-					>
-						Contraseña
-					</label>
-					<input
-						id="crm-password"
-						type="password"
-						required
-						value={password}
-						onChange={(e) => setPassword(e.target.value)}
-						className="w-full px-4 py-3 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-(--accent) outline-none transition-all"
-						placeholder="••••••••"
-					/>
-				</div>
+
 				<button
-					type="submit"
+					type="button"
+					onClick={handleGoogleSignIn}
 					disabled={loading}
-					className="w-full bg-(--accent) hover:bg-[#1a4a42] text-white font-semibold py-3 px-4 rounded-xl transition-colors disabled:opacity-70 disabled:cursor-not-allowed"
+					className="w-full mt-6 bg-white border border-slate-200 hover:border-primary hover:bg-primary/5 text-secondary font-bold py-4 flex items-center justify-center gap-3 rounded-2xl transition-all duration-300 disabled:opacity-70"
 				>
-					{loading ? "Verificando..." : "Iniciar Sesión"}
+					<Image
+						src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
+						width={20}
+						height={20}
+						alt="Logo de Google para autenticación corporativa"
+					/>
+					<span>Acceso de Empleado</span>
 				</button>
-			</form>
-
-			<div className="mt-6 flex items-center before:flex-1 before:border-t before:border-gray-200 after:flex-1 after:border-t after:border-gray-200">
-				<span className="mx-4 text-xs text-gray-400 font-medium uppercase">
-					o acceso rápido con
-				</span>
+				
+				<p className="mt-8 text-center text-slate-400 text-xs font-medium uppercase tracking-tighter">
+					Confidencial & Privado &copy; {new Date().getFullYear()} Abtec Energía
+				</p>
 			</div>
-
-			<button
-				type="button"
-				onClick={handleGoogleSignIn}
-				disabled={loading}
-				className="w-full mt-6 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-semibold py-3 flex items-center justify-center gap-3 rounded-xl transition-colors disabled:opacity-70"
-			>
-				{/* eslint-disable-next-line @next/next/no-img-element */}
-				<img
-					src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-					className="w-5 h-5"
-					alt="Google logo"
-				/>
-				<span>Cuenta de Google</span>
-			</button>
 		</div>
 	);
 }
 
 export default function LoginPage() {
 	return (
-		<div className="min-h-screen flex text-left items-center justify-center bg-gray-50 p-4">
-			<Suspense fallback={<div>Cargando entorno seguro...</div>}>
-				<LoginForm />
-			</Suspense>
+		<div className="min-h-screen relative flex items-center justify-center bg-background-light overflow-hidden font-display selection:bg-primary/30">
+			{/* Decorative Elements */}
+			<div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
+				<div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
+				<div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]"></div>
+			</div>
+			
+			<div className="z-10 w-full p-4 flex justify-center">
+				<Suspense fallback={
+					<div className="flex flex-col items-center gap-4">
+						<div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
+						<p className="text-secondary font-bold animate-pulse">Cargando Entorno Seguro...</p>
+					</div>
+				}>
+					<LoginForm />
+				</Suspense>
+			</div>
 		</div>
 	);
 }

@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase-admin/firestore";
+import type { Timestamp } from "firebase-admin/firestore";
 
 export interface Contact {
 	id?: string;
@@ -7,7 +7,7 @@ export interface Contact {
 	phone?: string;
 	companyId?: string;
 	tags: string[];
-	customFields: Record<string, any>;
+	customFields: Record<string, unknown>;
 	lifecycleStage: string;
 	leadScore: number;
 	ownerId?: string;

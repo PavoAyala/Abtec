@@ -49,6 +49,9 @@ importers:
         specifier: ^2.4.1
         version: 2.4.1(react@18.3.1)
     devDependencies:
+      '@tailwindcss/postcss':
+        specifier: ^4.0.14
+        version: 4.2.2
       '@types/node':
         specifier: ^20.0.0
         version: 20.19.39
@@ -58,6 +61,15 @@ importers:
       '@types/react-dom':
         specifier: ^18.3.0
         version: 18.3.7(@types/react@18.3.28)
+      autoprefixer:
+        specifier: ^10.4.21
+        version: 10.5.0(postcss@8.5.10)
+      postcss:
+        specifier: ^8.5.3
+        version: 8.5.10
+      tailwindcss:
+        specifier: ^4.0.14
+        version: 4.2.2
       typescript:
         specifier: ^5.4.0
         version: 5.9.2

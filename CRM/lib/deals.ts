@@ -1,17 +1,17 @@
 // Funciones CRUD para Deals
+
+import { type Deal, DealStage } from "@/types";
 import {
+	createDocument,
+	deleteDocument,
 	getCollection,
 	getDocument,
-	createDocument,
-	updateDocument,
-	deleteDocument,
-	query,
-	where,
 	orderBy,
+	type QueryConstraint,
 	subscribeToCollection,
-	QueryConstraint,
+	updateDocument,
+	where,
 } from "./firebase";
-import { Deal, DealStage } from "@/types";
 
 export const getDeals = (filters?: {
 	ownerId?: string;

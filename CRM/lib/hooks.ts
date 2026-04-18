@@ -1,7 +1,7 @@
 "use client";
 
 import useSWR from "swr";
-import { SWRKeys, fetcher } from "./swr";
+import { fetcher, SWRKeys } from "./swr";
 
 export function useContacts() {
 	const { data, error, isLoading, mutate } = useSWR(

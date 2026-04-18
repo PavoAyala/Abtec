@@ -1,16 +1,16 @@
 "use client";
-import { useState } from "react";
-import { useAuth } from "../../hooks/useAuth";
 import {
-	signInWithEmailAndPassword,
 	createUserWithEmailAndPassword,
 	GoogleAuthProvider,
+	signInWithEmailAndPassword,
 	signInWithPopup,
 } from "firebase/auth";
-import { getClientAuth, getClientDb } from "../../lib/firebase";
-import { doc, setDoc, serverTimestamp } from "firebase/firestore";
-
+import { doc, serverTimestamp, setDoc } from "firebase/firestore";
+import Image from "next/image";
 import type { ReactElement } from "react";
+import { useState } from "react";
+import { useAuth } from "../../hooks/useAuth";
+import { getClientAuth, getClientDb } from "../../lib/firebase";
 
 export default function AuthModal(): ReactElement | null {
 	const { isAuthModalOpen, closeAuthModal, user } = useAuth();
@@ -121,6 +121,7 @@ export default function AuthModal(): ReactElement | null {
 			<div className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center">
 				<div className="bg-white rounded-2xl w-full max-w-sm p-8 text-center relative shadow-2xl">
 					<button
+						type="button"
 						onClick={closeAuthModal}
 						className="absolute right-4 top-4 text-gray-400 hover:text-gray-600 transition-colors"
 					>
@@ -134,6 +135,7 @@ export default function AuthModal(): ReactElement | null {
 					<h2 className="text-xl font-bold mb-2">Ya estás conectado</h2>
 					<p className="text-gray-600 mb-6">{user.email}</p>
 					<button
+						type="button"
 						onClick={closeAuthModal}
 						className="w-full bg-primary text-white py-3 rounded-xl font-bold hover:bg-primary/90 transition-colors"
 					>
@@ -148,6 +150,7 @@ export default function AuthModal(): ReactElement | null {
 		<div className="fixed inset-0 z-100 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4">
 			<div className="bg-white rounded-2xl w-full max-w-md p-8 relative shadow-2xl animate-in fade-in zoom-in-95 duration-200">
 				<button
+					type="button"
 					onClick={closeAuthModal}
 					className="absolute right-4 top-4 text-secondary/40 hover:text-secondary p-1 transition-colors"
 				>
@@ -320,10 +323,10 @@ export default function AuthModal(): ReactElement | null {
 					disabled={loading}
 					className="w-full flex items-center justify-center gap-3 bg-white border-2 border-gray-100 hover:bg-gray-50 text-secondary font-bold py-3.5 px-4 rounded-xl transition-all disabled:opacity-70"
 				>
-					{/* eslint-disable-next-line @next/next/no-img-element */}
-					<img
+					<Image
 						src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg"
-						className="w-5 h-5"
+						width={20}
+						height={20}
 						alt="Google logo"
 					/>
 					<span>Google</span>

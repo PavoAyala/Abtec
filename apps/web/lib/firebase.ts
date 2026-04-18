@@ -1,9 +1,9 @@
-import { FirebaseApp, getApps, initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
-import { Auth, connectAuthEmulator, getAuth } from "firebase/auth";
+import { type FirebaseApp, getApps, initializeApp } from "firebase/app";
+import { type Auth, connectAuthEmulator, getAuth } from "firebase/auth";
 import {
 	connectFirestoreEmulator,
-	Firestore,
+	type Firestore,
 	getFirestore,
 	initializeFirestore,
 } from "firebase/firestore";
@@ -36,7 +36,13 @@ function getApp(): FirebaseApp {
 	}
 
 	const apps = getApps();
-	const app = apps.length === 0 ? initializeApp(firebaseConfig) : apps[0]!;
+	if (apps.length > 0) {
+		const app = apps[0] as FirebaseApp;
+		globalForFirebase.__abtecWebFirebaseApp = app;
+		return app;
+	}
+
+	const app = initializeApp(firebaseConfig);
 	globalForFirebase.__abtecWebFirebaseApp = app;
 	return app;
 }

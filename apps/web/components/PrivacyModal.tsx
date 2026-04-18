@@ -3,15 +3,10 @@
 import type { JSX } from "react";
 import { useEffect } from "react";
 
-interface PrivacyModalProps {
-	isOpen: boolean;
-	onClose: () => void;
-}
-
 export default function PrivacyModal({
 	isOpen,
 	onClose,
-}: PrivacyModalProps): JSX.Element | null {
+}: Readonly<{ isOpen: boolean; onClose: () => void }>): JSX.Element | null {
 	useEffect(() => {
 		if (isOpen) {
 			document.body.style.overflow = "hidden";
@@ -26,9 +21,9 @@ export default function PrivacyModal({
 	if (!isOpen) return null;
 
 	return (
-		<div
-			className="fixed inset-0 z-[100] flex items-center justify-center p-4 md:p-6"
-			role="dialog"
+		<dialog
+			className="fixed inset-0 z-100 flex items-center justify-center p-4 md:p-6 bg-transparent border-none w-full h-full max-w-none max-h-none"
+			open={isOpen}
 			aria-modal="true"
 		>
 			{/* Backdrop */}
@@ -49,6 +44,7 @@ export default function PrivacyModal({
 						<div className="h-1 w-12 bg-primary rounded-full mt-2"></div>
 					</div>
 					<button
+						type="button"
 						onClick={onClose}
 						aria-label="Cerrar"
 						className="w-10 h-10 rounded-full bg-white flex items-center justify-center text-secondary/40 hover:text-secondary hover:bg-secondary/5 transition-all shadow-sm border border-secondary/10"
@@ -165,6 +161,7 @@ export default function PrivacyModal({
 				{/* Footer */}
 				<div className="p-6 border-t border-secondary/5 bg-background-light flex justify-end">
 					<button
+						type="button"
 						onClick={onClose}
 						className="bg-secondary text-white px-8 py-3 rounded-xl font-bold hover:bg-secondary/90 transition-all shadow-lg shadow-secondary/20"
 					>
@@ -172,22 +169,6 @@ export default function PrivacyModal({
 					</button>
 				</div>
 			</div>
-
-			<style jsx global>{`
-        .custom-scrollbar::-webkit-scrollbar {
-          width: 6px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-track {
-          background: #f1f1f1;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb {
-          background: #ccc;
-          border-radius: 10px;
-        }
-        .custom-scrollbar::-webkit-scrollbar-thumb:hover {
-          background: #b3b3b3;
-        }
-      `}</style>
-		</div>
+		</dialog>
 	);
 }

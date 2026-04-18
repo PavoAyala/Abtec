@@ -1,17 +1,17 @@
 // Funciones CRUD para Contacts
+
+import { type Contact, LifecycleStage } from "@/types";
 import {
+	createDocument,
+	deleteDocument,
 	getCollection,
 	getDocument,
-	createDocument,
-	updateDocument,
-	deleteDocument,
-	query,
-	where,
 	orderBy,
+	type QueryConstraint,
 	subscribeToCollection,
-	QueryConstraint,
+	updateDocument,
+	where,
 } from "./firebase";
-import { Contact, LifecycleStage } from "@/types";
 
 export const getContacts = (filters?: {
 	ownerId?: string;

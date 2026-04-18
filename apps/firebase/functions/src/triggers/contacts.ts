@@ -1,9 +1,13 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Contact } from "../models";
-import { Activity, ActivityType } from "../models";
-import { AuditLog, AuditAction } from "../models";
+import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
+import {
+	type Activity,
+	ActivityType,
+	AuditAction,
+	type AuditLog,
+	type Contact,
+} from "../models";
 
 /**
  * onContactCreated - Trigger when a new contact is created

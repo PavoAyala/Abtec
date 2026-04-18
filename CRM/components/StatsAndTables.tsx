@@ -1,6 +1,6 @@
 "use client";
 
-import { useEffect, useState, type ReactNode } from "react";
+import { type ReactNode, useEffect, useState } from "react";
 
 interface StatCardProps {
 	label: string;
@@ -181,6 +181,7 @@ export function DataTable<T extends { id: string | number }>({
 								fill="none"
 								stroke="currentColor"
 								strokeWidth="2"
+								aria-hidden="true"
 							>
 								<circle cx="11" cy="11" r="8" />
 								<path d="m21 21-4.3-4.3" />
@@ -231,6 +232,7 @@ export function DataTable<T extends { id: string | number }>({
 											fill="none"
 											stroke="currentColor"
 											strokeWidth="1.5"
+											aria-hidden="true"
 										>
 											<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z" />
 											<path d="M14 2v6h6" />

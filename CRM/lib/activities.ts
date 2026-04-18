@@ -1,17 +1,17 @@
 // Funciones CRUD para Activities
+
+import { type Activity, ActivityType } from "@/types";
 import {
+	createDocument,
+	deleteDocument,
 	getCollection,
 	getDocument,
-	createDocument,
-	updateDocument,
-	deleteDocument,
-	query,
-	where,
 	orderBy,
+	type QueryConstraint,
 	subscribeToCollection,
-	QueryConstraint,
+	updateDocument,
+	where,
 } from "./firebase";
-import { Activity, ActivityType } from "@/types";
 
 export const getActivities = (filters?: {
 	ownerId?: string;

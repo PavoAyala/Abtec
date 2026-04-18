@@ -1,18 +1,17 @@
 // Funciones CRUD para Companies
+
+import type { Company } from "@/types";
 import {
+	createDocument,
+	deleteDocument,
 	getCollection,
 	getDocument,
-	createDocument,
-	updateDocument,
-	deleteDocument,
-	query,
-	where,
 	orderBy,
 	subscribeToCollection,
+	updateDocument,
 } from "./firebase";
-import { Company } from "@/types";
 
-export const getCompanies = (filters?: { search?: string }) => {
+export const getCompanies = (_filters?: { search?: string }) => {
 	const constraints = [orderBy("createdAt", "desc")];
 	return getCollection<Company>("companies", ...constraints);
 };
