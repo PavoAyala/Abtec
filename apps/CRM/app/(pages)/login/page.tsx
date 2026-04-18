@@ -1,6 +1,6 @@
 "use client";
 
-import SplitLoginCard from "@/components/ui/split-login-card";
+import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
 import { auth, db } from "../../../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { doc, getDoc } from "firebase/firestore";
@@ -15,7 +15,6 @@ function LoginForm() {
 	const router = useRouter();
 	const searchParams = useSearchParams();
 
-	// If redirected here with error query parameter
 	const queryError = searchParams.get("error");
 
 	const getFriendlyErrorMessage = (errorObj: unknown): string => {
@@ -69,7 +68,7 @@ function LoginForm() {
 	};
 
 	return (
-		<SplitLoginCard
+		<TravelConnectSignIn
 			onSubmit={handleLogin}
 			loading={loading}
 			error={error || (queryError === "not_staff" ? "Acceso denegado: esta cuenta no pertenece al personal interno." : null)}
@@ -78,32 +77,16 @@ function LoginForm() {
 			password={password}
 			setPassword={setPassword}
 		/>
+
 	);
 }
 
 export default function LoginPage() {
 	return (
-		<div className="min-h-screen relative flex items-center justify-center bg-background-light p-6 overflow-hidden selection:bg-primary/30">
-			{/* Decorative background elements consistent with Abtec theme */}
-			<div className="absolute top-0 left-0 w-full h-full overflow-hidden pointer-events-none">
-				<div className="absolute top-[-10%] right-[-5%] w-[40%] h-[40%] bg-primary/10 rounded-full blur-[120px] animate-pulse"></div>
-				<div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]"></div>
-			</div>
-
-			<div className="z-10 w-full max-w-5xl mx-auto flex justify-center">
-				<Suspense
-					fallback={
-						<div className="flex flex-col items-center gap-4">
-							<div className="w-12 h-12 border-4 border-primary/20 border-t-primary rounded-full animate-spin"></div>
-							<p className="text-secondary font-bold animate-pulse">
-								Cargando Entorno Seguro...
-							</p>
-						</div>
-					}
-				>
-					<LoginForm />
-				</Suspense>
-			</div>
+		<div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#0a1628] to-[#0d1a0d] p-4">
+			<Suspense fallback={<p className="text-gray-400">Cargando Entorno Seguro...</p>}>
+				<LoginForm />
+			</Suspense>
 		</div>
 	);
 }
