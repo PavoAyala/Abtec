@@ -1,6 +1,6 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
+import { createContext, useContext, useEffect, useState, useMemo, type ReactNode } from "react";
 import {
 	User,
 	signOut as firebaseSignOut,
@@ -97,7 +97,7 @@ export function AuthProvider({
 	);
 
 	return (
-		<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
+		<AuthContext value={contextValue}>{children}</AuthContext>
 	);
 }
 
