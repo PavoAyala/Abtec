@@ -69,22 +69,23 @@ const DotMap = () => {
 
 		const ctx = canvas.getContext("2d");
 		if (!ctx) return;
+		const context: CanvasRenderingContext2D = ctx;
 
 		const dots = generateDots(dimensions.width, dimensions.height);
 		let animationFrameId: number;
 		let startTime = Date.now();
 
-		function drawDots() {
-			ctx.clearRect(0, 0, dimensions.width, dimensions.height);
+		function drawDots(c: CanvasRenderingContext2D) {
+			c.clearRect(0, 0, dimensions.width, dimensions.height);
 			for (const dot of dots) {
-				ctx.beginPath();
-				ctx.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
-				ctx.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
-				ctx.fill();
+				c.beginPath();
+				c.arc(dot.x, dot.y, dot.radius, 0, Math.PI * 2);
+				c.fillStyle = `rgba(255, 255, 255, ${dot.opacity})`;
+				c.fill();
 			}
 		}
 
-		function drawRoutes() {
+		function drawRoutes(c: CanvasRenderingContext2D) {
 			const currentTime = (Date.now() - startTime) / 1000;
 
 			for (const route of routes) {
@@ -97,40 +98,40 @@ const DotMap = () => {
 				const x = route.start.x + (route.end.x - route.start.x) * progress;
 				const y = route.start.y + (route.end.y - route.start.y) * progress;
 
-				ctx.beginPath();
-				ctx.moveTo(route.start.x, route.start.y);
-				ctx.lineTo(x, y);
-				ctx.strokeStyle = route.color;
-				ctx.lineWidth = 1.5;
-				ctx.stroke();
+				c.beginPath();
+				c.moveTo(route.start.x, route.start.y);
+				c.lineTo(x, y);
+				c.strokeStyle = route.color;
+				c.lineWidth = 1.5;
+				c.stroke();
 
-				ctx.beginPath();
-				ctx.arc(route.start.x, route.start.y, 3, 0, Math.PI * 2);
-				ctx.fillStyle = route.color;
-				ctx.fill();
+				c.beginPath();
+				c.arc(route.start.x, route.start.y, 3, 0, Math.PI * 2);
+				c.fillStyle = route.color;
+				c.fill();
 
-				ctx.beginPath();
-				ctx.arc(x, y, 3, 0, Math.PI * 2);
-				ctx.fillStyle = "#a3d430";
-				ctx.fill();
+				c.beginPath();
+				c.arc(x, y, 3, 0, Math.PI * 2);
+				c.fillStyle = "#a3d430";
+				c.fill();
 
-				ctx.beginPath();
-				ctx.arc(x, y, 6, 0, Math.PI * 2);
-				ctx.fillStyle = "rgba(120, 179, 9, 0.3)";
-				ctx.fill();
+				c.beginPath();
+				c.arc(x, y, 6, 0, Math.PI * 2);
+				c.fillStyle = "rgba(120, 179, 9, 0.3)";
+				c.fill();
 
 				if (progress === 1) {
-					ctx.beginPath();
-					ctx.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2);
-					ctx.fillStyle = route.color;
-					ctx.fill();
+					c.beginPath();
+					c.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2);
+					c.fillStyle = route.color;
+					c.fill();
 				}
 			}
 		}
 
 		function animate() {
-			drawDots();
-			drawRoutes();
+			drawDots(context);
+			drawRoutes(context);
 
 			const currentTime = (Date.now() - startTime) / 1000;
 			if (currentTime > 15) {
