@@ -90,7 +90,7 @@ export default function LoginPage() {
 				<div className="absolute bottom-[-10%] left-[-5%] w-[40%] h-[40%] bg-secondary/5 rounded-full blur-[120px]"></div>
 			</div>
 
-			<div className="z-10 w-full max-w-6xl mx-auto flex justify-center">
+			<div className="z-10 w-full max-w-5xl mx-auto flex justify-center">
 				<Suspense
 					fallback={
 						<div className="flex flex-col items-center gap-4">
