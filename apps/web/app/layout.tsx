@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import type { JSX } from "react";
 import { Analytics } from "@vercel/analytics/next";
 import FirebaseEmulatorBootstrap from "../components/FirebaseEmulatorBootstrap";
+import { AuthProvider } from "../hooks/useAuth";
+import AuthModal from "../components/auth/AuthModal";
 import "./globals.css";
 
 export const metadata: Metadata = {
@@ -14,7 +16,7 @@ export const metadata: Metadata = {
 export default function RootLayout({
   children,
 }: Readonly<{
-  children: any;
+  children: React.ReactNode;
 }>): JSX.Element {
   return (
     <html lang="es" className="light">
@@ -24,7 +26,11 @@ export default function RootLayout({
       </head>
       <body className="bg-background-light dark:bg-background-dark text-secondary dark:text-white antialiased">
         <FirebaseEmulatorBootstrap />
-        {children}
+        <AuthProvider>
+          {children}
+          {/* @ts-expect-error React node mismatch in monorepo */}
+          <AuthModal />
+        </AuthProvider>
         <Analytics />
       </body>
     </html>

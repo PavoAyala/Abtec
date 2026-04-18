@@ -651,6 +651,7 @@ Solo si entra en uso:
 - [ ] convertir app movil de scaffold a login + lista de tickets + crear ticket
 - [ ] conectar customer auth en ambos canales
 - [ ] Configurar extensión **Trigger Email from Firestore** para correos transaccionales (bienvenidas, estatus).
+- [ ] Implementar doble autenticación (MFA) en accesos de Web y CRM.
 
 ### Sprint 4
 

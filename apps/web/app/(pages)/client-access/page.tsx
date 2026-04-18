@@ -6,18 +6,22 @@ import Link from 'next/link';
 import { useAuth } from '../../../hooks/useAuth';
 
 export default function ClientAccess(): JSX.Element {
-    const { user, loading, error, signIn, signOut, isAuthenticated } = useAuth();
+    const { user, loading, error, signOut, isAuthenticated } = useAuth();
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [localError, setLocalError] = useState<string | null>(null);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
         setIsSubmitting(true);
+        setLocalError(null);
         try {
-            await signIn(email, password);
-        } catch {
-            // Error is handled in useAuth hook
+            const { signInWithEmailAndPassword } = await import('firebase/auth');
+            const { getClientAuth } = await import('../../../lib/firebase');
+            await signInWithEmailAndPassword(getClientAuth(), email, password);
+        } catch (err) {
+            setLocalError(err instanceof Error ? err.message : 'Sign in failed');
         } finally {
             setIsSubmitting(false);
         }
@@ -153,9 +157,9 @@ export default function ClientAccess(): JSX.Element {
                             />
                         </div>
 
-                        {error && (
+                        {(error || localError) && (
                             <div className="p-4 bg-red-100 text-red-700 rounded-lg text-sm">
-                                {error}
+                                {error || localError}
                             </div>
                         )}
 

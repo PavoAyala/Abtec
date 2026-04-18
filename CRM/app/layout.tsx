@@ -1,16 +1,20 @@
 "use client";
 
-import type { Metadata } from "next";
-import { useEffect, useState } from "react";
 import Sidebar from "@/components/Sidebar";
 import CommandPalette, { useCommandPalette } from "@/components/CommandPalette";
 import "./globals.css";
 
+import { usePathname } from 'next/navigation';
+import { AuthProvider } from "@/components/AuthProvider";
+
 export default function RootLayout({
   children,
-}: {
+}: Readonly<{
   children: React.ReactNode;
-}) {
+}>) {
+  const pathname = usePathname();
+  const isLoginPage = pathname === '/login';
+
   return (
     <html lang="es">
       <head>
@@ -27,15 +31,21 @@ export default function RootLayout({
         />
       </head>
       <body>
-        <CommandPaletteWrapper>
-          <Sidebar>{children}</Sidebar>
-        </CommandPaletteWrapper>
+        <AuthProvider>
+          {isLoginPage ? (
+            children
+          ) : (
+            <CommandPaletteWrapper>
+              <Sidebar>{children}</Sidebar>
+            </CommandPaletteWrapper>
+          )}
+        </AuthProvider>
       </body>
     </html>
   );
 }
 
-function CommandPaletteWrapper({ children }: { children: React.ReactNode }) {
+function CommandPaletteWrapper({ children }: Readonly<{ children: React.ReactNode }>) {
   const { isOpen, setIsOpen } = useCommandPalette();
 
   return (
