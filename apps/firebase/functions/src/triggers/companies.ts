@@ -1,8 +1,7 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Company } from "../models";
-import { AuditLog, AuditAction } from "../models";
+import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
+import { AuditAction, type AuditLog, type Company } from "../models";
 
 /**
  * onCompanyCreated - Trigger when a new company is created

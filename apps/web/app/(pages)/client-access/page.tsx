@@ -1,8 +1,8 @@
 "use client";
 
+import Link from "next/link";
 import type { JSX } from "react";
 import { useState } from "react";
-import Link from "next/link";
 import { useAuth } from "../../../hooks/useAuth";
 
 export default function ClientAccess(): JSX.Element {
@@ -47,6 +47,7 @@ export default function ClientAccess(): JSX.Element {
 									fill="none"
 									stroke="currentColor"
 									viewBox="0 0 24 24"
+									aria-hidden="true"
 								>
 									<path
 										strokeLinecap="round"
@@ -87,6 +88,7 @@ export default function ClientAccess(): JSX.Element {
 
 						<div className="flex flex-col sm:flex-row gap-4 justify-center">
 							<button
+								type="button"
 								onClick={signOut}
 								className="px-6 py-3 border-2 border-abtec-navy-200 text-abtec-navy-700 font-semibold rounded-lg hover:bg-abtec-navy-50 transition-colors"
 							>

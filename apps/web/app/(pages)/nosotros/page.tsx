@@ -1,6 +1,6 @@
 import type { JSX } from "react";
-import Header from "../../../components/Header";
 import Footer from "../../../components/Footer";
+import Header from "../../../components/Header";
 
 export default function Nosotros(): JSX.Element {
 	return (

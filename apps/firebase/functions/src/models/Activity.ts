@@ -1,5 +1,5 @@
-import { Timestamp } from "firebase-admin/firestore";
-import { ActivityType } from "./types";
+import type { Timestamp } from "firebase-admin/firestore";
+import type { ActivityType } from "./types";
 
 export interface Activity {
 	id?: string;

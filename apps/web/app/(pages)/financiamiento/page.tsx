@@ -1,7 +1,7 @@
 import type { JSX } from "react";
-import Header from "../../../components/Header";
 import Financing from "../../../components/Financing";
 import Footer from "../../../components/Footer";
+import Header from "../../../components/Header";
 
 export const metadata = {
 	title: "Financiamiento | ABTEC",

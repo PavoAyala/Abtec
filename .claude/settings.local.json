@@ -1,5 +1,11 @@
 {
-	"permissions": {
-		"allow": ["Bash(pnpm install:*)", "Bash(pnpm turbo:*)"]
-	}
+  "permissions": {
+    "allow": [
+      "Bash(pnpm install:*)",
+      "Bash(pnpm turbo:*)",
+      "Bash(pnpm build *)",
+      "Bash(npm install *)",
+      "Bash(pnpm add *)"
+    ]
+  }
 }

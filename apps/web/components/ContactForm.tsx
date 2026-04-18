@@ -1,6 +1,6 @@
 "use client";
 
-import type { JSX, ChangeEvent, FormEvent } from "react";
+import type { ChangeEvent, FormEvent, JSX } from "react";
 import { useState } from "react";
 
 interface FormData {

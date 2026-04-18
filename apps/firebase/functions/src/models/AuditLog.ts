@@ -1,4 +1,4 @@
-import { Timestamp } from "firebase-admin/firestore";
+import type { Timestamp } from "firebase-admin/firestore";
 
 export enum AuditAction {
 	Create = "create",
@@ -12,6 +12,6 @@ export interface AuditLog {
 	action: AuditAction;
 	collection: string;
 	documentId: string;
-	changes: Record<string, { before: any; after: any }>;
+	changes: Record<string, { before: unknown; after: unknown }>;
 	timestamp: Timestamp;
 }

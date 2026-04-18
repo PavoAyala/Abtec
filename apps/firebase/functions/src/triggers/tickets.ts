@@ -1,9 +1,15 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Ticket, TicketStatus, TicketPriority } from "../models";
-import { Activity, ActivityType } from "../models";
-import { AuditLog, AuditAction } from "../models";
+import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
+import {
+	type Activity,
+	ActivityType,
+	AuditAction,
+	type AuditLog,
+	type Ticket,
+	TicketPriority,
+	TicketStatus,
+} from "../models";
 
 // SLA deadlines by priority (in hours)
 const SLA_HOURS: Record<string, number> = {

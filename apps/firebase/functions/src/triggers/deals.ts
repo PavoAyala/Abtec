@@ -1,9 +1,14 @@
-import * as functions from "firebase-functions";
 import * as admin from "firebase-admin";
-import { Deal, DealStage } from "../models";
-import { Activity, ActivityType } from "../models";
-import { AuditLog, AuditAction } from "../models";
+import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
+import {
+	type Activity,
+	ActivityType,
+	AuditAction,
+	type AuditLog,
+	type Deal,
+	DealStage,
+} from "../models";
 
 /**
  * onDealCreated - Trigger when a new deal is created

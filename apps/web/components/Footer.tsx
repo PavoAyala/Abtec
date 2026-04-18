@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import type { JSX } from "react";
 import { useState } from "react";
 import PrivacyModal from "./PrivacyModal";
@@ -13,10 +14,12 @@ export default function Footer(): JSX.Element {
 				<div className="flex flex-col md:flex-row justify-between items-center gap-8">
 					<div className="flex items-center gap-3">
 						<div className="relative flex items-center justify-center">
-							<img
+							<Image
 								src="/logo.png"
 								alt="ABTEC Logo"
-								className="w-6 h-6 object-contain opacity-50"
+								width={24}
+								height={24}
+								className="opacity-50"
 							/>
 						</div>
 						<span className="text-secondary/40 font-bold uppercase tracking-tighter">
@@ -25,6 +28,7 @@ export default function Footer(): JSX.Element {
 					</div>
 					<div className="flex gap-8">
 						<button
+							type="button"
 							onClick={() => setIsPrivacyOpen(true)}
 							className="text-secondary/40 hover:text-primary transition-colors text-sm font-medium"
 						>
@@ -33,9 +37,13 @@ export default function Footer(): JSX.Element {
 					</div>
 					<div className="flex gap-4">
 						<a
-							href="#"
+							href="https://instagram.com/abtec"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Instagram"
 							className="w-10 h-10 rounded-full bg-background-light flex items-center justify-center text-secondary/40 hover:bg-primary/20 hover:text-primary transition-all cursor-pointer group"
 						>
+							<span className="sr-only">Instagram</span>
 							<svg
 								className="w-5 h-5 fill-current"
 								viewBox="0 0 24 24"
@@ -45,9 +53,13 @@ export default function Footer(): JSX.Element {
 							</svg>
 						</a>
 						<a
-							href="#"
+							href="https://facebook.com/abtec"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="Facebook"
 							className="w-10 h-10 rounded-full bg-background-light flex items-center justify-center text-secondary/40 hover:bg-primary/20 hover:text-primary transition-all cursor-pointer group"
 						>
+							<span className="sr-only">Facebook</span>
 							<svg
 								className="w-5 h-5 fill-current"
 								viewBox="0 0 24 24"
@@ -57,9 +69,13 @@ export default function Footer(): JSX.Element {
 							</svg>
 						</a>
 						<a
-							href="#"
+							href="https://x.com/abtec"
+							target="_blank"
+							rel="noopener noreferrer"
+							aria-label="X (Twitter)"
 							className="w-10 h-10 rounded-full bg-background-light flex items-center justify-center text-secondary/40 hover:bg-primary/20 hover:text-primary transition-all cursor-pointer group"
 						>
+							<span className="sr-only">X (Twitter)</span>
 							<svg
 								className="w-5 h-5 fill-current"
 								viewBox="0 0 24 24"

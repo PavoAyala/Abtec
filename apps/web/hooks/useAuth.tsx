@@ -1,13 +1,22 @@
 "use client";
 
-import { createContext, useContext, useEffect, useState, useMemo } from "react";
 import {
-	User,
 	signOut as firebaseSignOut,
 	onAuthStateChanged,
+	type User,
 } from "firebase/auth";
+import { doc, getDoc, serverTimestamp, setDoc } from "firebase/firestore";
+import {
+	createContext,
+	type ReactNode,
+	useCallback,
+	useContext,
+	useEffect,
+	useMemo,
+	useState,
+} from "react";
+
 import { getClientAuth, getClientDb } from "../lib/firebase";
-import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 
 interface AuthContextType {
 	user: User | null;
@@ -25,7 +34,7 @@ const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export function AuthProvider({
 	children,
-}: Readonly<{ children: React.ReactNode }>) {
+}: Readonly<{ children: ReactNode }>): ReactNode {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [error, setError] = useState<string | null>(null);
@@ -66,10 +75,10 @@ export function AuthProvider({
 		return () => unsubscribe();
 	}, []);
 
-	const openAuthModal = () => setIsAuthModalOpen(true);
-	const closeAuthModal = () => setIsAuthModalOpen(false);
+	const openAuthModal = useCallback(() => setIsAuthModalOpen(true), []);
+	const closeAuthModal = useCallback(() => setIsAuthModalOpen(false), []);
 
-	const signOut = async () => {
+	const signOut = useCallback(async () => {
 		setError(null);
 		try {
 			const auth = getClientAuth();
@@ -79,7 +88,7 @@ export function AuthProvider({
 			setError(message);
 			throw err;
 		}
-	};
+	}, []);
 
 	const contextValue = useMemo(
 		() => ({
@@ -93,10 +102,19 @@ export function AuthProvider({
 			signOut,
 			setUser,
 		}),
-		[user, loading, error, isAuthModalOpen],
+		[
+			user,
+			loading,
+			error,
+			isAuthModalOpen,
+			openAuthModal,
+			closeAuthModal,
+			signOut,
+		],
 	);
 
 	return (
+		// @ts-expect-error React node mismatch in monorepo
 		<AuthContext.Provider value={contextValue}>{children}</AuthContext.Provider>
 	);
 }

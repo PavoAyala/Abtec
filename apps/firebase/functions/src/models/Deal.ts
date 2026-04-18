@@ -1,5 +1,5 @@
-import { Timestamp } from "firebase-admin/firestore";
-import { DealStage } from "./types";
+import type { Timestamp } from "firebase-admin/firestore";
+import type { DealStage } from "./types";
 
 export interface Deal {
 	id?: string;
