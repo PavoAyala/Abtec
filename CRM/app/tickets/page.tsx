@@ -1,68 +1,94 @@
-'use client';
+"use client";
 
-import useSWR from 'swr';
-import { SWRKeys, fetcher } from '@/lib/swr';
-import { TicketStatus, TicketPriority } from '@/types';
+import useSWR from "swr";
+import { SWRKeys, fetcher } from "@/lib/swr";
+import { TicketStatus, TicketPriority } from "@/types";
+import { DataTable } from "@/components/StatsAndTables";
+
+const statusColors: Record<string, string> = {
+	[TicketStatus.Open]: "badge-yellow",
+	[TicketStatus.InProgress]: "badge-blue",
+	[TicketStatus.Resolved]: "badge-green",
+	[TicketStatus.Closed]: "badge-gray",
+};
+
+const priorityColors: Record<string, string> = {
+	[TicketPriority.Low]: "badge-gray",
+	[TicketPriority.Medium]: "badge-yellow",
+	[TicketPriority.High]: "badge-red",
+	[TicketPriority.Critical]: "badge-red",
+};
 
 export default function TicketsPage() {
-  const { data: tickets } = useSWR(SWRKeys.tickets, fetcher.tickets, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    dedupingInterval: 60000,
-  });
+	const { data: tickets } = useSWR(SWRKeys.tickets, fetcher.tickets, {
+		revalidateOnFocus: false,
+		revalidateOnReconnect: false,
+		dedupingInterval: 60000,
+	});
 
-  const getStatusBadge = (status: string) => {
-    const classes: Record<string, string> = {
-      [TicketStatus.Open]: 'badge-open',
-      [TicketStatus.InProgress]: 'badge-inprogress',
-      [TicketStatus.Resolved]: 'badge-resolved',
-      [TicketStatus.Closed]: 'badge-closed',
-    };
-    return classes[status] || '';
-  };
+	const columns = [
+		{
+			key: "title",
+			label: "Título",
+			sortable: true,
+		},
+		{
+			key: "status",
+			label: "Estado",
+			render: (item: { status: string }) => (
+				<span className={`badge ${statusColors[item.status] || "badge-gray"}`}>
+					{item.status}
+				</span>
+			),
+		},
+		{
+			key: "priority",
+			label: "Prioridad",
+			render: (item: { priority: string }) => (
+				<span
+					className={`badge ${priorityColors[item.priority] || "badge-gray"}`}
+				>
+					{item.priority}
+				</span>
+			),
+		},
+		{
+			key: "category",
+			label: "Categoría",
+			sortable: true,
+		},
+	];
 
-  const getPriorityBadge = (priority: string) => {
-    const classes: Record<string, string> = {
-      [TicketPriority.Low]: 'badge-low',
-      [TicketPriority.Medium]: 'badge-medium',
-      [TicketPriority.High]: 'badge-high',
-      [TicketPriority.Critical]: 'badge-critical',
-    };
-    return classes[priority] || '';
-  };
+	return (
+		<div className="page-container">
+			<div className="page-header">
+				<div className="page-header-content">
+					<h2>Tickets de Soporte</h2>
+					<p>Sistema de soporte postventa</p>
+				</div>
+				<div className="page-actions">
+					<button className="btn btn-primary">
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+						>
+							<path d="M12 5v14M5 12h14" />
+						</svg>
+						Nuevo Ticket
+					</button>
+				</div>
+			</div>
 
-  return (
-    <div className="container">
-      <div className="page-header">
-        <h2>Tickets de Soporte</h2>
-        <p style={{ color: '#666' }}>Total: {tickets?.length || 0}</p>
-      </div>
-
-      <div className="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Título</th>
-              <th>Estado</th>
-              <th>Prioridad</th>
-              <th>Categoría</th>
-            </tr>
-          </thead>
-          <tbody>
-            {tickets?.map((ticket) => (
-              <tr key={ticket.id}>
-                <td>{ticket.title}</td>
-                <td><span className={`badge ${getStatusBadge(ticket.status)}`}>{ticket.status}</span></td>
-                <td><span className={`badge ${getPriorityBadge(ticket.priority)}`}>{ticket.priority}</span></td>
-                <td>{ticket.category}</td>
-              </tr>
-            ))}
-            {(!tickets || tickets.length === 0) && (
-              <tr><td colSpan={4} style={{ textAlign: 'center' }}>No hay tickets</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+			<DataTable
+				data={tickets || []}
+				columns={columns}
+				searchPlaceholder="Buscar tickets..."
+				emptyMessage="No hay tickets. El sistema está tranquilo."
+			/>
+		</div>
+	);
 }

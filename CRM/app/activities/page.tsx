@@ -1,59 +1,166 @@
-'use client';
+"use client";
 
-import useSWR from 'swr';
-import { SWRKeys, fetcher } from '@/lib/swr';
-import { ActivityType } from '@/types';
+import useSWR from "swr";
+import { SWRKeys, fetcher } from "@/lib/swr";
+import { Activity, ActivityType } from "@/types";
+import { DataTable } from "@/components/StatsAndTables";
 
 export default function ActivitiesPage() {
-  const { data: activities } = useSWR(SWRKeys.activities, fetcher.activities, {
-    revalidateOnFocus: false,
-    revalidateOnReconnect: false,
-    dedupingInterval: 60000,
-  });
+	const { data: activities } = useSWR<Activity[]>(
+		SWRKeys.activities,
+		fetcher.activities,
+		{
+			revalidateOnFocus: false,
+			revalidateOnReconnect: false,
+			dedupingInterval: 60000,
+		},
+	);
 
-  const getTypeIcon = (type: string) => {
-    const icons: Record<string, string> = {
-      [ActivityType.Call]: '📞',
-      [ActivityType.Email]: '✉️',
-      [ActivityType.Meeting]: '📅',
-      [ActivityType.Note]: '📝',
-      [ActivityType.Task]: '✅',
-    };
-    return icons[type] || '📌';
-  };
+	const columns = [
+		{
+			key: "type",
+			label: "Tipo",
+			sortable: true,
+			render: (item: Activity) => {
+				const getIcon = () => {
+					switch (item.type) {
+						case ActivityType.Call:
+							return (
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									style={{ verticalAlign: "middle" }}
+								>
+									<path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72" />
+								</svg>
+							);
+						case ActivityType.Email:
+							return (
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									style={{ verticalAlign: "middle" }}
+								>
+									<rect width="20" height="16" x="2" y="4" rx="2" />
+									<path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+								</svg>
+							);
+						case ActivityType.Meeting:
+							return (
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									style={{ verticalAlign: "middle" }}
+								>
+									<rect width="18" height="18" x="3" y="4" rx="2" />
+									<path d="M16 2v4M8 2v4M3 10h18" />
+								</svg>
+							);
+						case ActivityType.Task:
+							return (
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									style={{ verticalAlign: "middle" }}
+								>
+									<path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+									<path d="m9 11 3 3L22 4" />
+								</svg>
+							);
+						default:
+							return (
+								<svg
+									width="16"
+									height="16"
+									viewBox="0 0 24 24"
+									fill="none"
+									stroke="currentColor"
+									strokeWidth="2"
+									style={{ verticalAlign: "middle" }}
+								>
+									<path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z" />
+								</svg>
+							);
+					}
+				};
+				return (
+					<span style={{ display: "flex", alignItems: "center" }}>
+						{getIcon()}
+						<span style={{ marginLeft: 8 }}>{item.type}</span>
+					</span>
+				);
+			},
+		},
+		{
+			key: "description",
+			label: "Descripción",
+			sortable: true,
+		},
+		{
+			key: "dueDate",
+			label: "Fecha Límite",
+			render: (item: Activity) =>
+				item.dueDate ? new Date(item.dueDate).toLocaleDateString("es-ES") : "-",
+		},
+		{
+			key: "completedAt",
+			label: "Estado",
+			render: (item: Activity) => (
+				<span
+					className={`badge ${item.completedAt ? "badge-green" : "badge-yellow"}`}
+				>
+					{item.completedAt ? "Completada" : "Pendiente"}
+				</span>
+			),
+		},
+	];
 
-  return (
-    <div className="container">
-      <div className="page-header">
-        <h2>Actividades</h2>
-        <p style={{ color: '#666' }}>Total: {activities?.length || 0}</p>
-      </div>
+	return (
+		<div className="page-container">
+			<div className="page-header">
+				<div className="page-header-content">
+					<h2>Actividades</h2>
+					<p>Tareas y seguimiento</p>
+				</div>
+				<div className="page-actions">
+					<button className="btn btn-primary">
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+						>
+							<path d="M12 5v14M5 12h14" />
+						</svg>
+						Nueva Actividad
+					</button>
+				</div>
+			</div>
 
-      <div className="card">
-        <table>
-          <thead>
-            <tr>
-              <th>Tipo</th>
-              <th>Descripción</th>
-              <th>Fecha Límite</th>
-              <th>Completada</th>
-            </tr>
-          </thead>
-          <tbody>
-            {activities?.map((activity) => (
-              <tr key={activity.id}>
-                <td>{getTypeIcon(activity.type)} {activity.type}</td>
-                <td>{activity.description}</td>
-                <td>{activity.dueDate ? new Date(activity.dueDate).toLocaleDateString() : '-'}</td>
-                <td>{activity.completedAt ? '✅' : '❌'}</td>
-              </tr>
-            ))}
-            {(!activities || activities.length === 0) && (
-              <tr><td colSpan={4} style={{ textAlign: 'center' }}>No hay actividades</td></tr>
-            )}
-          </tbody>
-        </table>
-      </div>
-    </div>
-  );
+			<DataTable
+				data={activities || []}
+				columns={columns}
+				searchPlaceholder="Buscar actividades..."
+				emptyMessage="No hay actividades. Crea una nueva para empezar."
+			/>
+		</div>
+	);
 }
