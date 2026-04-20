@@ -635,7 +635,7 @@ Solo si entra en uso:
 
 - [x] Limpiar LeadCMS del repo y documentacion
 - [x] Investigar extensiones de Firebase y Google Cloud aplicables al flujo comercial/CRM.
-- [ ] cerrar auth y proteccion de rutas del CRM
+- [x] cerrar auth y proteccion de rutas del CRM
 - [ ] endurecer `firestore.rules`
 
 ### Sprint 2

@@ -1,9 +1,8 @@
 "use client";
 
 import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
-import { auth, db } from "../../../lib/firebase";
+import { auth } from "../../../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
-import { doc, getDoc } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 
@@ -45,23 +44,18 @@ function LoginForm() {
 		setLoading(true);
 
 		try {
-			const userCredential = await signInWithEmailAndPassword(
-				auth,
-				email,
-				password,
-			);
+			const { user } = await signInWithEmailAndPassword(auth, email, password);
 
-			const staffRef = doc(db, "staff", userCredential.user.uid);
-			const staffSnap = await getDoc(staffRef);
-
-			if (!staffSnap.exists()) {
+			// Verify the staff custom claim before allowing access
+			const { claims } = await user.getIdTokenResult(true);
+			if (!claims.staff) {
+				await auth.signOut();
 				throw new Error("Access Denied: You do not have staff privileges.");
 			}
 
 			router.push("/");
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
-			await auth.signOut();
 		} finally {
 			setLoading(false);
 		}

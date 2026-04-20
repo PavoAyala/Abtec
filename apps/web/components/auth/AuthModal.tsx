@@ -84,6 +84,7 @@ export default function AuthModal(): ReactElement | null {
 						firstName,
 						lastName,
 						authUid: user.uid,
+						role: "customer",
 						status: "active",
 						createdAt: serverTimestamp(),
 						updatedAt: serverTimestamp(),
