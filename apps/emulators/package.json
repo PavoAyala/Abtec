@@ -1,0 +1,16 @@
+{
+  "name": "@abtec/emulators",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Configuración centralizada y modular de emuladores de Firebase",
+  "scripts": {
+    "dev": "firebase emulators:start --project abtec-8f31e --import=./emulators-data --export-on-exit=./emulators-data",
+    "export-data": "firebase emulators:export ./emulators-data --project abtec-8f31e",
+    "auth-emulators": "cross-env GOOGLE_APPLICATION_CREDENTIALS=./serviceAccountKey.json firebase emulators:start --project abtec-8f31e --import=./emulators-data --export-on-exit=./emulators-data",
+    "test:firestore": "firebase emulators:exec --project abtec-8f31e \"node --test tests/firestore/\"",
+    "test:rtdb-analytics": "firebase emulators:exec --project abtec-8f31e \"node --test tests/realtime/analytics/\""
+  },
+  "devDependencies": {
+    "cross-env": "^7.0.3"
+  }
+}
