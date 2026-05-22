@@ -1,8 +1,8 @@
 "use client";
 
+import { Mail, MapPin, Phone, Search } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { Phone, Mail, MapPin, Search } from "lucide-react";
 import type { JSX } from "react";
 
 export default function Footer(): JSX.Element {
@@ -40,7 +40,6 @@ export default function Footer(): JSX.Element {
 		<footer className="bg-white text-[#1c1d29] pt-20 pb-8 border-t-[8px] border-abtec-green relative overflow-hidden">
 			<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
 				<div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-12 mb-16">
-					
 					{/* Brand & Contact */}
 					<div className="flex flex-col gap-6">
 						<Link href="/" className="flex items-center gap-3 mb-2">
@@ -71,14 +70,19 @@ export default function Footer(): JSX.Element {
 						</div>
 
 						<div className="mt-4">
-							<h3 className="text-lg font-heading font-bold mb-4 text-[#1c1d29] uppercase">Buscador</h3>
+							<h3 className="text-lg font-heading font-bold mb-4 text-[#1c1d29] uppercase">
+								Buscador
+							</h3>
 							<form className="relative" onSubmit={(e) => e.preventDefault()}>
 								<input
 									type="text"
 									placeholder="Buscar..."
 									className="w-full bg-gray-50 border border-gray-200 rounded py-2 pl-4 pr-10 text-[#1c1d29] placeholder:text-gray-400 focus:outline-none focus:border-abtec-green focus:bg-white transition-all font-sans text-sm"
 								/>
-								<button type="submit" className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-abtec-green transition-colors">
+								<button
+									type="submit"
+									className="absolute right-2 top-1/2 -translate-y-1/2 text-gray-500 hover:text-abtec-green transition-colors"
+								>
 									<Search size={18} />
 								</button>
 							</form>

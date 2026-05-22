@@ -1,7 +1,7 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Sun, Lightbulb, Settings, ArrowRight } from "lucide-react";
+import { ArrowRight, Lightbulb, Settings, Sun } from "lucide-react";
 import type { JSX } from "react";
 
 export default function Services(): JSX.Element {

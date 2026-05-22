@@ -1,1 +1,336 @@
-(globalThis.TURBOPACK||(globalThis.TURBOPACK=[])).push(["object"==typeof document?document.currentScript:void 0,96044,e=>{"use strict";var t=e.i(11173),s=e.i(54679),i=e.i(75307),a=e.i(24182),r=e.i(25629);function l(){let{data:e}=(0,i.default)(r.SWRKeys.contacts,r.fetcher.contacts,{revalidateOnFocus:!1,revalidateOnReconnect:!1,dedupingInterval:6e4}),{data:l}=(0,i.default)(r.SWRKeys.deals,r.fetcher.deals,{revalidateOnFocus:!1,revalidateOnReconnect:!1,dedupingInterval:6e4}),{data:d}=(0,i.default)(r.SWRKeys.dealsStats,r.fetcher.dealsStats,{revalidateOnFocus:!1,revalidateOnReconnect:!1,dedupingInterval:6e4}),{data:n}=(0,i.default)(r.SWRKeys.ticketsStats,r.fetcher.ticketsStats,{revalidateOnFocus:!1,revalidateOnReconnect:!1,dedupingInterval:6e4}),o={totalContacts:e?.length||0,totalDeals:l?.length||0,pipelineValue:d?.totalValue||0,openTickets:(n?.open||0)+(n?.inProgress||0)};return(0,t.jsxs)("div",{className:"page-container",children:[(0,t.jsx)("div",{className:"page-header",children:(0,t.jsxs)("div",{className:"page-header-content",children:[(0,t.jsx)("h2",{children:"Dashboard"}),(0,t.jsx)("p",{children:"Resumen de tu CRM"})]})}),(0,t.jsxs)("div",{className:"stats-grid",children:[(0,t.jsx)(a.default,{label:"Total Contactos",value:o.totalContacts,icon:(0,t.jsxs)("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"}),(0,t.jsx)("circle",{cx:"9",cy:"7",r:"4"}),(0,t.jsx)("path",{d:"M23 21v-2a4 4 0 0 0-3-3.87"}),(0,t.jsx)("path",{d:"M16 3.13a4 4 0 0 1 0 7.75"})]}),variant:"blue"}),(0,t.jsx)(a.default,{label:"Total Deals",value:o.totalDeals,icon:(0,t.jsxs)("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"m11 17 2 2a1 1 0 1 0 3-3"}),(0,t.jsx)("path",{d:"m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4"})]}),variant:"green"}),(0,t.jsx)(a.default,{label:"Valor Pipeline",value:o.pipelineValue,prefix:"$",icon:(0,t.jsxs)("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("line",{x1:"12",y1:"1",x2:"12",y2:"23"}),(0,t.jsx)("path",{d:"M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6"})]}),variant:"yellow"}),(0,t.jsx)(a.default,{label:"Tickets Abiertos",value:o.openTickets,icon:(0,t.jsxs)("svg",{width:"20",height:"20",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0"}),(0,t.jsx)("circle",{cx:"12",cy:"17",r:"5"})]}),variant:"red"})]}),(0,t.jsxs)("div",{className:"card",children:[(0,t.jsx)("div",{className:"card-header",children:(0,t.jsx)("h3",{children:"Módulos del CRM"})}),(0,t.jsx)("div",{className:"card-body",children:(0,t.jsx)("div",{className:"module-grid",children:[{href:"/contacts",title:"Contactos",description:"Gestiona tus contactos y leads",icon:"people",color:"blue"},{href:"/companies",title:"Empresas",description:"Administra empresas y cuentas",icon:"business",color:"green"},{href:"/deals",title:"Pipeline",description:"Gestiona tus oportunidades",icon:"handshake",color:"yellow"},{href:"/tickets",title:"Tickets",description:"Sistema de soporte postventa",icon:"support",color:"red"},{href:"/activities",title:"Actividades",description:"Tareas y seguimiento",icon:"event",color:"purple"}].map(e=>(0,t.jsxs)(s.default,{href:e.href,className:"module-card",children:[(0,t.jsxs)("div",{className:`module-icon ${e.color}`,children:["people"===e.icon&&(0,t.jsxs)("svg",{width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"}),(0,t.jsx)("circle",{cx:"9",cy:"7",r:"4"}),(0,t.jsx)("path",{d:"M23 21v-2a4 4 0 0 0-3-3.87"}),(0,t.jsx)("path",{d:"M16 3.13a4 4 0 0 1 0 7.75"})]}),"business"===e.icon&&(0,t.jsxs)("svg",{width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"M3 21h18"}),(0,t.jsx)("path",{d:"M5 21V7l8-4v18"}),(0,t.jsx)("path",{d:"M19 21V11l-6-4"})]}),"handshake"===e.icon&&(0,t.jsxs)("svg",{width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"m11 17 2 2a1 1 0 1 0 3-3"}),(0,t.jsx)("path",{d:"m14 14 2.5 2.5a1 1 0 1 0 3-3"})]}),"support"===e.icon&&(0,t.jsxs)("svg",{width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("path",{d:"M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0"}),(0,t.jsx)("circle",{cx:"12",cy:"17",r:"5"})]}),"event"===e.icon&&(0,t.jsxs)("svg",{width:"24",height:"24",viewBox:"0 0 24 24",fill:"none",stroke:"currentColor",strokeWidth:"2","aria-hidden":"true",children:[(0,t.jsx)("rect",{width:"18",height:"18",x:"3",y:"4",rx:"2"}),(0,t.jsx)("path",{d:"M16 2v4"}),(0,t.jsx)("path",{d:"M8 2v4"}),(0,t.jsx)("path",{d:"M3 10h18"})]})]}),(0,t.jsxs)("div",{className:"module-content",children:[(0,t.jsx)("h4",{children:e.title}),(0,t.jsx)("p",{children:e.description})]})]},e.href))})})]})]})}e.s(["default",()=>l])}]);
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+	"object" == typeof document ? document.currentScript : void 0,
+	96044,
+	(e) => {
+		var t = e.i(11173),
+			s = e.i(54679),
+			i = e.i(75307),
+			a = e.i(24182),
+			r = e.i(25629);
+		function l() {
+			const { data: e } = (0, i.default)(
+					r.SWRKeys.contacts,
+					r.fetcher.contacts,
+					{
+						revalidateOnFocus: !1,
+						revalidateOnReconnect: !1,
+						dedupingInterval: 6e4,
+					},
+				),
+				{ data: l } = (0, i.default)(r.SWRKeys.deals, r.fetcher.deals, {
+					revalidateOnFocus: !1,
+					revalidateOnReconnect: !1,
+					dedupingInterval: 6e4,
+				}),
+				{ data: d } = (0, i.default)(
+					r.SWRKeys.dealsStats,
+					r.fetcher.dealsStats,
+					{
+						revalidateOnFocus: !1,
+						revalidateOnReconnect: !1,
+						dedupingInterval: 6e4,
+					},
+				),
+				{ data: n } = (0, i.default)(
+					r.SWRKeys.ticketsStats,
+					r.fetcher.ticketsStats,
+					{
+						revalidateOnFocus: !1,
+						revalidateOnReconnect: !1,
+						dedupingInterval: 6e4,
+					},
+				),
+				o = {
+					totalContacts: e?.length || 0,
+					totalDeals: l?.length || 0,
+					pipelineValue: d?.totalValue || 0,
+					openTickets: (n?.open || 0) + (n?.inProgress || 0),
+				};
+			return (0, t.jsxs)("div", {
+				className: "page-container",
+				children: [
+					(0, t.jsx)("div", {
+						className: "page-header",
+						children: (0, t.jsxs)("div", {
+							className: "page-header-content",
+							children: [
+								(0, t.jsx)("h2", { children: "Dashboard" }),
+								(0, t.jsx)("p", { children: "Resumen de tu CRM" }),
+							],
+						}),
+					}),
+					(0, t.jsxs)("div", {
+						className: "stats-grid",
+						children: [
+							(0, t.jsx)(a.default, {
+								label: "Total Contactos",
+								value: o.totalContacts,
+								icon: (0, t.jsxs)("svg", {
+									width: "20",
+									height: "20",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									"aria-hidden": "true",
+									children: [
+										(0, t.jsx)("path", {
+											d: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2",
+										}),
+										(0, t.jsx)("circle", { cx: "9", cy: "7", r: "4" }),
+										(0, t.jsx)("path", { d: "M23 21v-2a4 4 0 0 0-3-3.87" }),
+										(0, t.jsx)("path", { d: "M16 3.13a4 4 0 0 1 0 7.75" }),
+									],
+								}),
+								variant: "blue",
+							}),
+							(0, t.jsx)(a.default, {
+								label: "Total Deals",
+								value: o.totalDeals,
+								icon: (0, t.jsxs)("svg", {
+									width: "20",
+									height: "20",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									"aria-hidden": "true",
+									children: [
+										(0, t.jsx)("path", { d: "m11 17 2 2a1 1 0 1 0 3-3" }),
+										(0, t.jsx)("path", {
+											d: "m14 14 2.5 2.5a1 1 0 1 0 3-3l-3.88-3.88a3 3 0 0 0-4.24 0l-.88.88a1 1 0 1 1-3-3l2.81-2.81a5.79 5.79 0 0 1 7.06-.87l.47.28a2 2 0 0 0 1.42.25L21 4",
+										}),
+									],
+								}),
+								variant: "green",
+							}),
+							(0, t.jsx)(a.default, {
+								label: "Valor Pipeline",
+								value: o.pipelineValue,
+								prefix: "$",
+								icon: (0, t.jsxs)("svg", {
+									width: "20",
+									height: "20",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									"aria-hidden": "true",
+									children: [
+										(0, t.jsx)("line", {
+											x1: "12",
+											y1: "1",
+											x2: "12",
+											y2: "23",
+										}),
+										(0, t.jsx)("path", {
+											d: "M17 5H9.5a3.5 3.5 0 0 0 0 7h5a3.5 3.5 0 0 1 0 7H6",
+										}),
+									],
+								}),
+								variant: "yellow",
+							}),
+							(0, t.jsx)(a.default, {
+								label: "Tickets Abiertos",
+								value: o.openTickets,
+								icon: (0, t.jsxs)("svg", {
+									width: "20",
+									height: "20",
+									viewBox: "0 0 24 24",
+									fill: "none",
+									stroke: "currentColor",
+									strokeWidth: "2",
+									"aria-hidden": "true",
+									children: [
+										(0, t.jsx)("path", {
+											d: "M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0",
+										}),
+										(0, t.jsx)("circle", { cx: "12", cy: "17", r: "5" }),
+									],
+								}),
+								variant: "red",
+							}),
+						],
+					}),
+					(0, t.jsxs)("div", {
+						className: "card",
+						children: [
+							(0, t.jsx)("div", {
+								className: "card-header",
+								children: (0, t.jsx)("h3", { children: "Módulos del CRM" }),
+							}),
+							(0, t.jsx)("div", {
+								className: "card-body",
+								children: (0, t.jsx)("div", {
+									className: "module-grid",
+									children: [
+										{
+											href: "/contacts",
+											title: "Contactos",
+											description: "Gestiona tus contactos y leads",
+											icon: "people",
+											color: "blue",
+										},
+										{
+											href: "/companies",
+											title: "Empresas",
+											description: "Administra empresas y cuentas",
+											icon: "business",
+											color: "green",
+										},
+										{
+											href: "/deals",
+											title: "Pipeline",
+											description: "Gestiona tus oportunidades",
+											icon: "handshake",
+											color: "yellow",
+										},
+										{
+											href: "/tickets",
+											title: "Tickets",
+											description: "Sistema de soporte postventa",
+											icon: "support",
+											color: "red",
+										},
+										{
+											href: "/activities",
+											title: "Actividades",
+											description: "Tareas y seguimiento",
+											icon: "event",
+											color: "purple",
+										},
+									].map((e) =>
+										(0, t.jsxs)(
+											s.default,
+											{
+												href: e.href,
+												className: "module-card",
+												children: [
+													(0, t.jsxs)("div", {
+														className: `module-icon ${e.color}`,
+														children: [
+															"people" === e.icon &&
+																(0, t.jsxs)("svg", {
+																	width: "24",
+																	height: "24",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "2",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("path", {
+																			d: "M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2",
+																		}),
+																		(0, t.jsx)("circle", {
+																			cx: "9",
+																			cy: "7",
+																			r: "4",
+																		}),
+																		(0, t.jsx)("path", {
+																			d: "M23 21v-2a4 4 0 0 0-3-3.87",
+																		}),
+																		(0, t.jsx)("path", {
+																			d: "M16 3.13a4 4 0 0 1 0 7.75",
+																		}),
+																	],
+																}),
+															"business" === e.icon &&
+																(0, t.jsxs)("svg", {
+																	width: "24",
+																	height: "24",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "2",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("path", { d: "M3 21h18" }),
+																		(0, t.jsx)("path", { d: "M5 21V7l8-4v18" }),
+																		(0, t.jsx)("path", { d: "M19 21V11l-6-4" }),
+																	],
+																}),
+															"handshake" === e.icon &&
+																(0, t.jsxs)("svg", {
+																	width: "24",
+																	height: "24",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "2",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("path", {
+																			d: "m11 17 2 2a1 1 0 1 0 3-3",
+																		}),
+																		(0, t.jsx)("path", {
+																			d: "m14 14 2.5 2.5a1 1 0 1 0 3-3",
+																		}),
+																	],
+																}),
+															"support" === e.icon &&
+																(0, t.jsxs)("svg", {
+																	width: "24",
+																	height: "24",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "2",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("path", {
+																			d: "M18 8c0 4.5-6 9-6 9s-6-4.5-6-9a6 6 0 0 1 12 0",
+																		}),
+																		(0, t.jsx)("circle", {
+																			cx: "12",
+																			cy: "17",
+																			r: "5",
+																		}),
+																	],
+																}),
+															"event" === e.icon &&
+																(0, t.jsxs)("svg", {
+																	width: "24",
+																	height: "24",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "2",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("rect", {
+																			width: "18",
+																			height: "18",
+																			x: "3",
+																			y: "4",
+																			rx: "2",
+																		}),
+																		(0, t.jsx)("path", { d: "M16 2v4" }),
+																		(0, t.jsx)("path", { d: "M8 2v4" }),
+																		(0, t.jsx)("path", { d: "M3 10h18" }),
+																	],
+																}),
+														],
+													}),
+													(0, t.jsxs)("div", {
+														className: "module-content",
+														children: [
+															(0, t.jsx)("h4", { children: e.title }),
+															(0, t.jsx)("p", { children: e.description }),
+														],
+													}),
+												],
+											},
+											e.href,
+										),
+									),
+								}),
+							}),
+						],
+					}),
+				],
+			});
+		}
+		e.s(["default", () => l]);
+	},
+]);

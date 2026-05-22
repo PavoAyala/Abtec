@@ -30,9 +30,9 @@ import {
 } from "firebase/firestore";
 import {
 	connectFunctionsEmulator,
+	type Functions,
 	getFunctions,
 	httpsCallable,
-	type Functions,
 } from "firebase/functions";
 
 // Configuración de Firebase - usar variables de entorno en producción

@@ -1,6 +1,6 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
-import { Roboto, Oswald } from "next/font/google";
+import { Oswald, Roboto } from "next/font/google";
 import type { JSX } from "react";
 
 import AuthModal from "../components/auth/AuthModal";

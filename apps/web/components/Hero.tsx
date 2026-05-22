@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { JSX } from "react";
 import Image from "next/image";
+import type { JSX } from "react";
 
 export default function Hero(): JSX.Element {
 	const stats = [

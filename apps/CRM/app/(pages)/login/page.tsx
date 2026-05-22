@@ -1,10 +1,10 @@
 "use client";
 
-import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
-import { auth } from "../../../lib/firebase";
 import { signInWithEmailAndPassword } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
+import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
+import { auth } from "../../../lib/firebase";
 
 function LoginForm() {
 	const [email, setEmail] = useState("");
@@ -65,20 +65,26 @@ function LoginForm() {
 		<TravelConnectSignIn
 			onSubmit={handleLogin}
 			loading={loading}
-			error={error || (queryError === "not_staff" ? "Acceso denegado: esta cuenta no pertenece al personal interno." : null)}
+			error={
+				error ||
+				(queryError === "not_staff"
+					? "Acceso denegado: esta cuenta no pertenece al personal interno."
+					: null)
+			}
 			email={email}
 			setEmail={setEmail}
 			password={password}
 			setPassword={setPassword}
 		/>
-
 	);
 }
 
 export default function LoginPage() {
 	return (
 		<div className="min-h-screen w-full flex items-center justify-center bg-gradient-to-br from-[#0a1628] to-[#0d1a0d] p-4">
-			<Suspense fallback={<p className="text-gray-400">Cargando Entorno Seguro...</p>}>
+			<Suspense
+				fallback={<p className="text-gray-400">Cargando Entorno Seguro...</p>}
+			>
 				<LoginForm />
 			</Suspense>
 		</div>

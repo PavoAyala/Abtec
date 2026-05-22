@@ -1,122 +1,203 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import type { JSX } from "react";
 import Image from "next/image";
+import type { JSX } from "react";
 import { useState } from "react";
 
 export default function TestimonialsClients(): JSX.Element {
 	const testimonials = [
 		{
-			name: "Javier Gómez",
+			name: "Gastos Empresariales",
 			title: "Cliente Comercial",
-			text: "Empresa muy profesional y recomendable para proyectos de paneles solares en Monterrey, te atienden en sus oficinas, los ingenieros te explican bien el proyecto y te muestran los paneles solares y inversores en su bodega, la cual está en las mismas instalaciones, ahí mismo tienen ellos también instalado paneles solares por lo que puedes ver el sistema funcionando.",
-			image: "/images/proyecto residencial.png",
+			text: "Muy contento con el servicio y los resultados que he tenido con mi sistema solar que me instalo ABTEC. De un recibo en promedio de $8,000 al mes me llega ahora de $90 pesos, cumplen lo que prometen y atienden mis solicitudes puntualmente, los recomiendo ampliamente.",
+			image: "/images/abtec1.jpeg",
 		},
 		{
-			name: "Douglas Gil",
-			title: "Jefe Administrativo en ABTEC Paneles Solares Monterrey",
-			text: "Especialista titulado en administración de recursos y eficiencia de procesos, profesional en ejecución de proyectos de Paneles Solares Monterrey a través de métodos efectivos de seguimiento y atención al cliente durante el tiempo de vida útil de los sistemas solares.",
-			image: "/images/abtec1.jpeg",
+			name: "Marcela Duque",
+			title: "Cliente Residencial",
+			text: "La instalación fue muy rápida, se hicieron cargo de todos los trámites y mis paneles comenzaron a funcionar antes de lo que pensábamos. El personal muy profesional y explicando cada duda de manera muy entendible.",
+			image: "/images/markus-spiske-qwRF33UKsVg-unsplash (1)-1.jpg",
+		},
+		{
+			name: "Ana Maria López",
+			title: "Cliente Residencial",
+			text: "Súper rápidos y la mejor cotización, busque con diferentes proveedores y fue la mejor opción. Además no todos proporcionan monitoreo WI-FI para hacer bien cuentas y estar atento al cobro de CFE.",
+			image: "/images/convento.png",
+		},
+		{
+			name: "Tomoyuky Nagamatsu",
+			title: "Cliente Residencial",
+			text: "Excelente atención, cumplen con los plazos y costos ofrecidos entregando productos de alta calidad. Inmejorable instalación. Muy recomendable!",
+			image: "/images/TREVIÑO.png",
+		},
+		{
+			name: "Paco Ibarra",
+			title: "Cliente Residencial",
+			text: "Excelente servicio muy profesionales, los equipos quedaron perfectos y funcionan mejor de lo que esperaba recomiendo al cien por ciento esta empresa",
+			image: "/images/michael-wilson-Wp7wotWlbBk-unsplash.jpg",
+		},
+		{
+			name: "Javier Gómez",
+			title: "Cliente Comercial",
+			text: "Empresa muy profesional y recomendable para proyectos de paneles solares en Monterrey, te atienden en sus oficinas los ingenieros para explicarte bien el proyecto y te muestran los paneles solares y inversores en su bodega la cual esta en las mismas instalaciones, ahí mismo tienen ellos también instalado paneles solares por lo que puedes ver el sistema funcionando.",
+			image: "/images/casanova.png",
+		},
+		{
+			name: "Luria Zuñiga",
+			title: "Cliente Residencial",
+			text: "Nos llegó el primer recibo de luz con periodo completo con paneles, y debo confesarle que usamos la luz MUCHO MÁS, de lo que se había calculado. Tuvimos muchas visitas en casa que hicieron que todos los climas de la casa estuvieran prendidos diario, y a pesar que se hizo el cálculo de la cantidad de paneles por un uso muy bajo, nos llegó un recibo súper increíble!!!! Estamos muy satisfechos con el producto que nos ofrecieron!",
+			image: "/images/6d658031-bf7e-41a9-82e8-ccd0b5cb5af6.png",
 		},
 	];
 
 	const clients = [
-		"HEINEKEN MEXICO.png",
+		"LOGO HEINEKEN.png",
 		"LOGO TERNIUM.png",
-		"BUDENHEIM.png",
-		"VITRO.png",
+		"LOGO BUDENHEIM.png",
+		"LOGO VITRO.png",
 		"LOGO TUPY.png",
-		"GRÚAS MONTERREY.png",
+		"LOGO GRUAS MONTERREY.png",
 	];
 
 	const [currentIndex, setCurrentIndex] = useState(0);
+	const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 
 	const previousTestimonial = () => {
-		setCurrentIndex((prev) => (prev === 0 ? testimonials.length - 1 : prev - 1));
+		setDirection(-1);
+		setCurrentIndex((prev) =>
+			prev === 0 ? testimonials.length - 1 : prev - 1,
+		);
 	};
 
 	const nextTestimonial = () => {
-		setCurrentIndex((prev) => (prev === testimonials.length - 1 ? 0 : prev + 1));
+		setDirection(1);
+		setCurrentIndex((prev) =>
+			prev === testimonials.length - 1 ? 0 : prev + 1,
+		);
 	};
+
+	const variants = {
+		enter: (dir: number) => ({
+			x: dir > 0 ? 100 : -100,
+			opacity: 0,
+		}),
+		center: {
+			x: 0,
+			opacity: 1,
+		},
+		exit: (dir: number) => ({
+			x: dir < 0 ? 100 : -100,
+			opacity: 0,
+		}),
+	};
+
+	const activeTestimonial = testimonials[currentIndex] || testimonials[0];
 
 	return (
 		<section className="py-16 bg-[#f8fafc]">
 			<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
-				<div className="text-center mb-12">
-					<p className="text-abtec-blue font-semibold uppercase tracking-[0.4em] text-sm mb-3">
-						TESTIMONIOS
-					</p>
-					<h2 className="font-heading text-4xl md:text-5xl font-bold text-[#1c1d29] uppercase">
-						<span className="text-abtec-green">RESEÑAS</span> DE CLIENTES
-					</h2>
-				</div>
-
-				<div className="relative rounded-[40px] overflow-hidden bg-white shadow-[0_30px_80px_rgba(15,23,42,0.08)] p-6 md:p-10">
-					<div className="hidden md:flex absolute inset-y-0 left-0 items-center px-4">
-						<button
-							type="button"
-							onClick={previousTestimonial}
-							className="w-14 h-14 bg-[#1c1d29] text-white rounded-full flex items-center justify-center shadow hover:bg-[#131427] transition"
-						>
-							<ChevronLeft size={24} />
-						</button>
-					</div>
-					<div className="hidden md:flex absolute inset-y-0 right-0 items-center px-4">
-						<button
-							type="button"
-							onClick={nextTestimonial}
-							className="w-14 h-14 bg-[#1c1d29] text-white rounded-full flex items-center justify-center shadow hover:bg-[#131427] transition"
-						>
-							<ChevronRight size={24} />
-						</button>
+				<div className="relative rounded-[32px] border border-slate-100 bg-white shadow-[0_20px_50px_rgba(15,23,42,0.03)] p-8 md:p-14 flex flex-col items-center">
+					{/* Header inside the card */}
+					<div className="text-center mb-10 w-full">
+						<p className="text-abtec-blue font-semibold uppercase tracking-[0.4em] text-xs md:text-sm mb-3">
+							TESTIMONIOS
+						</p>
+						<h2 className="font-heading text-3xl md:text-4xl lg:text-5xl font-bold text-abtec-green uppercase">
+							RESEÑAS DE CLIENTES
+						</h2>
+						{/* Header underline divider */}
+						<div className="w-16 h-1 bg-[#262660] mx-auto mt-4 rounded-full" />
 					</div>
 
-					<div className="bg-[#1c1d29] rounded-[28px] p-8 md:p-12 text-center text-white relative overflow-hidden">
-						<div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(56,189,248,0.15),transparent_35%)]" />
-						<div className="relative z-10 max-w-3xl mx-auto">
-							<div className="flex flex-col items-center gap-4 md:gap-6 mb-8">
-								<div className="w-24 h-24 rounded-full overflow-hidden border-4 border-white shadow-lg">
-									<Image
-										src={testimonials[currentIndex].image}
-										alt={testimonials[currentIndex].name}
-										width={96}
-										height={96}
-										className="object-cover"
-									/>
+					{/* Navigation Arrow Left */}
+					<button
+						type="button"
+						onClick={previousTestimonial}
+						className="absolute left-4 md:left-10 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-[#262660] hover:bg-[#1a1a44] text-white rounded-full flex items-center justify-center shadow-lg transition-all z-20 cursor-pointer hover:scale-105 active:scale-95"
+						aria-label="Testimonio anterior"
+					>
+						<ChevronLeft size={24} />
+					</button>
+
+					{/* Navigation Arrow Right */}
+					<button
+						type="button"
+						onClick={nextTestimonial}
+						className="absolute right-4 md:right-10 top-1/2 -translate-y-1/2 w-12 h-12 md:w-14 md:h-14 bg-[#262660] hover:bg-[#1a1a44] text-white rounded-full flex items-center justify-center shadow-lg transition-all z-20 cursor-pointer hover:scale-105 active:scale-95"
+						aria-label="Siguiente testimonio"
+					>
+						<ChevronRight size={24} />
+					</button>
+
+					{/* Testimonial Active Slide Content */}
+					<div className="w-full max-w-4xl mx-auto overflow-hidden relative min-h-[280px] md:min-h-[220px] flex items-center justify-center px-8 md:px-16">
+						<AnimatePresence initial={false} custom={direction} mode="wait">
+							<motion.div
+								key={currentIndex}
+								custom={direction}
+								variants={variants}
+								initial="enter"
+								animate="center"
+								exit="exit"
+								transition={{
+									x: { type: "spring", stiffness: 300, damping: 30 },
+									opacity: { duration: 0.2 },
+								}}
+								className="w-full flex flex-col items-center"
+							>
+								{/* Author Profile Information Group */}
+								<div className="flex items-center gap-4 mb-6">
+									<div className="w-16 h-16 rounded-full overflow-hidden border-2 border-slate-100 shadow-sm flex-shrink-0 relative">
+										<Image
+											src={activeTestimonial.image}
+											alt={activeTestimonial.name}
+											fill
+											className="object-cover"
+										/>
+									</div>
+									<div className="flex flex-col text-left">
+										<span className="text-xs md:text-sm uppercase tracking-wider text-[#262660] font-semibold">
+											{activeTestimonial.title}
+										</span>
+										<h3 className="font-heading text-xl md:text-2xl font-bold text-[#262660]">
+											{activeTestimonial.name}
+										</h3>
+									</div>
 								</div>
-								<p className="text-sm uppercase tracking-[0.35em] text-abtec-green font-bold">
-									{testimonials[currentIndex].title}
+
+								{/* Divider between author and text */}
+								<div className="w-12 h-0.5 bg-[#262660] opacity-40 mb-6" />
+
+								{/* Testimonial text */}
+								<p className="text-base md:text-lg text-slate-600 leading-relaxed text-center italic max-w-3xl">
+									"{activeTestimonial.text}"
 								</p>
-								<h3 className="font-heading text-3xl md:text-4xl font-bold text-white">
-									{testimonials[currentIndex].name}
-								</h3>
-							</div>
-							<p className="text-base md:text-lg leading-relaxed text-white/80">
-								"{testimonials[currentIndex].text}"
-							</p>
-						</div>
+							</motion.div>
+						</AnimatePresence>
 					</div>
 				</div>
 
+				{/* Clients Brands Logo Section */}
 				<div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
 					{clients.map((client, index) => (
 						<motion.div
-							key={index}
+							key={client}
 							initial={{ opacity: 0, y: 10 }}
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
 							transition={{ delay: index * 0.05, duration: 0.4 }}
-							className="bg-[#eef2f7] rounded-[24px] p-6 flex items-center justify-center"
+							className="bg-[#eef2f7] rounded-[24px] p-6 flex items-center justify-center h-24 relative"
 						>
-							<Image
-								src={`/images/${client}`}
-								alt={`Marca ${index + 1}`}
-								width={140}
-								height={80}
-								className="object-contain"
-							/>
+							<div className="relative w-full h-full max-h-12">
+								<Image
+									src={`/images/${client}`}
+									alt={`Marca ${index + 1}`}
+									fill
+									className="object-contain"
+								/>
+							</div>
 						</motion.div>
 					))}
 				</div>

@@ -2,8 +2,8 @@
 
 import { motion } from "framer-motion";
 import { Calendar, User } from "lucide-react";
-import type { JSX } from "react";
 import Image from "next/image";
+import type { JSX } from "react";
 
 export default function BlogPreview(): JSX.Element {
 	const posts = [
@@ -12,7 +12,8 @@ export default function BlogPreview(): JSX.Element {
 			category: "Paneles Solares Monterrey",
 			author: "Ingeniería ABTEC",
 			date: "agosto 23, 2023",
-			title: "Paneles Solares Monterrey: Cómo aprovechar al máximo la energía del sol",
+			title:
+				"Paneles Solares Monterrey: Cómo aprovechar al máximo la energía del sol",
 			excerpt:
 				"Los paneles solares Monterrey se han convertido en una forma cada vez más popular y efectiva de aprovechar la energía...",
 			slug: "https://www.abtec.com.mx/blog/paneles-solares-cómo-aprovechar-al-máximo-la-energía-del-sol",
@@ -32,7 +33,8 @@ export default function BlogPreview(): JSX.Element {
 			category: "Paneles Solares Monterrey",
 			author: "Ingeniería ABTEC",
 			date: "mayo 22, 2023",
-			title: "El futuro de la energía solar: avances tecnológicos y perspectivas",
+			title:
+				"El futuro de la energía solar: avances tecnológicos y perspectivas",
 			excerpt:
 				"La energía solar ha experimentado un crecimiento exponencial en las últimas décadas, convirtiéndose en una de las...",
 			slug: "https://www.abtec.com.mx/blog/el-futuro-de-la-energía-solar-avances-tecnológicos-y-perspectivas",
@@ -88,10 +90,13 @@ export default function BlogPreview(): JSX.Element {
 									</div>
 								</div>
 								<h3 className="text-2xl font-heading font-bold text-[#1c1d29] mb-4">
-									<a href={post.slug} className="block hover:text-abtec-blue transition-colors">
+									<a
+										href={post.slug}
+										className="block hover:text-abtec-blue transition-colors"
+									>
 										{post.title}
-										</a>
-									</h3>
+									</a>
+								</h3>
 								<p className="text-gray-600 leading-relaxed mb-8 text-sm flex-grow">
 									{post.excerpt}
 								</p>
@@ -103,9 +108,9 @@ export default function BlogPreview(): JSX.Element {
 								</a>
 							</div>
 						</motion.div>
-						))}
-					</div>
+					))}
 				</div>
-			</section>
+			</div>
+		</section>
 	);
 }

@@ -1,7 +1,13 @@
 "use client";
 
 import { motion } from "framer-motion";
-import { Leaf, CircleDollarSign, ShieldCheck, TrendingUp, Home } from "lucide-react";
+import {
+	CircleDollarSign,
+	Home,
+	Leaf,
+	ShieldCheck,
+	TrendingUp,
+} from "lucide-react";
 import type { JSX } from "react";
 
 export default function Benefits(): JSX.Element {

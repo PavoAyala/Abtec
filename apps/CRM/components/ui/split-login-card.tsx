@@ -1,10 +1,10 @@
 "use client";
 
+import Image from "next/image";
+import type * as React from "react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import Image from "next/image";
-import type * as React from "react";
 
 interface SplitLoginCardProps {
 	readonly onSubmit: (e: React.FormEvent) => void;
@@ -36,7 +36,10 @@ export default function SplitLoginCard({
 					priority
 				/>
 				<h2>Energía que Transforma</h2>
-				<p>Accede al ecosistema corporativo de Abtec para gestionar operaciones de vanguardia.</p>
+				<p>
+					Accede al ecosistema corporativo de Abtec para gestionar operaciones
+					de vanguardia.
+				</p>
 			</div>
 
 			<div>

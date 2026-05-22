@@ -1,8 +1,8 @@
 "use client";
 
 import { motion } from "framer-motion";
-import type { JSX } from "react";
 import Image from "next/image";
+import type { JSX } from "react";
 
 export default function About(): JSX.Element {
 	return (
@@ -43,21 +43,22 @@ export default function About(): JSX.Element {
 								Paga hasta $45 pesos en recibos de CFE
 							</p>
 							<p className="text-gray-700 text-base leading-relaxed mb-5 font-sans">
-								Invertir en ABTEC Paneles Solares Monterrey para hogares, comercios o
-								industrias genera beneficios en ahorros de hasta el 98% en pagos de recibos
-								de luz ante CFE, durante un tiempo de vida de los sistemas solares de hasta 30
-								años.
+								Invertir en ABTEC Paneles Solares Monterrey para hogares,
+								comercios o industrias genera beneficios en ahorros de hasta el
+								98% en pagos de recibos de luz ante CFE, durante un tiempo de
+								vida de los sistemas solares de hasta 30 años.
 							</p>
 							<p className="text-gray-700 text-base leading-relaxed mb-5 font-sans">
-								Considerando que la instalación de Paneles Solares Monterrey como una opción
-								de producción de energía alternativa puede reducir la emisión de CO2 y a su vez
-								servir como estrategia de inversión en nuestro hogar o negocio, aumentando la
-								plusvalía de la propiedad.
+								Considerando que la instalación de Paneles Solares Monterrey
+								como una opción de producción de energía alternativa puede
+								reducir la emisión de CO2 y a su vez servir como estrategia de
+								inversión en nuestro hogar o negocio, aumentando la plusvalía de
+								la propiedad.
 							</p>
 							<p className="text-gray-700 text-base leading-relaxed font-sans">
-								Los proyectos de Paneles Solares Monterrey permiten un ahorro a corto plazo en
-								los pagos en recibos de luz ante CFE, así como protegen las tarifas para evitar
-								aumentos por exceso de consumo.
+								Los proyectos de Paneles Solares Monterrey permiten un ahorro a
+								corto plazo en los pagos en recibos de luz ante CFE, así como
+								protegen las tarifas para evitar aumentos por exceso de consumo.
 							</p>
 						</motion.div>
 					</div>

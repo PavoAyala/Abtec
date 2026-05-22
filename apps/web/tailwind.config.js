@@ -38,7 +38,7 @@ export default {
 				},
 				"abtec-gray": {
 					DEFAULT: "#f3f3f7",
-				}
+				},
 			},
 			fontFamily: {
 				sans: ["var(--font-roboto)", "system-ui", "sans-serif"],

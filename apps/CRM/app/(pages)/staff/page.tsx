@@ -1,5 +1,8 @@
 "use client";
 
+import { useRouter } from "next/navigation";
+import { useEffect, useState } from "react";
+import useSWR from "swr";
 import { useAuth } from "@/components/AuthProvider";
 import { DataTable } from "@/components/StatsAndTables";
 import {
@@ -9,9 +12,6 @@ import {
 	updateStaffRole,
 } from "@/lib/staff";
 import { type StaffMember, UserRole } from "@/types";
-import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
-import useSWR from "swr";
 
 const ROLE_LABELS: Record<UserRole, string> = {
 	[UserRole.Admin]: "Administrador",
@@ -29,11 +29,22 @@ const ROLE_BADGE: Record<UserRole, string> = {
 	[UserRole.Viewer]: "badge-gray",
 };
 
-const STAFF_ROLES = [UserRole.Admin, UserRole.Manager, UserRole.Sales, UserRole.Support];
+const STAFF_ROLES = [
+	UserRole.Admin,
+	UserRole.Manager,
+	UserRole.Sales,
+	UserRole.Support,
+];
 
 // ── Modals ──────────────────────────────────────────────────────────────────
 
-function ModalOverlay({ onClose, children }: { onClose: () => void; children: React.ReactNode }) {
+function ModalOverlay({
+	onClose,
+	children,
+}: {
+	onClose: () => void;
+	children: React.ReactNode;
+}) {
 	return (
 		<div
 			className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
@@ -49,7 +60,13 @@ function ModalOverlay({ onClose, children }: { onClose: () => void; children: Re
 	);
 }
 
-function CreateModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: () => void }) {
+function CreateModal({
+	onClose,
+	onSuccess,
+}: {
+	onClose: () => void;
+	onSuccess: () => void;
+}) {
 	const [form, setForm] = useState({
 		displayName: "",
 		email: "",
@@ -67,7 +84,8 @@ function CreateModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
 			await createStaffUser(form);
 			onSuccess();
 		} catch (err: unknown) {
-			const msg = (err as { message?: string })?.message ?? "Error al crear usuario.";
+			const msg =
+				(err as { message?: string })?.message ?? "Error al crear usuario.";
 			setError(msg);
 		} finally {
 			setLoading(false);
@@ -76,7 +94,9 @@ function CreateModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
 
 	return (
 		<ModalOverlay onClose={onClose}>
-			<h3 className="text-lg font-bold text-gray-900 mb-4">Nuevo Usuario Staff</h3>
+			<h3 className="text-lg font-bold text-gray-900 mb-4">
+				Nuevo Usuario Staff
+			</h3>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
 					<label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">
@@ -125,10 +145,14 @@ function CreateModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
 					<select
 						className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
 						value={form.role}
-						onChange={(e) => setForm({ ...form, role: e.target.value as UserRole })}
+						onChange={(e) =>
+							setForm({ ...form, role: e.target.value as UserRole })
+						}
 					>
 						{STAFF_ROLES.map((r) => (
-							<option key={r} value={r}>{ROLE_LABELS[r]}</option>
+							<option key={r} value={r}>
+								{ROLE_LABELS[r]}
+							</option>
 						))}
 					</select>
 				</div>
@@ -143,7 +167,11 @@ function CreateModal({ onClose, onSuccess }: { onClose: () => void; onSuccess: (
 					<button type="button" onClick={onClose} className="btn flex-1">
 						Cancelar
 					</button>
-					<button type="submit" disabled={loading} className="btn btn-primary flex-1">
+					<button
+						type="submit"
+						disabled={loading}
+						className="btn btn-primary flex-1"
+					>
 						{loading ? "Creando..." : "Crear usuario"}
 					</button>
 				</div>
@@ -173,7 +201,8 @@ function EditRoleModal({
 			await updateStaffRole(member.id, role);
 			onSuccess();
 		} catch (err: unknown) {
-			const msg = (err as { message?: string })?.message ?? "Error al actualizar rol.";
+			const msg =
+				(err as { message?: string })?.message ?? "Error al actualizar rol.";
 			setError(msg);
 		} finally {
 			setLoading(false);
@@ -183,7 +212,9 @@ function EditRoleModal({
 	return (
 		<ModalOverlay onClose={onClose}>
 			<h3 className="text-lg font-bold text-gray-900 mb-1">Editar Rol</h3>
-			<p className="text-sm text-gray-500 mb-4">{member.displayName} · {member.email}</p>
+			<p className="text-sm text-gray-500 mb-4">
+				{member.displayName} · {member.email}
+			</p>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
 					<label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">
@@ -195,7 +226,9 @@ function EditRoleModal({
 						onChange={(e) => setRole(e.target.value as UserRole)}
 					>
 						{STAFF_ROLES.map((r) => (
-							<option key={r} value={r}>{ROLE_LABELS[r]}</option>
+							<option key={r} value={r}>
+								{ROLE_LABELS[r]}
+							</option>
 						))}
 					</select>
 				</div>
@@ -210,7 +243,11 @@ function EditRoleModal({
 					<button type="button" onClick={onClose} className="btn flex-1">
 						Cancelar
 					</button>
-					<button type="submit" disabled={loading} className="btn btn-primary flex-1">
+					<button
+						type="submit"
+						disabled={loading}
+						className="btn btn-primary flex-1"
+					>
 						{loading ? "Guardando..." : "Guardar cambios"}
 					</button>
 				</div>
@@ -238,7 +275,8 @@ function RevokeModal({
 			await revokeStaffAccess(member.id);
 			onSuccess();
 		} catch (err: unknown) {
-			const msg = (err as { message?: string })?.message ?? "Error al revocar acceso.";
+			const msg =
+				(err as { message?: string })?.message ?? "Error al revocar acceso.";
 			setError(msg);
 		} finally {
 			setLoading(false);
@@ -249,15 +287,26 @@ function RevokeModal({
 		<ModalOverlay onClose={onClose}>
 			<div className="text-center">
 				<div className="w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3">
-					<svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" aria-hidden="true">
+					<svg
+						width="20"
+						height="20"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="#ef4444"
+						strokeWidth="2"
+						aria-hidden="true"
+					>
 						<path d="M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6" />
 					</svg>
 				</div>
 				<h3 className="text-lg font-bold text-gray-900 mb-1">Revocar acceso</h3>
 				<p className="text-sm text-gray-500 mb-1">
-					<span className="font-semibold">{member.displayName}</span> perderá acceso al CRM inmediatamente.
+					<span className="font-semibold">{member.displayName}</span> perderá
+					acceso al CRM inmediatamente.
 				</p>
-				<p className="text-xs text-gray-400 mb-4">Su cuenta de Firebase permanecerá, solo se revoca el claim.</p>
+				<p className="text-xs text-gray-400 mb-4">
+					Su cuenta de Firebase permanecerá, solo se revoca el claim.
+				</p>
 
 				{error && (
 					<p className="text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2 mb-3">
@@ -300,11 +349,14 @@ export default function StaffPage() {
 		}
 	}, [staffRole, router]);
 
-	const { data: staff, isLoading, mutate } = useSWR<StaffMember[]>(
-		"staff-users",
-		getStaffUsers,
-		{ revalidateOnFocus: false, dedupingInterval: 30000 },
-	);
+	const {
+		data: staff,
+		isLoading,
+		mutate,
+	} = useSWR<StaffMember[]>("staff-users", getStaffUsers, {
+		revalidateOnFocus: false,
+		dedupingInterval: 30000,
+	});
 
 	const handleSuccess = () => {
 		mutate();
@@ -337,7 +389,9 @@ export default function StaffPage() {
 			key: "status",
 			label: "Estado",
 			render: (item: StaffMember) => (
-				<span className={`badge ${item.status === "active" ? "badge-green" : "badge-gray"}`}>
+				<span
+					className={`badge ${item.status === "active" ? "badge-green" : "badge-gray"}`}
+				>
 					{item.status === "active" ? "Activo" : "Inactivo"}
 				</span>
 			),
@@ -348,10 +402,10 @@ export default function StaffPage() {
 			render: (item: StaffMember) =>
 				item.createdAt
 					? new Date(item.createdAt).toLocaleDateString("es-MX", {
-						day: "2-digit",
-						month: "short",
-						year: "numeric",
-					})
+							day: "2-digit",
+							month: "short",
+							year: "numeric",
+						})
 					: "—",
 		},
 		{
@@ -393,7 +447,15 @@ export default function StaffPage() {
 						className="btn btn-primary"
 						onClick={() => setCreateOpen(true)}
 					>
-						<svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" aria-hidden="true">
+						<svg
+							width="16"
+							height="16"
+							viewBox="0 0 24 24"
+							fill="none"
+							stroke="currentColor"
+							strokeWidth="2"
+							aria-hidden="true"
+						>
 							<path d="M12 5v14M5 12h14" />
 						</svg>
 						Nuevo Usuario
@@ -406,14 +468,22 @@ export default function StaffPage() {
 				columns={columns}
 				searchPlaceholder="Buscar por nombre o email..."
 				onSearch={() => {}}
-				filterOptions={STAFF_ROLES.map((r) => ({ label: ROLE_LABELS[r], value: r }))}
+				filterOptions={STAFF_ROLES.map((r) => ({
+					label: ROLE_LABELS[r],
+					value: r,
+				}))}
 				emptyMessage={
-					isLoading ? "Cargando usuarios..." : "No hay usuarios staff registrados."
+					isLoading
+						? "Cargando usuarios..."
+						: "No hay usuarios staff registrados."
 				}
 			/>
 
 			{createOpen && (
-				<CreateModal onClose={() => setCreateOpen(false)} onSuccess={handleSuccess} />
+				<CreateModal
+					onClose={() => setCreateOpen(false)}
+					onSuccess={handleSuccess}
+				/>
 			)}
 			{editTarget && (
 				<EditRoleModal

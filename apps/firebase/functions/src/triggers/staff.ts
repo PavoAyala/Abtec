@@ -12,18 +12,30 @@ type StaffRole = (typeof STAFF_ROLES)[number];
  */
 export const setStaffRole = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		throw new functions.https.HttpsError("unauthenticated", "Debes estar autenticado.");
+		throw new functions.https.HttpsError(
+			"unauthenticated",
+			"Debes estar autenticado.",
+		);
 	}
 
 	const callerClaim = context.auth.token.staff as string | undefined;
 	if (callerClaim !== "admin") {
-		throw new functions.https.HttpsError("permission-denied", "Solo un admin puede asignar roles.");
+		throw new functions.https.HttpsError(
+			"permission-denied",
+			"Solo un admin puede asignar roles.",
+		);
 	}
 
-	const { targetUid, role } = data as { targetUid?: string; role?: StaffRole | null };
+	const { targetUid, role } = data as {
+		targetUid?: string;
+		role?: StaffRole | null;
+	};
 
 	if (!targetUid || typeof targetUid !== "string") {
-		throw new functions.https.HttpsError("invalid-argument", "targetUid requerido.");
+		throw new functions.https.HttpsError(
+			"invalid-argument",
+			"targetUid requerido.",
+		);
 	}
 
 	if (role !== null && role !== undefined && !STAFF_ROLES.includes(role)) {
@@ -38,17 +50,23 @@ export const setStaffRole = functions.https.onCall(async (data, context) => {
 	const newClaims = role ? { staff: role } : {};
 	await admin.auth().setCustomUserClaims(targetUid, newClaims);
 
-	await db.collection("users").doc(targetUid).set(
-		{
-			role: role ?? admin.firestore.FieldValue.delete(),
-			updatedAt: admin.firestore.FieldValue.serverTimestamp(),
-		},
-		{ merge: true },
-	);
+	await db
+		.collection("users")
+		.doc(targetUid)
+		.set(
+			{
+				role: role ?? admin.firestore.FieldValue.delete(),
+				updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+			},
+			{ merge: true },
+		);
 
-	functions.logger.info(`Staff role updated: ${targetUid} → ${role ?? "revoked"}`, {
-		by: context.auth.uid,
-	});
+	functions.logger.info(
+		`Staff role updated: ${targetUid} → ${role ?? "revoked"}`,
+		{
+			by: context.auth.uid,
+		},
+	);
 
 	return { success: true, uid: targetUid, role: role ?? null };
 });
@@ -59,12 +77,18 @@ export const setStaffRole = functions.https.onCall(async (data, context) => {
  */
 export const createStaffUser = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
-		throw new functions.https.HttpsError("unauthenticated", "Debes estar autenticado.");
+		throw new functions.https.HttpsError(
+			"unauthenticated",
+			"Debes estar autenticado.",
+		);
 	}
 
 	const callerClaim = context.auth.token.staff as string | undefined;
 	if (callerClaim !== "admin") {
-		throw new functions.https.HttpsError("permission-denied", "Solo un admin puede crear usuarios staff.");
+		throw new functions.https.HttpsError(
+			"permission-denied",
+			"Solo un admin puede crear usuarios staff.",
+		);
 	}
 
 	const { email, password, displayName, role } = data as {
@@ -75,19 +99,30 @@ export const createStaffUser = functions.https.onCall(async (data, context) => {
 	};
 
 	if (!email || !password || !displayName || !role) {
-		throw new functions.https.HttpsError("invalid-argument", "email, password, displayName y role son requeridos.");
+		throw new functions.https.HttpsError(
+			"invalid-argument",
+			"email, password, displayName y role son requeridos.",
+		);
 	}
 
 	if (!STAFF_ROLES.includes(role)) {
-		throw new functions.https.HttpsError("invalid-argument", `role debe ser uno de: ${STAFF_ROLES.join(", ")}`);
+		throw new functions.https.HttpsError(
+			"invalid-argument",
+			`role debe ser uno de: ${STAFF_ROLES.join(", ")}`,
+		);
 	}
 
 	if (password.length < 6) {
-		throw new functions.https.HttpsError("invalid-argument", "La contraseña debe tener mínimo 6 caracteres.");
+		throw new functions.https.HttpsError(
+			"invalid-argument",
+			"La contraseña debe tener mínimo 6 caracteres.",
+		);
 	}
 
 	// Crear usuario en Firebase Auth
-	const newUser = await admin.auth().createUser({ email, password, displayName });
+	const newUser = await admin
+		.auth()
+		.createUser({ email, password, displayName });
 
 	// Setear custom claim
 	await admin.auth().setCustomUserClaims(newUser.uid, { staff: role });
@@ -103,9 +138,12 @@ export const createStaffUser = functions.https.onCall(async (data, context) => {
 		updatedAt: admin.firestore.FieldValue.serverTimestamp(),
 	});
 
-	functions.logger.info(`Staff user created: ${newUser.uid} (${email}) with role: ${role}`, {
-		by: context.auth.uid,
-	});
+	functions.logger.info(
+		`Staff user created: ${newUser.uid} (${email}) with role: ${role}`,
+		{
+			by: context.auth.uid,
+		},
+	);
 
 	return { success: true, uid: newUser.uid, email, role };
 });

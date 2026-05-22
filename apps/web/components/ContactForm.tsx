@@ -1,10 +1,10 @@
 "use client";
 
 import { motion } from "framer-motion";
+import { Mail, MapPin, Phone } from "lucide-react";
+import Image from "next/image";
 import type { ChangeEvent, FormEvent, JSX } from "react";
 import { useState } from "react";
-import { Phone, Mail, MapPin } from "lucide-react";
-import Image from "next/image";
 
 interface FormData {
 	name: string;
@@ -21,9 +21,13 @@ export default function ContactForm(): JSX.Element {
 		message: "",
 	});
 	const [isSubmitting, setIsSubmitting] = useState(false);
-	const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
+	const [submitStatus, setSubmitStatus] = useState<
+		"idle" | "success" | "error"
+	>("idle");
 
-	const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+	const handleInputChange = (
+		e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+	) => {
 		const { name, value } = e.target;
 		setFormData((prev) => ({ ...prev, [name]: value }));
 	};
@@ -35,7 +39,9 @@ export default function ContactForm(): JSX.Element {
 
 		try {
 			const { getClientDb } = await import("../lib/firebase");
-			const { collection, addDoc, serverTimestamp } = await import("firebase/firestore");
+			const { collection, addDoc, serverTimestamp } = await import(
+				"firebase/firestore"
+			);
 			const db = getClientDb();
 
 			await addDoc(collection(db, "quotes"), {
@@ -67,19 +73,27 @@ export default function ContactForm(): JSX.Element {
 							Comunícate con expertos
 						</h2>
 						<p className="text-white/80 text-sm leading-relaxed mb-8">
-							Cotiza Paneles Solares Monterrey en tan sólo unos sencillos pasos. Déjanos tus datos y un asesor se comunicará contigo para platicar acerca de tus necesidades, presupuesto y consumo eléctrico actual.
+							Cotiza Paneles Solares Monterrey en tan sólo unos sencillos pasos.
+							Déjanos tus datos y un asesor se comunicará contigo para platicar
+							acerca de tus necesidades, presupuesto y consumo eléctrico actual.
 						</p>
 						<div className="grid gap-4 sm:grid-cols-3">
 							<div className="bg-white/10 rounded-3xl p-4">
-								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">Teléfono</p>
+								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">
+									Teléfono
+								</p>
 								<p className="text-lg font-bold">(81) 3247 6565</p>
 							</div>
 							<div className="bg-white/10 rounded-3xl p-4">
-								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">Correo</p>
+								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">
+									Correo
+								</p>
 								<p className="text-lg font-bold">ventas@abtec.mx</p>
 							</div>
 							<div className="bg-white/10 rounded-3xl p-4">
-								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">Ubicación</p>
+								<p className="text-xs uppercase tracking-[0.35em] text-white/70 mb-2">
+									Ubicación
+								</p>
 								<p className="text-lg font-bold">Monterrey, N.L.</p>
 							</div>
 						</div>
@@ -97,8 +111,13 @@ export default function ContactForm(): JSX.Element {
 							<div className="absolute inset-0 bg-black/20" />
 							<div className="absolute inset-0 flex items-center justify-center">
 								<div className="bg-white/95 rounded-[28px] p-8 text-center shadow-2xl max-w-sm">
-									<h3 className="text-abtec-green font-bold text-xl mb-2">Obtén un presupuesto</h3>
-									<p className="text-slate-900 text-sm leading-relaxed mb-6">Recibe un estudio-cotización de Paneles Solares Monterrey a través de expertos del área fotovoltaica.</p>
+									<h3 className="text-abtec-green font-bold text-xl mb-2">
+										Obtén un presupuesto
+									</h3>
+									<p className="text-slate-900 text-sm leading-relaxed mb-6">
+										Recibe un estudio-cotización de Paneles Solares Monterrey a
+										través de expertos del área fotovoltaica.
+									</p>
 									<a
 										href="https://wa.link/rwcs6i"
 										target="_blank"
@@ -115,11 +134,18 @@ export default function ContactForm(): JSX.Element {
 
 				<div className="grid lg:grid-cols-2 gap-10">
 					<div className="bg-white rounded-[32px] p-10 shadow-[0_30px_80px_rgba(15,23,42,0.08)] border border-slate-200">
-						<h2 className="font-heading text-3xl md:text-4xl font-bold text-[#1f2a5c] mb-6">¿Listo para cotizar?</h2>
+						<h2 className="font-heading text-3xl md:text-4xl font-bold text-[#1f2a5c] mb-6">
+							¿Listo para cotizar?
+						</h2>
 						<form onSubmit={handleSubmit} className="space-y-6">
 							<div className="grid gap-6 md:grid-cols-2">
 								<div className="flex flex-col gap-2">
-									<label htmlFor="name" className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">Nombre Completo</label>
+									<label
+										htmlFor="name"
+										className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700"
+									>
+										Nombre Completo
+									</label>
 									<input
 										name="name"
 										id="name"
@@ -132,7 +158,12 @@ export default function ContactForm(): JSX.Element {
 									/>
 								</div>
 								<div className="flex flex-col gap-2">
-									<label htmlFor="email" className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">Correo Electrónico</label>
+									<label
+										htmlFor="email"
+										className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700"
+									>
+										Correo Electrónico
+									</label>
 									<input
 										name="email"
 										id="email"
@@ -147,7 +178,12 @@ export default function ContactForm(): JSX.Element {
 							</div>
 							<div className="grid gap-6 md:grid-cols-2">
 								<div className="flex flex-col gap-2">
-									<label htmlFor="phone" className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">Teléfono</label>
+									<label
+										htmlFor="phone"
+										className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700"
+									>
+										Teléfono
+									</label>
 									<input
 										name="phone"
 										id="phone"
@@ -160,7 +196,12 @@ export default function ContactForm(): JSX.Element {
 									/>
 								</div>
 								<div className="flex flex-col gap-2">
-									<label htmlFor="message" className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700">Mensaje</label>
+									<label
+										htmlFor="message"
+										className="text-sm font-bold uppercase tracking-[0.15em] text-slate-700"
+									>
+										Mensaje
+									</label>
 									<textarea
 										name="message"
 										id="message"

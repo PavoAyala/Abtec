@@ -1,10 +1,10 @@
 "use client";
 
-import { Menu, Phone, X, ChevronDown } from "lucide-react";
+import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react";
 import type { JSX } from "react";
+import { useState } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Header(): JSX.Element {
@@ -27,45 +27,126 @@ export default function Header(): JSX.Element {
 				</Link>
 
 				<nav className="hidden lg:flex items-center gap-6">
-					<Link href="/" className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+					<Link
+						href="/"
+						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+					>
 						Paneles Solares Monterrey
 					</Link>
-					<Link href="#nosotros" className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+					<Link
+						href="#nosotros"
+						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+					>
 						Acerca de Nosotros
 					</Link>
 					<div className="relative group">
-						<button type="button" className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+						<button
+							type="button"
+							className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+						>
 							Proyectos <ChevronDown size={14} />
 						</button>
 						<div className="absolute top-full left-0 hidden group-hover:flex flex-col bg-white shadow-lg border border-gray-100 min-w-[240px] py-2 z-50">
-							<Link href="#proyectos" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green">Proyectos de Paneles Solares</Link>
-							<Link href="#proyectos" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green">Proyectos de Iluminación</Link>
-							<Link href="#proyectos" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green">Proyectos de Calentadores Solares</Link>
+							<Link
+								href="#proyectos"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
+							>
+								Proyectos de Paneles Solares
+							</Link>
+							<Link
+								href="#proyectos"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
+							>
+								Proyectos de Iluminación
+							</Link>
+							<Link
+								href="#proyectos"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
+							>
+								Proyectos de Calentadores Solares
+							</Link>
 						</div>
 					</div>
 					<div className="relative group">
-						<button type="button" className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+						<button
+							type="button"
+							className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+						>
 							Servicios <ChevronDown size={14} />
 						</button>
 						<div className="absolute top-full left-0 hidden group-hover:flex flex-col bg-white shadow-lg border border-gray-100 min-w-[200px] py-2 z-50">
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm font-bold text-gray-800">Equipos</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Paneles Solares</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Inversores</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Microinversores</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Controladores</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Baterias</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Alumbrado Público</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Alumbrado Comercial</Link>
-							<Link href="#servicios" className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6">Alumbrado Industrial</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm font-bold text-gray-800"
+							>
+								Equipos
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Paneles Solares
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Inversores
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Microinversores
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Controladores
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Baterias
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Alumbrado Público
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Alumbrado Comercial
+							</Link>
+							<Link
+								href="#servicios"
+								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
+							>
+								Alumbrado Industrial
+							</Link>
 						</div>
 					</div>
-					<Link href="#financiamiento" className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+					<Link
+						href="#financiamiento"
+						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+					>
 						Financiamiento
 					</Link>
-					<Link href="#blog" className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+					<Link
+						href="#blog"
+						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+					>
 						Blog
 					</Link>
-					<Link href="#contacto" className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium">
+					<Link
+						href="#contacto"
+						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
+					>
 						Contacto
 					</Link>
 				</nav>
@@ -109,14 +190,46 @@ export default function Header(): JSX.Element {
 			{/* Mobile Navigation */}
 			{isMobileMenuOpen && (
 				<div className="lg:hidden absolute top-[90px] left-0 w-full bg-white shadow-lg py-4 flex flex-col px-6 gap-4 z-50">
-					<Link href="/" className="text-gray-700 font-medium pb-2 border-b">Paneles Solares Monterrey</Link>
-					<Link href="#nosotros" className="text-gray-700 font-medium pb-2 border-b">Acerca de Nosotros</Link>
-					<Link href="#proyectos" className="text-gray-700 font-medium pb-2 border-b">Proyectos</Link>
-					<Link href="#servicios" className="text-gray-700 font-medium pb-2 border-b">Servicios / Equipos</Link>
-					<Link href="#financiamiento" className="text-gray-700 font-medium pb-2 border-b">Financiamiento</Link>
-					<Link href="#blog" className="text-gray-700 font-medium pb-2 border-b">Blog</Link>
-					<Link href="#contacto" className="text-gray-700 font-medium pb-2 border-b">Contacto</Link>
-					
+					<Link href="/" className="text-gray-700 font-medium pb-2 border-b">
+						Paneles Solares Monterrey
+					</Link>
+					<Link
+						href="#nosotros"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Acerca de Nosotros
+					</Link>
+					<Link
+						href="#proyectos"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Proyectos
+					</Link>
+					<Link
+						href="#servicios"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Servicios / Equipos
+					</Link>
+					<Link
+						href="#financiamiento"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Financiamiento
+					</Link>
+					<Link
+						href="#blog"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Blog
+					</Link>
+					<Link
+						href="#contacto"
+						className="text-gray-700 font-medium pb-2 border-b"
+					>
+						Contacto
+					</Link>
+
 					<div className="flex flex-col gap-4 mt-2">
 						<a
 							href="tel:8132476565"
