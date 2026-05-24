@@ -4,12 +4,27 @@ import { ChevronDown, Menu, Phone, X } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { JSX } from "react";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useAuth } from "../hooks/useAuth";
 
 export default function Header(): JSX.Element {
 	const { isAuthenticated, openAuthModal } = useAuth();
 	const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+	const [isNosotrosDropdownOpen, setIsNosotrosDropdownOpen] = useState(false);
+	const [isMobileNosotrosOpen, setIsMobileNosotrosOpen] = useState(false);
+
+	useEffect(() => {
+		const handleClickOutside = (event: MouseEvent) => {
+			const target = event.target as HTMLElement;
+			if (!target.closest(".nosotros-dropdown-container")) {
+				setIsNosotrosDropdownOpen(false);
+			}
+		};
+		document.addEventListener("mousedown", handleClickOutside);
+		return () => {
+			document.removeEventListener("mousedown", handleClickOutside);
+		};
+	}, []);
 
 	return (
 		<header className="sticky top-0 z-50 w-full bg-white border-b border-gray-200 shadow-sm transition-all duration-300">
@@ -33,98 +48,99 @@ export default function Header(): JSX.Element {
 					>
 						Paneles Solares Monterrey
 					</Link>
+					<div className="relative nosotros-dropdown-container flex items-center">
+						<button
+							type="button"
+							onClick={() => setIsNosotrosDropdownOpen(!isNosotrosDropdownOpen)}
+							className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium cursor-pointer focus:outline-none"
+						>
+							Acerca de Nosotros <ChevronDown size={14} className={`transition-transform duration-200 ${isNosotrosDropdownOpen ? "rotate-180" : ""}`} />
+						</button>
+						{isNosotrosDropdownOpen && (
+							<div className="absolute top-full left-0 flex flex-col bg-white shadow-lg border border-gray-100 min-w-[280px] py-2 z-50 rounded-md mt-2">
+								<Link
+									href="/nosotros/paneles-solares"
+									onClick={() => setIsNosotrosDropdownOpen(false)}
+									className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green block transition-colors"
+								>
+									Proyectos de Paneles Solares
+								</Link>
+								<Link
+									href="/nosotros/iluminacion"
+									onClick={() => setIsNosotrosDropdownOpen(false)}
+									className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green block transition-colors"
+								>
+									Proyectos de Iluminación
+								</Link>
+								<Link
+									href="/nosotros/calentadores-solares"
+									onClick={() => setIsNosotrosDropdownOpen(false)}
+									className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green block transition-colors"
+								>
+									Proyectos de Calentadores Solares
+								</Link>
+							</div>
+						)}
+					</div>
+
 					<Link
-						href="#nosotros"
+						href="/servicios"
 						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
 					>
-						Acerca de Nosotros
+						Servicios
 					</Link>
 					<div className="relative group">
 						<button
 							type="button"
 							className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
 						>
-							Proyectos <ChevronDown size={14} />
-						</button>
-						<div className="absolute top-full left-0 hidden group-hover:flex flex-col bg-white shadow-lg border border-gray-100 min-w-[240px] py-2 z-50">
-							<Link
-								href="#proyectos"
-								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
-							>
-								Proyectos de Paneles Solares
-							</Link>
-							<Link
-								href="#proyectos"
-								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
-							>
-								Proyectos de Iluminación
-							</Link>
-							<Link
-								href="#proyectos"
-								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-700 hover:text-abtec-green"
-							>
-								Proyectos de Calentadores Solares
-							</Link>
-						</div>
-					</div>
-					<div className="relative group">
-						<button
-							type="button"
-							className="flex items-center gap-1 text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
-						>
-							Servicios <ChevronDown size={14} />
+							Equipos <ChevronDown size={14} />
 						</button>
 						<div className="absolute top-full left-0 hidden group-hover:flex flex-col bg-white shadow-lg border border-gray-100 min-w-[200px] py-2 z-50">
 							<Link
-								href="#servicios"
-								className="px-4 py-2 hover:bg-gray-50 text-sm font-bold text-gray-800"
-							>
-								Equipos
-							</Link>
-							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Paneles Solares
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Inversores
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Microinversores
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Controladores
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Baterias
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Alumbrado Público
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Alumbrado Comercial
 							</Link>
 							<Link
-								href="#servicios"
+								href="#equipos"
 								className="px-4 py-2 hover:bg-gray-50 text-sm text-gray-600 pl-6"
 							>
 								Alumbrado Industrial
@@ -132,7 +148,7 @@ export default function Header(): JSX.Element {
 						</div>
 					</div>
 					<Link
-						href="#financiamiento"
+						href="/financiamiento"
 						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
 					>
 						Financiamiento
@@ -193,26 +209,65 @@ export default function Header(): JSX.Element {
 					<Link href="/" className="text-gray-700 font-medium pb-2 border-b">
 						Paneles Solares Monterrey
 					</Link>
+					<div className="flex flex-col border-b pb-2">
+						<button
+							type="button"
+							onClick={() => setIsMobileNosotrosOpen(!isMobileNosotrosOpen)}
+							className="flex items-center justify-between text-gray-700 font-medium w-full text-left focus:outline-none"
+						>
+							<span>Acerca de Nosotros</span>
+							<ChevronDown size={18} className={`transition-transform duration-200 ${isMobileNosotrosOpen ? 'rotate-180' : ''}`} />
+						</button>
+						{isMobileNosotrosOpen && (
+							<div className="flex flex-col pl-4 mt-2 gap-2">
+								<Link
+									href="/nosotros/paneles-solares"
+									onClick={() => {
+										setIsMobileMenuOpen(false);
+										setIsMobileNosotrosOpen(false);
+									}}
+									className="text-gray-600 text-sm py-1 hover:text-abtec-green transition-colors"
+								>
+									Proyectos de Paneles Solares
+								</Link>
+								<Link
+									href="/nosotros/iluminacion"
+									onClick={() => {
+										setIsMobileMenuOpen(false);
+										setIsMobileNosotrosOpen(false);
+									}}
+									className="text-gray-600 text-sm py-1 hover:text-abtec-green transition-colors"
+								>
+									Proyectos de Iluminación
+								</Link>
+								<Link
+									href="/nosotros/calentadores-solares"
+									onClick={() => {
+										setIsMobileMenuOpen(false);
+										setIsMobileNosotrosOpen(false);
+									}}
+									className="text-gray-600 text-sm py-1 hover:text-abtec-green transition-colors"
+								>
+									Proyectos de Calentadores Solares
+								</Link>
+							</div>
+						)}
+					</div>
+
 					<Link
-						href="#nosotros"
+						href="/servicios"
 						className="text-gray-700 font-medium pb-2 border-b"
 					>
-						Acerca de Nosotros
+						Servicios
 					</Link>
 					<Link
-						href="#proyectos"
+						href="#equipos"
 						className="text-gray-700 font-medium pb-2 border-b"
 					>
-						Proyectos
+						Equipos
 					</Link>
 					<Link
-						href="#servicios"
-						className="text-gray-700 font-medium pb-2 border-b"
-					>
-						Servicios / Equipos
-					</Link>
-					<Link
-						href="#financiamiento"
+						href="/financiamiento"
 						className="text-gray-700 font-medium pb-2 border-b"
 					>
 						Financiamiento

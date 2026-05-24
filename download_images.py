@@ -10,6 +10,8 @@ with open(html_path, 'r', encoding='utf-8') as f:
     content = f.read()
 
 urls = re.findall(r'src=\"(https://www\.abtec\.com\.mx/[^\"]+)\"', content)
+urls_bg = re.findall(r'url\([\'\"]?(https://www\.abtec\.com\.mx/[^\'\")]+)[\'\"]?\)', content)
+urls.extend(urls_bg)
 urls = list(set(urls))
 
 for url in urls:

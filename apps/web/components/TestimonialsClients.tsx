@@ -61,6 +61,11 @@ export default function TestimonialsClients(): JSX.Element {
 		"LOGO GRUAS MONTERREY.png",
 	];
 
+	const duplicatedClients = [
+		...clients.map((client) => ({ name: client, id: `first-${client}` })),
+		...clients.map((client) => ({ name: client, id: `second-${client}` })),
+	];
+
 	const [currentIndex, setCurrentIndex] = useState(0);
 	const [direction, setDirection] = useState(0); // -1 for left, 1 for right
 
@@ -93,7 +98,12 @@ export default function TestimonialsClients(): JSX.Element {
 		}),
 	};
 
-	const activeTestimonial = testimonials[currentIndex] || testimonials[0];
+	const activeTestimonial = (testimonials[currentIndex] || testimonials[0]) as {
+		name: string;
+		title: string;
+		text: string;
+		image: string;
+	};
 
 	return (
 		<section className="py-16 bg-[#f8fafc]">
@@ -179,27 +189,50 @@ export default function TestimonialsClients(): JSX.Element {
 					</div>
 				</div>
 
-				{/* Clients Brands Logo Section */}
-				<div className="mt-12 grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-6">
-					{clients.map((client, index) => (
-						<motion.div
-							key={client}
-							initial={{ opacity: 0, y: 10 }}
-							whileInView={{ opacity: 1, y: 0 }}
-							viewport={{ once: true }}
-							transition={{ delay: index * 0.05, duration: 0.4 }}
-							className="bg-[#eef2f7] rounded-[24px] p-6 flex items-center justify-center h-24 relative"
-						>
-							<div className="relative w-full h-full max-h-12">
-								<Image
-									src={`/images/${client}`}
-									alt={`Marca ${index + 1}`}
-									fill
-									className="object-contain"
-								/>
-							</div>
-						</motion.div>
-					))}
+				{/* Clients Brands Logo Section (Automatic Marquee) */}
+				<div className="mt-16 w-full overflow-hidden relative">
+					{/* Fade effects on edges */}
+					<div className="absolute inset-y-0 left-0 w-24 bg-gradient-to-r from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+					<div className="absolute inset-y-0 right-0 w-24 bg-gradient-to-l from-[#f8fafc] to-transparent z-10 pointer-events-none" />
+
+					<div className="flex animate-marquee-container">
+						<div className="flex gap-8 px-4 py-4 animate-marquee-scroll">
+							{duplicatedClients.map((client, index) => (
+								<div
+									key={client.id}
+									className="bg-white rounded-[28px] border border-slate-100 shadow-[0_10px_30px_rgba(15,23,42,0.02)] p-8 flex items-center justify-center w-64 h-36 flex-shrink-0 hover:scale-105 transition-all duration-300 hover:shadow-[0_15px_40px_rgba(15,23,42,0.06)]"
+								>
+									<div className="relative w-full h-full">
+										<Image
+											src={`/images/${client.name}`}
+											alt={`Cliente ${index + 1}`}
+											fill
+											className="object-contain"
+										/>
+									</div>
+								</div>
+							))}
+						</div>
+					</div>
+
+					<style>{`
+						@keyframes marquee {
+							0% { transform: translateX(0); }
+							100% { transform: translateX(-50%); }
+						}
+						.animate-marquee-container {
+							display: flex;
+							width: max-content;
+						}
+						.animate-marquee-scroll {
+							display: flex;
+							width: max-content;
+							animation: marquee 25s linear infinite;
+						}
+						.animate-marquee-scroll:hover {
+							animation-play-state: paused;
+						}
+					`}</style>
 				</div>
 			</div>
 		</section>

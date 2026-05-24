@@ -4,22 +4,22 @@ import type { JSX } from "react";
 import { useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
-import Footer from "../../../components/Footer";
-import Header from "../../../components/Header";
+import Footer from "../../../../components/Footer";
+import Header from "../../../../components/Header";
 import { 
-	Banknote, CreditCard, Landmark, PiggyBank,
-	CheckCircle2, ChevronDown, User, Phone, Mail, FileText
+	Droplet, Flame, PhoneCall, ShoppingBag, 
+	CheckCircle2, ChevronDown, User, Phone, Mail 
 } from "lucide-react";
 
-interface FinanceOption {
-	tag: string;
+interface ProjectItem {
+	type: "PROYECTO INDUSTRIAL" | "PROYECTO COMERCIAL";
 	title: string;
-	name: string;
-	bullets: string[];
+	location: string;
 	image: string;
+	details: { label: string; value: string }[];
 }
 
-export default function FinanciamientoPage(): JSX.Element {
+export default function NosotrosCalentadoresSolares(): JSX.Element {
 	const [formSubmitted, setFormSubmitted] = useState(false);
 	const [formData, setFormData] = useState({
 		nombre: "",
@@ -29,53 +29,16 @@ export default function FinanciamientoPage(): JSX.Element {
 		comentarios: ""
 	});
 
-	const options: FinanceOption[] = [
+	const projects: ProjectItem[] = [
 		{
-			tag: "PANELES SOLARES MONTERREY",
-			title: "PLAZO DESDE 12 HASTA 84 MESES",
-			name: "Financiamiento CIBANCO",
-			bullets: [
-				"Persona Física / Persona Moral.",
-				"Opción de abono a cuenta sin penalización.",
-				"Incluye seguro del sistema solar ante robo o daños sin costo adicional.",
-				"Tasa de interés desde el 15.75% anual."
-			],
-			image: "/images/PANELES SOLARES-1.png"
-		},
-		{
-			tag: "PANELES SOLARES MONTERREY",
-			title: "PLAZO DESDE 3 HASTA 12 MESES",
-			name: "Financiamiento con Tarjeta de Crédito",
-			bullets: [
-				"Visa, MasterCard ó American Express.",
-				"Opción de pagos a distancia.",
-				"Opción a financiamiento directa a través de su banco (Consultar términos y condiciones).",
-				"Opción a pago con tarjeta en una sola exhibición."
-			],
-			image: "/images/kateryna-hliznitsova-Eyt8PjCWKLw-unsplash.jpg"
-		},
-		{
-			tag: "PANELES SOLARES MONTERREY",
-			title: "PLAZO DESDE 3 HASTA 6 MESES",
-			name: "Financiamiento Directo",
-			bullets: [
-				"50% de enganche.",
-				"0% de interés.",
-				"Pagos con factura fiscal."
-			],
-			image: "/images/thisisengineering-raeng-q1-zGTPk1Co-unsplash.jpg"
-		},
-		{
-			tag: "GASERA 2-1",
-			title: "PLAZO DESDE 12 HASTA 60 MESES",
-			name: "Financiamiento RED GIRASOL",
-			bullets: [
-				"Desde 0% de enganche.",
-				"Financiamientos desde $50,000 hasta $10,000,000 de pesos.",
-				"Flexibilidad para amortizar durante el plazo o hasta el final.",
-				"Disposición en efectivo."
-			],
-			image: "/images/proyecto residencial.png"
+			type: "PROYECTO COMERCIAL",
+			title: "Club Primavera, A.C.",
+			location: "Monterrey, Nuevo León.",
+			image: "/images/BOILER SOLAR.png",
+			details: [
+				{ label: "Nº de boiler instalados", value: "40 piezas." },
+				{ label: "Descripción de proyecto", value: "Distribución y asesoría en diseño de instalación de boiler solares." }
+			]
 		}
 	];
 
@@ -102,46 +65,111 @@ export default function FinanciamientoPage(): JSX.Element {
 				<section className="relative w-full py-24 md:py-32 bg-slate-950 overflow-hidden">
 					<div className="absolute inset-0 z-0">
 						<Image
-							src="/images/markus-spiske-qwRF33UKsVg-unsplash (1)-1.jpg"
-							alt="Financiamiento"
+							src="https://images.unsplash.com/photo-1508514177221-188b1cf16e9d?q=80&w=800&auto=format&fit=crop"
+							alt="Proyectos de Boiler Solar"
 							fill
-							className="object-cover object-[center_30%] opacity-40"
+							className="object-cover object-[center_40%] opacity-40"
 							priority
 							sizes="100vw"
 							quality={90}
+							unoptimized
 						/>
-						<div className="absolute inset-0 bg-gradient-to-b from-slate-950/75 via-slate-950/55 to-slate-950/80"></div>
+						<div className="absolute inset-0 bg-gradient-to-b from-slate-950/70 via-slate-950/50 to-slate-950/80"></div>
 					</div>
 					<div className="max-w-7xl mx-auto px-6 lg:px-10 relative z-10 text-center">
 						<div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-primary/20 text-primary border border-primary/30 w-fit mb-6 mx-auto">
-							<Banknote className="w-4 h-4 animate-pulse text-primary" />
+							<Flame className="w-4 h-4 text-primary animate-pulse" />
 							<span className="text-xs font-bold tracking-widest uppercase text-primary">
-								Opciones Flexibles
+								boiler solar
 							</span>
 						</div>
 						<h1 className="text-white text-5xl md:text-7xl font-bold tracking-tight mb-4 font-display">
-							Financiamiento
+							Proyectos de Boiler Solar
 						</h1>
 						<p className="text-white/70 text-lg md:text-xl font-medium tracking-wide">
-							Facilitamos tu transición hacia la energía solar
+							ABTEC • Soluciones de Energía Limpia
 						</p>
 					</div>
 				</section>
 
-				{/* Options Grid Section (Alternating Design) */}
+				{/* Services Section */}
+				<section className="py-20 bg-white">
+					<div className="max-w-7xl mx-auto px-6 lg:px-10">
+						<div className="text-center max-w-3xl mx-auto mb-16">
+							<span className="text-primary font-bold text-xs uppercase tracking-widest mb-3 block">
+								boiler solar
+							</span>
+							<h2 className="text-secondary text-3xl md:text-4xl font-bold tracking-tight font-display">
+								Nuestros Servicios Principales
+							</h2>
+						</div>
+
+						<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+							{/* Service: Distribución */}
+							<div className="bg-white rounded-2xl border border-gray-150 p-8 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+								<div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+									<ShoppingBag className="w-6 h-6" />
+								</div>
+								<span className="text-primary/75 text-xs font-bold uppercase tracking-widest block mb-2">
+									SERVICIO
+								</span>
+								<h3 className="text-secondary text-2xl font-bold mb-4 font-display">
+									DISTRIBUCIÓN
+								</h3>
+								<p className="text-gray-650 text-sm leading-relaxed">
+									Suministro directo de calentadores solares de alta eficiencia, utilizando tecnología de tubos de vacío y acero inoxidable de grado alimenticio para máximo ahorro y durabilidad.
+								</p>
+							</div>
+
+							{/* Service: Atención */}
+							<div className="bg-white rounded-2xl border border-gray-150 p-8 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+								<div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+									<PhoneCall className="w-6 h-6" />
+								</div>
+								<span className="text-primary/75 text-xs font-bold uppercase tracking-widest block mb-2">
+									SERVICIO
+								</span>
+								<h3 className="text-secondary text-2xl font-bold mb-4 font-display">
+									ATENCIÓN
+								</h3>
+								<p className="text-gray-650 text-sm leading-relaxed">
+									Atención personalizada y asesoría integral para determinar el equipo más adecuado según las necesidades de agua caliente de su hogar, comercio o industria.
+								</p>
+							</div>
+
+							{/* Service: Asistencia */}
+							<div className="bg-white rounded-2xl border border-gray-150 p-8 shadow-md hover:shadow-xl transition-all duration-300 group hover:-translate-y-1">
+								<div className="w-14 h-14 rounded-xl bg-primary/10 text-primary flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+									<CheckCircle2 className="w-6 h-6" />
+								</div>
+								<span className="text-primary/75 text-xs font-bold uppercase tracking-widest block mb-2">
+									SERVICIO
+								</span>
+								<h3 className="text-secondary text-2xl font-bold mb-4 font-display">
+									ASISTENCIA
+								</h3>
+								<p className="text-gray-650 text-sm leading-relaxed">
+									Soporte técnico y asistencia en el diseño de instalación de boiler solares para garantizar un funcionamiento óptimo y prolongar la vida útil del sistema.
+								</p>
+							</div>
+						</div>
+					</div>
+				</section>
+
+				{/* Projects Grid Section */}
 				<section className="py-24 bg-[#f8fafc]">
 					<div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
 						<div className="text-center max-w-3xl mx-auto mb-20">
 							<span className="text-primary font-bold text-xs uppercase tracking-[0.3em] mb-3 block">
-								Inversión Inteligente
+								boiler solar
 							</span>
 							<h2 className="text-secondary text-3xl md:text-5xl font-bold tracking-tight font-display">
-								Planes de Financiamiento
+								Portafolio de Proyectos
 							</h2>
 						</div>
 
 						<div className="space-y-6 max-w-6xl mx-auto">
-							{options.map((option, idx) => {
+							{projects.map((project, idx) => {
 								const isEven = idx % 2 === 0;
 								return (
 									<div key={idx} className="w-full">
@@ -150,41 +178,28 @@ export default function FinanciamientoPage(): JSX.Element {
 											<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-16 items-center">
 												
 												{/* Text Details Column */}
-												<div className={`lg:col-span-6 flex flex-col items-center lg:items-start text-center lg:text-left ${isEven ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
-													<div className="flex items-center gap-2 mb-2 justify-center lg:justify-start">
+												<div className={`lg:col-span-6 flex flex-col items-center justify-center text-center ${isEven ? 'order-1 lg:order-1' : 'order-1 lg:order-2'}`}>
+													<div className="flex items-center gap-2 mb-2 justify-center">
 														<span className="text-[11px] font-bold tracking-[0.25em] text-[#262660]">
-															{option.tag}
+															{project.type}
 														</span>
 														<span className="text-xs text-gray-400 font-bold">—</span>
 													</div>
 													
-													<p className="text-abtec-green font-bold text-sm tracking-wide mb-1 uppercase">
-														{option.title}
-													</p>
-													
-													<h3 className="text-secondary font-bold text-3xl md:text-4xl font-heading mb-4">
-														{option.name}
+													<h3 className="text-abtec-green font-bold text-3xl font-heading tracking-wide uppercase">
+														{project.title}
 													</h3>
 													
 													{/* Green Underline Divider */}
-													<div className="w-16 h-[2.5px] bg-abtec-green rounded-full my-4 mx-auto lg:mx-0"></div>
+													<div className="w-16 h-[2.5px] bg-abtec-green rounded-full my-4"></div>
 													
-													<ul className="space-y-3 mt-4 text-sm md:text-base font-sans text-slate-600 text-left w-full">
-														{option.bullets.map((bullet, bIdx) => (
-															<li key={bIdx} className="flex items-start gap-3">
-																<CheckCircle2 className="w-5 h-5 text-abtec-green shrink-0 mt-0.5" />
-																<span>{bullet}</span>
-															</li>
+													<div className="space-y-3 mt-2 text-sm md:text-base font-sans">
+														{project.details.map((detail, dIdx) => (
+															<p key={dIdx} className="leading-relaxed">
+																<span className="font-bold text-[#262660]">{detail.label}:</span>{" "}
+																<span className="text-abtec-green font-semibold">{detail.value}</span>
+															</p>
 														))}
-													</ul>
-
-													<div className="flex flex-col sm:flex-row gap-4 mt-8 w-full sm:w-auto">
-														<Link href="#contacto" className="bg-[#262660] hover:bg-[#1d1d54] text-white text-sm font-bold py-3.5 px-6 rounded-xl shadow-md hover:shadow-lg transition-all text-center">
-															Obtener un presupuesto
-														</Link>
-														<Link href="#contacto" className="bg-white border-2 border-[#262660] text-[#262660] hover:bg-slate-50 text-sm font-bold py-3.5 px-6 rounded-xl transition-all text-center">
-															Mayor información
-														</Link>
 													</div>
 												</div>
 
@@ -192,8 +207,8 @@ export default function FinanciamientoPage(): JSX.Element {
 												<div className={`lg:col-span-6 ${isEven ? 'order-2 lg:order-2' : 'order-2 lg:order-1'}`}>
 													<div className="relative w-full aspect-[16/10] rounded-[20px] overflow-hidden border border-slate-100 shadow-sm group">
 														<Image
-															src={option.image}
-															alt={option.name}
+															src={project.image}
+															alt={project.title}
 															fill
 															className="object-cover group-hover:scale-103 transition-transform duration-700 ease-out"
 															sizes="(max-w-768px) 100vw, 50vw"
@@ -206,8 +221,8 @@ export default function FinanciamientoPage(): JSX.Element {
 											</div>
 										</div>
 
-										{/* Custom Separator Component between option cards */}
-										{idx < options.length - 1 && (
+										{/* Custom Separator Component between project cards */}
+										{idx < projects.length - 1 && (
 											<div className="my-8 w-full h-8 border border-slate-200 rounded-xl bg-slate-50/50 flex items-center justify-center opacity-60">
 												<div className="w-11/12 border-t border-slate-200"></div>
 											</div>
@@ -220,7 +235,7 @@ export default function FinanciamientoPage(): JSX.Element {
 				</section>
 
 				{/* Contact and Corporate Info Section */}
-				<section id="contacto" className="py-24 bg-white border-t border-gray-100 relative">
+				<section className="py-24 bg-white border-t border-gray-100 relative">
 					<div className="max-w-7xl mx-auto px-6 lg:px-10">
 						{/* Header containing title and description */}
 						<div className="mb-10 max-w-3xl">
@@ -242,7 +257,7 @@ export default function FinanciamientoPage(): JSX.Element {
 										<CheckCircle2 className="w-16 h-16 text-abtec-green mb-4 animate-bounce" />
 										<h4 className="text-abtec-blue font-bold text-xl mb-2">¡Solicitud Recibida!</h4>
 										<p className="text-slate-500 text-sm max-w-sm">
-											Muchas gracias por contactarnos. Un especialista en financiamiento se comunicará contigo a la brevedad.
+											Muchas gracias por contactarnos. Un especialista se comunicará contigo a la brevedad.
 										</p>
 									</div>
 								) : (
@@ -329,12 +344,10 @@ export default function FinanciamientoPage(): JSX.Element {
 														onChange={(e) => setFormData({...formData, servicio: e.target.value})}
 														className="w-full bg-white border border-slate-200 rounded-2xl px-6 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm text-gray-700 appearance-none cursor-pointer"
 													>
-														<option value="" disabled>Selecciona un plan</option>
-														<option value="cibanco">Financiamiento CIBANCO</option>
-														<option value="tarjeta">Financiamiento Tarjeta de Crédito</option>
-														<option value="directo">Financiamiento Directo</option>
-														<option value="redgirasol">Financiamiento RED GIRASOL</option>
-														<option value="otro">Otro</option>
+														<option value="" disabled>Selecciona un servicio o producto</option>
+														<option value="boiler">Venta / Distribución de Boiler Solar</option>
+														<option value="atencion">Atención / Asesoría</option>
+														<option value="asistencia">Asistencia / Diseño de Instalación</option>
 													</select>
 													<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-6 text-slate-500">
 														<ChevronDown className="w-4 h-4" />
@@ -363,7 +376,7 @@ export default function FinanciamientoPage(): JSX.Element {
 									<div className="relative w-full aspect-[16/10] rounded-[24px] overflow-hidden mb-6 shadow-sm">
 										<Image
 											src="/images/PANELES SOLARES-1.png"
-											alt="ABTEC Financiamiento"
+											alt="PANELES SOLARES MONTERREY"
 											fill
 											className="object-cover"
 											sizes="(max-w-768px) 100vw, 30vw"
@@ -372,17 +385,17 @@ export default function FinanciamientoPage(): JSX.Element {
 									</div>
 
 									<h3 className="text-abtec-green text-2xl md:text-3xl font-bold font-display mb-4">
-										Planes a tu Medida
+										ABTEC Boiler Solar
 									</h3>
 									
 									<p className="text-slate-700 text-sm md:text-base leading-relaxed mb-6 font-sans">
-										Recibir una corrida financiera para tu proyecto es fácil y rápido a través de nuestros expertos con más de 15 años de experiencia en el mercado. Compártenos tus datos y encontraremos el esquema que mejor se adapte a ti.
+										Recibir un presupuesto para tu proyecto es fácil y rápido a través de nuestros expertos con más de 15 años de experiencia en el mercado. Compártenos tus datos y pronto nos comunicaremos contigo para brindarte el estudio-cotización de paneles solares que más se adapte a tus necesidades.
 									</p>
 								</div>
 
 								<div>
 									<p className="text-abtec-blue font-bold italic text-sm md:text-base mb-4 font-sans">
-										¿Necesitas contactarnos de inmediato?
+										¿Deseas recibir nuestro CV Empresarial?
 									</p>
 									
 									{/* Button: Contáctanos */}
@@ -390,7 +403,7 @@ export default function FinanciamientoPage(): JSX.Element {
 										href="/#contacto" 
 										className="inline-block bg-[#262660] hover:bg-[#1d1d54] text-white font-bold py-3.5 px-8 rounded-2xl shadow-md hover:shadow-lg transition-all text-sm text-center"
 									>
-										Contactar a Ventas
+										Contáctanos
 									</Link>
 								</div>
 							</div>

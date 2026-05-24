@@ -1,6 +1,6 @@
 "use client";
 
-import { Mail, MapPin, Phone, Search } from "lucide-react";
+import { Mail, MapPin, Phone, Search, Facebook, Instagram, MessageCircle, Linkedin } from "lucide-react";
 import Image from "next/image";
 import Link from "next/link";
 import type { JSX } from "react";
@@ -10,22 +10,19 @@ export default function Footer(): JSX.Element {
 
 	const menuLinks = [
 		{ name: "Paneles Solares Monterrey", href: "/" },
-		{ name: "Acerca de Nosotros", href: "#nosotros" },
+		{ name: "Acerca de Nosotros", href: "/nosotros/paneles-solares" },
 		{ name: "Servicios", href: "#servicios" },
 		{ name: "Equipos", href: "#equipos" },
-		{ name: "Financiamiento", href: "#financiamiento" },
+		{ name: "Financiamiento", href: "/financiamiento" },
 		{ name: "Blog", href: "#blog" },
 		{ name: "Contacto", href: "#contacto" },
 	];
 
 	const articles = [
-		"Paneles Solares Saltillo",
-		"Paneles Solares Monterrey",
-		"Alumbrado Público",
-		"Proyecto de Paneles Solares Monterrey",
-		"Proyecto de Paneles Solares Saltillo",
-		"Panel Solar Saltillo",
-		"Panel Solar Monterrey",
+		{ name: "Paneles Solares Monterrey", href: "/nosotros/paneles-solares" },
+		{ name: "Proyectos de Iluminación", href: "/nosotros/iluminacion" },
+		{ name: "Calentadores Solares", href: "/nosotros/calentadores-solares" },
+		{ name: "Boiler Solar", href: "/nosotros/boiler-solar" },
 	];
 
 	const blogLinks = [
@@ -87,6 +84,26 @@ export default function Footer(): JSX.Element {
 								</button>
 							</form>
 						</div>
+
+						<div className="mt-8">
+							<h3 className="text-lg font-heading font-bold mb-4 text-[#1c1d29] uppercase">
+								Síguenos
+							</h3>
+							<div className="flex gap-4">
+								<a href="https://www.facebook.com/abtecmx/?ref=page_internal" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#1877F2] hover:text-white transition-all duration-300">
+									<Facebook size={18} fill="currentColor" />
+								</a>
+								<a href="https://www.instagram.com/abtecmx/?hl=es-la" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#E4405F] hover:text-white transition-all duration-300">
+									<Instagram size={18} />
+								</a>
+								<a href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#25D366] hover:text-white transition-all duration-300">
+									<MessageCircle size={18} fill="currentColor" />
+								</a>
+								<a href="https://mx.linkedin.com/company/abtec-soluciones-en-energ%C3%ADa" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#0A66C2] hover:text-white transition-all duration-300">
+									<Linkedin size={18} fill="currentColor" />
+								</a>
+							</div>
+						</div>
 					</div>
 
 					{/* Navigation Links */}
@@ -112,18 +129,18 @@ export default function Footer(): JSX.Element {
 					{/* Articles */}
 					<div>
 						<h3 className="text-lg font-heading font-bold mb-6 text-[#1c1d29] uppercase tracking-wider">
-							Artículos
+							Proyectos
 						</h3>
 						<ul className="flex flex-col gap-3">
 							{articles.map((article, index) => (
 								<li key={index}>
-									<a
-										href="#"
+									<Link
+										href={article.href}
 										className="text-gray-700 hover:text-abtec-green transition-colors font-sans text-sm flex items-start gap-2 group"
 									>
 										<span className="w-1.5 h-1.5 rounded-full bg-gray-300 group-hover:bg-abtec-green transition-colors mt-1.5 flex-shrink-0" />
-										<span className="leading-tight">{article}</span>
-									</a>
+										<span className="leading-tight">{article.name}</span>
+									</Link>
 								</li>
 							))}
 						</ul>
@@ -148,7 +165,7 @@ export default function Footer(): JSX.Element {
 						</ul>
 						<a
 							href="#contacto"
-							className="inline-block mt-8 bg-abtec-green text-white font-bold px-6 py-3 rounded hover:bg-opacity-90 transition-colors uppercase text-sm"
+							className="inline-block mt-8 bg-abtec-blue text-white font-bold px-6 py-3 rounded hover:bg-opacity-90 transition-colors uppercase text-sm"
 						>
 							¡Contáctanos!
 						</a>
@@ -158,12 +175,12 @@ export default function Footer(): JSX.Element {
 				{/* Bottom Bar */}
 				<div className="pt-8 border-t border-gray-200 flex flex-col md:flex-row justify-between items-center gap-4">
 					<div className="flex gap-6 text-sm text-gray-500 font-sans">
-						<a href="#" className="hover:text-abtec-green transition-colors">
+						<Link href="#" className="hover:text-abtec-green transition-colors">
 							Términos y Condiciones
-						</a>
-						<a href="#" className="hover:text-abtec-green transition-colors">
+						</Link>
+						<Link href="/politicas-de-privacidad" className="hover:text-abtec-green transition-colors">
 							Política de Privacidad
-						</a>
+						</Link>
 					</div>
 					<p className="text-sm text-gray-500 text-center md:text-right font-sans">
 						Derechos reservados ABTEC Soluciones de Energía® {currentYear}

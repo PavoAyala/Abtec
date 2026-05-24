@@ -9,20 +9,21 @@ export default function About(): JSX.Element {
 		<section id="nosotros" className="py-16 bg-[#f8fafc]">
 			<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 				<div className="bg-white border border-slate-200 rounded-[32px] shadow-[0_20px_60px_rgba(15,23,42,0.08)] overflow-hidden">
-					<div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-8 lg:gap-10 items-center p-6 sm:p-10">
+					<div className="grid grid-cols-1 lg:grid-cols-[1.1fr_0.9fr] gap-0 items-stretch">
 						<motion.div
-							initial={{ opacity: 0, y: 20 }}
-							whileInView={{ opacity: 1, y: 0 }}
+							initial={{ opacity: 0 }}
+							whileInView={{ opacity: 1 }}
 							viewport={{ once: true }}
-							transition={{ duration: 0.5 }}
-							className="relative w-full overflow-hidden rounded-[28px] h-[420px] sm:h-[500px]"
+							transition={{ duration: 0.6 }}
+							className="relative w-full overflow-hidden h-[350px] sm:h-[450px] lg:h-full lg:min-h-full"
 						>
 							<Image
 								src="/images/abtec1.jpeg"
 								alt="PANELES SOLARES MONTERREY"
 								fill
-								className="object-cover"
+								className="object-cover hover:scale-102 transition-transform duration-700 ease-out"
 								quality={100}
+								priority
 							/>
 						</motion.div>
 
@@ -31,7 +32,7 @@ export default function About(): JSX.Element {
 							whileInView={{ opacity: 1, y: 0 }}
 							viewport={{ once: true }}
 							transition={{ duration: 0.5, delay: 0.15 }}
-							className="flex flex-col items-center lg:items-start text-center lg:text-left"
+							className="flex flex-col justify-center items-center lg:items-start text-center lg:text-left p-6 sm:p-10 lg:p-12 xl:p-16"
 						>
 							<p className="text-abtec-green font-semibold text-sm uppercase tracking-[0.4em] mb-4">
 								ABTEC

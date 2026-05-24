@@ -18,7 +18,7 @@ export default function Hero(): JSX.Element {
 				<div className="relative w-full overflow-hidden rounded-[32px] bg-slate-900 shadow-[0_30px_80px_rgba(15,23,42,0.2)]">
 					<div className="absolute inset-0">
 						<Image
-							src="/images/hero_bg.png"
+							src="/images/markus-spiske-qwRF33UKsVg-unsplash.jpg"
 							alt="Paneles solares Monterrey"
 							fill
 							priority
@@ -64,7 +64,7 @@ export default function Hero(): JSX.Element {
 									href="https://wa.me/528132476565"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex items-center justify-center rounded-full bg-[#34d399] text-white px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-sm transition hover:bg-[#22c55e]"
+									className="inline-flex items-center justify-center rounded-full bg-[#262660] text-white px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-md hover:bg-[#1f2a5c] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
 								>
 									WhatsApp
 								</a>
