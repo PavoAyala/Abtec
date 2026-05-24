@@ -6,6 +6,44 @@
 	--color-background-light: #f7f8f5;
 	--color-background-dark: #1c2210;
 
+	--color-abtec-blue: #262660;
+	--color-abtec-blue-50: #e9e9f0;
+	--color-abtec-blue-100: #c7c7d9;
+	--color-abtec-blue-200: #a3a3bf;
+	--color-abtec-blue-300: #7f7fa6;
+	--color-abtec-blue-400: #5c5c8c;
+	--color-abtec-blue-500: #3d3d73;
+	--color-abtec-blue-600: #262660;
+	--color-abtec-blue-700: #1e1e4d;
+	--color-abtec-blue-800: #15153a;
+	--color-abtec-blue-900: #0b0b26;
+
+	--color-abtec-green: #3AB54A;
+	--color-abtec-green-50: #eef8f0;
+	--color-abtec-green-100: #d3edd7;
+	--color-abtec-green-200: #b5e1bc;
+	--color-abtec-green-300: #94d3a0;
+	--color-abtec-green-400: #70c481;
+	--color-abtec-green-500: #3AB54A;
+	--color-abtec-green-600: #2d9c3b;
+	--color-abtec-green-700: #227d2f;
+	--color-abtec-green-800: #175b22;
+	--color-abtec-green-900: #0b3714;
+
+	--color-abtec-orange: #FF6A00;
+	--color-abtec-gray: #f3f3f7;
+
+	--color-abtec-navy-50: #e8eaf0;
+	--color-abtec-navy-100: #c5cbdc;
+	--color-abtec-navy-200: #9fa9c5;
+	--color-abtec-navy-300: #7987af;
+	--color-abtec-navy-400: #57699d;
+	--color-abtec-navy-500: #3c4f8c;
+	--color-abtec-navy-600: #2d3b6f;
+	--color-abtec-navy-700: #1f274e;
+	--color-abtec-navy-800: #121630;
+	--color-abtec-navy-900: #0a0b18;
+
 	--font-display: "Space Grotesk", sans-serif;
 
 	--radius-DEFAULT: 0.25rem;

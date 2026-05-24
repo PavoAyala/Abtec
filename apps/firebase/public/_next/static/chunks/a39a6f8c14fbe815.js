@@ -1,0 +1,1569 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+	"object" == typeof document ? document.currentScript : void 0,
+	43513,
+	(e) => {
+		var t,
+			r,
+			a,
+			n,
+			s,
+			l,
+			i =
+				(((t = {}).Lead = "Lead"),
+				(t.Proposal = "Proposal"),
+				(t.Negotiation = "Negotiation"),
+				(t.Won = "Won"),
+				(t.Lost = "Lost"),
+				t),
+			o =
+				(((r = {}).Low = "Low"),
+				(r.Medium = "Medium"),
+				(r.High = "High"),
+				(r.Critical = "Critical"),
+				r),
+			c =
+				(((a = {}).Open = "Open"),
+				(a.InProgress = "InProgress"),
+				(a.Resolved = "Resolved"),
+				(a.Closed = "Closed"),
+				a),
+			u =
+				(((n = {}).Call = "Call"),
+				(n.Email = "Email"),
+				(n.Meeting = "Meeting"),
+				(n.Note = "Note"),
+				(n.Task = "Task"),
+				n),
+			d =
+				(((s = {}).Admin = "admin"),
+				(s.Manager = "manager"),
+				(s.Sales = "sales"),
+				(s.Support = "support"),
+				(s.Viewer = "viewer"),
+				s),
+			f =
+				(((l = {}).Subscriber = "subscriber"),
+				(l.Lead = "lead"),
+				(l.MQL = "mql"),
+				(l.SQL = "sql"),
+				(l.Opportunity = "opportunity"),
+				(l.Customer = "customer"),
+				(l.Lost = "lost"),
+				l);
+		e.s([
+			"ActivityType",
+			() => u,
+			"DealStage",
+			() => i,
+			"LifecycleStage",
+			() => f,
+			"TicketPriority",
+			() => o,
+			"TicketStatus",
+			() => c,
+			"UserRole",
+			() => d,
+		]);
+	},
+	60826,
+	(e, t, r) => {
+		var a = e.r(41787),
+			n =
+				"function" == typeof Object.is
+					? Object.is
+					: (e, t) =>
+							(e === t && (0 !== e || 1 / e == 1 / t)) || (e != e && t != t),
+			s = a.useState,
+			l = a.useEffect,
+			i = a.useLayoutEffect,
+			o = a.useDebugValue;
+		function c(e) {
+			var t = e.getSnapshot;
+			e = e.value;
+			try {
+				var r = t();
+				return !n(e, r);
+			} catch (e) {
+				return !0;
+			}
+		}
+		var u =
+			"u" < typeof window ||
+			void 0 === window.document ||
+			void 0 === window.document.createElement
+				? (e, t) => t()
+				: (e, t) => {
+						var r = t(),
+							a = s({ inst: { value: r, getSnapshot: t } }),
+							n = a[0].inst,
+							u = a[1];
+						return (
+							i(() => {
+								(n.value = r), (n.getSnapshot = t), c(n) && u({ inst: n });
+							}, [e, r, t]),
+							l(
+								() => (
+									c(n) && u({ inst: n }),
+									e(() => {
+										c(n) && u({ inst: n });
+									})
+								),
+								[e],
+							),
+							o(r),
+							r
+						);
+					};
+		r.useSyncExternalStore =
+			void 0 !== a.useSyncExternalStore ? a.useSyncExternalStore : u;
+	},
+	36379,
+	(e, t, r) => {
+		t.exports = e.r(60826);
+	},
+	75307,
+	(e) => {
+		let t;
+		var r = e.i(41787),
+			a = e.i(36379);
+		e.s(
+			[
+				"ERROR_REVALIDATE_EVENT",
+				() => 3,
+				"FOCUS_EVENT",
+				() => 0,
+				"MUTATE_EVENT",
+				() => 2,
+				"RECONNECT_EVENT",
+				() => 1,
+			],
+			29498,
+		);
+		var n = Object.prototype.hasOwnProperty;
+		let s = new WeakMap(),
+			l = () => {},
+			i = l(),
+			o = Object,
+			c = (e) => e === i,
+			u = (e, t) => ({ ...e, ...t }),
+			d = {},
+			f = {},
+			p = "undefined",
+			h = typeof window != p,
+			m = typeof document != p,
+			g = h && "Deno" in window,
+			b = (e, t) => {
+				const r = s.get(e);
+				return [
+					() => (!c(t) && e.get(t)) || d,
+					(a) => {
+						if (!c(t)) {
+							const n = e.get(t);
+							t in f || (f[t] = n), r[5](t, u(n, a), n || d);
+						}
+					},
+					r[6],
+					() => (!c(t) && t in f ? f[t] : (!c(t) && e.get(t)) || d),
+				];
+			},
+			x = !0,
+			[y, v] =
+				h && window.addEventListener
+					? [
+							window.addEventListener.bind(window),
+							window.removeEventListener.bind(window),
+						]
+					: [l, l],
+			j = {
+				initFocus: (e) => (
+					m && document.addEventListener("visibilitychange", e),
+					y("focus", e),
+					() => {
+						m && document.removeEventListener("visibilitychange", e),
+							v("focus", e);
+					}
+				),
+				initReconnect: (e) => {
+					const t = () => {
+							(x = !0), e();
+						},
+						r = () => {
+							x = !1;
+						};
+					return (
+						y("online", t),
+						y("offline", r),
+						() => {
+							v("online", t), v("offline", r);
+						}
+					);
+				},
+			},
+			S = !r.default.useId,
+			w = !h || g,
+			N = w ? r.useEffect : r.useLayoutEffect,
+			R = "u" > typeof navigator && navigator.connection,
+			E =
+				!w && R && (["slow-2g", "2g"].includes(R.effectiveType) || R.saveData),
+			k = new WeakMap(),
+			C = (e, t) => e === `[object ${t}]`,
+			O = 0,
+			T = (e) => {
+				let t,
+					r,
+					a = typeof e,
+					n = o.prototype.toString.call(e),
+					s = C(n, "Date"),
+					l = C(n, "RegExp"),
+					i = C(n, "Object");
+				if (o(e) !== e || s || l)
+					t = s
+						? e.toJSON()
+						: "symbol" == a
+							? e.toString()
+							: "string" == a
+								? JSON.stringify(e)
+								: "" + e;
+				else {
+					if ((t = k.get(e))) return t;
+					if (((t = ++O + "~"), k.set(e, t), Array.isArray(e))) {
+						for (r = 0, t = "@"; r < e.length; r++) t += T(e[r]) + ",";
+						k.set(e, t);
+					}
+					if (i) {
+						t = "#";
+						const a = o.keys(e).sort();
+						for (; !c((r = a.pop())); )
+							c(e[r]) || (t += r + ":" + T(e[r]) + ",");
+						k.set(e, t);
+					}
+				}
+				return t;
+			},
+			L = (e) => {
+				if ("function" == typeof e)
+					try {
+						e = e();
+					} catch (t) {
+						e = "";
+					}
+				const t = e;
+				return [
+					(e =
+						"string" == typeof e
+							? e
+							: (Array.isArray(e) ? e.length : e)
+								? T(e)
+								: ""),
+					t,
+				];
+			},
+			A = 0,
+			M = () => ++A;
+		async function _(...e) {
+			let [t, r, a, n] = e,
+				l = u(
+					{ populateCache: !0, throwOnError: !0 },
+					"boolean" == typeof n ? { revalidate: n } : n || {},
+				),
+				o = l.populateCache,
+				d = l.rollbackOnError,
+				f = l.optimisticData,
+				p = l.throwOnError;
+			if ("function" == typeof r) {
+				const e = [];
+				for (const a of t.keys())
+					!/^\$(inf|sub)\$/.test(a) && r(t.get(a)._k) && e.push(a);
+				return Promise.all(e.map(h));
+			}
+			return h(r);
+			async function h(r) {
+				let n,
+					[u] = L(r);
+				if (!u) return;
+				const [h, m] = b(t, u),
+					[g, x, y, v] = s.get(t),
+					j = () => {
+						const e = g[u];
+						return ("function" == typeof l.revalidate
+							? l.revalidate(h().data, r)
+							: !1 !== l.revalidate) && (delete y[u], delete v[u], e && e[0])
+							? e[0](2).then(() => h().data)
+							: h().data;
+					};
+				if (e.length < 3) return j();
+				let S = a,
+					w = !1,
+					N = M();
+				x[u] = [N, 0];
+				const R = !c(f),
+					E = h(),
+					k = E.data,
+					C = E._c,
+					O = c(C) ? k : C;
+				if (
+					(R && m({ data: (f = "function" == typeof f ? f(O, k) : f), _c: O }),
+					"function" == typeof S)
+				)
+					try {
+						S = S(O);
+					} catch (e) {
+						(n = e), (w = !0);
+					}
+				if (S && "function" == typeof S.then) {
+					let e;
+					if (
+						((S = await S.catch((e) => {
+							(n = e), (w = !0);
+						})),
+						N !== x[u][0])
+					) {
+						if (w) throw n;
+						return S;
+					}
+					w &&
+						R &&
+						((e = n), "function" == typeof d ? d(e) : !1 !== d) &&
+						((o = !0), m({ data: O, _c: i }));
+				}
+				if (
+					(o &&
+						!w &&
+						("function" == typeof o
+							? m({ data: o(S, O), error: i, _c: i })
+							: m({ data: S, error: i, _c: i })),
+					(x[u][1] = M()),
+					Promise.resolve(j()).then(() => {
+						m({ _c: i });
+					}),
+					w)
+				) {
+					if (p) throw n;
+					return;
+				}
+				return S;
+			}
+		}
+		const V = (e, t) => {
+				for (const r in e) e[r][0] && e[r][0](t);
+			},
+			U = (e, t) => {
+				if (!s.has(e)) {
+					let r = u(j, t),
+						a = Object.create(null),
+						n = _.bind(i, e),
+						o = l,
+						c = Object.create(null),
+						d = (e, t) => {
+							const r = c[e] || [];
+							return (c[e] = r), r.push(t), () => r.splice(r.indexOf(t), 1);
+						},
+						f = (t, r, a) => {
+							e.set(t, r);
+							const n = c[t];
+							if (n) for (const e of n) e(r, a);
+						},
+						p = () => {
+							if (
+								!s.has(e) &&
+								(s.set(e, [
+									a,
+									Object.create(null),
+									Object.create(null),
+									Object.create(null),
+									n,
+									f,
+									d,
+								]),
+								!w)
+							) {
+								const t = r.initFocus(setTimeout.bind(i, V.bind(i, a, 0))),
+									n = r.initReconnect(setTimeout.bind(i, V.bind(i, a, 1)));
+								o = () => {
+									t && t(), n && n(), s.delete(e);
+								};
+							}
+						};
+					return p(), [e, n, p, o];
+				}
+				return [e, s.get(e)[4]];
+			},
+			[D, P] = U(new Map()),
+			I = u(
+				{
+					onLoadingSlow: l,
+					onSuccess: l,
+					onError: l,
+					onErrorRetry: (e, t, r, a, n) => {
+						const s = r.errorRetryCount,
+							l = n.retryCount,
+							i =
+								~~((Math.random() + 0.5) * (1 << (l < 8 ? l : 8))) *
+								r.errorRetryInterval;
+						(c(s) || !(l > s)) && setTimeout(a, i, n);
+					},
+					onDiscarded: l,
+					revalidateOnFocus: !0,
+					revalidateOnReconnect: !0,
+					revalidateIfStale: !0,
+					shouldRetryOnError: !0,
+					errorRetryInterval: E ? 1e4 : 5e3,
+					focusThrottleInterval: 5e3,
+					dedupingInterval: 2e3,
+					loadingTimeout: E ? 5e3 : 3e3,
+					compare: function e(t, r) {
+						var a, s;
+						if (t === r) return !0;
+						if (t && r && (a = t.constructor) === r.constructor) {
+							if (a === Date) return t.getTime() === r.getTime();
+							if (a === RegExp) return t.toString() === r.toString();
+							if (a === Array) {
+								if ((s = t.length) === r.length) for (; s-- && e(t[s], r[s]); );
+								return -1 === s;
+							}
+							if (!a || "object" == typeof t) {
+								for (a in ((s = 0), t))
+									if (
+										(n.call(t, a) && ++s && !n.call(r, a)) ||
+										!(a in r) ||
+										!e(t[a], r[a])
+									)
+										return !1;
+								return Object.keys(r).length === s;
+							}
+						}
+						return t != t && r != r;
+					},
+					isPaused: () => !1,
+					cache: D,
+					mutate: P,
+					fallback: {},
+				},
+				{
+					isOnline: () => x,
+					isVisible: () => {
+						const e = m && document.visibilityState;
+						return c(e) || "hidden" !== e;
+					},
+				},
+			),
+			F = (e, t) => {
+				const r = u(e, t);
+				if (t) {
+					const { use: a, fallback: n } = e,
+						{ use: s, fallback: l } = t;
+					a && s && (r.use = a.concat(s)), n && l && (r.fallback = u(n, l));
+				}
+				return r;
+			},
+			W = (0, r.createContext)({});
+		var $ = e.i(29498);
+		const q = h && window.__SWR_DEVTOOLS_USE__,
+			B = (q ? window.__SWR_DEVTOOLS_USE__ : []).concat((e) => (t, r, a) => {
+				const n =
+					r &&
+					((...e) => {
+						const [a] = L(t),
+							[, , , n] = s.get(D);
+						if (a.startsWith("$inf$")) return r(...e);
+						const l = n[a];
+						return c(l) ? r(...e) : (delete n[a], l);
+					});
+				return e(t, n, a);
+			});
+		q && (window.__SWR_DEVTOOLS_REACT__ = r.default);
+		const z = () => {},
+			G = z(),
+			H =
+				(new WeakMap(),
+				r.default.use ||
+					((e) => {
+						switch (e.status) {
+							case "pending":
+								throw e;
+							case "fulfilled":
+								return e.value;
+							case "rejected":
+								throw e.reason;
+							default:
+								throw (
+									((e.status = "pending"),
+									e.then(
+										(t) => {
+											(e.status = "fulfilled"), (e.value = t);
+										},
+										(t) => {
+											(e.status = "rejected"), (e.reason = t);
+										},
+									),
+									e)
+								);
+						}
+					})),
+			J = { dedupe: !0 },
+			K = Promise.resolve(i),
+			Q = () => l;
+		o.defineProperty(
+			(e) => {
+				const { value: t } = e,
+					a = (0, r.useContext)(W),
+					n = "function" == typeof t,
+					s = (0, r.useMemo)(() => (n ? t(a) : t), [n, a, t]),
+					l = (0, r.useMemo)(() => (n ? s : F(a, s)), [n, a, s]),
+					o = s && s.provider,
+					c = (0, r.useRef)(i);
+				o && !c.current && (c.current = U(o(l.cache || D), s));
+				const d = c.current;
+				return (
+					d && ((l.cache = d[0]), (l.mutate = d[1])),
+					N(() => {
+						if (d) return d[2] && d[2](), d[3];
+					}, []),
+					(0, r.createElement)(W.Provider, u(e, { value: l }))
+				);
+			},
+			"defaultValue",
+			{ value: I },
+		);
+		const X =
+			((t = (e, t, n) => {
+				const {
+						cache: l,
+						compare: o,
+						suspense: d,
+						fallbackData: f,
+						revalidateOnMount: m,
+						revalidateIfStale: g,
+						refreshInterval: x,
+						refreshWhenHidden: y,
+						refreshWhenOffline: v,
+						keepPreviousData: j,
+						strictServerPrefetchWarning: R,
+					} = n,
+					[E, k, C, O] = s.get(l),
+					[T, A] = L(e),
+					V = (0, r.useRef)(!1),
+					U = (0, r.useRef)(!1),
+					D = (0, r.useRef)(T),
+					P = (0, r.useRef)(t),
+					I = (0, r.useRef)(n),
+					F = () => I.current.isVisible() && I.current.isOnline(),
+					[W, q, B, z] = b(l, T),
+					G = (0, r.useRef)({}).current,
+					X = c(f) ? (c(n.fallback) ? i : n.fallback[T]) : f,
+					Y = (e, t) => {
+						for (const r in G)
+							if ("data" === r) {
+								if (!o(e[r], t[r]) && (!c(e[r]) || !o(ei, t[r]))) return !1;
+							} else if (t[r] !== e[r]) return !1;
+						return !0;
+					},
+					Z = !V.current,
+					ee = (0, r.useMemo)(() => {
+						let e = W(),
+							r = z(),
+							a = (e) => {
+								const r = u(e);
+								return (delete r._k,
+								(() => {
+									if (!T || !t || I.current.isPaused()) return !1;
+									if (Z && !c(m)) return m;
+									const e = c(X) ? r.data : X;
+									return c(e) || g;
+								})())
+									? { isValidating: !0, isLoading: !0, ...r }
+									: r;
+							},
+							n = a(e),
+							s = e === r ? n : a(r),
+							l = n;
+						return [
+							() => {
+								const e = a(W());
+								return Y(e, l)
+									? ((l.data = e.data),
+										(l.isLoading = e.isLoading),
+										(l.isValidating = e.isValidating),
+										(l.error = e.error),
+										l)
+									: ((l = e), e);
+							},
+							() => s,
+						];
+					}, [l, T]),
+					et = (0, a.useSyncExternalStore)(
+						(0, r.useCallback)(
+							(e) =>
+								B(T, (t, r) => {
+									Y(r, t) || e();
+								}),
+							[l, T],
+						),
+						ee[0],
+						ee[1],
+					),
+					er = E[T] && E[T].length > 0,
+					ea = et.data,
+					en = c(ea) ? (X && "function" == typeof X.then ? H(X) : X) : ea,
+					es = et.error,
+					el = (0, r.useRef)(en),
+					ei = j ? (c(ea) ? (c(el.current) ? en : el.current) : ea) : en,
+					eo = T && c(en),
+					ec = (0, r.useRef)(null);
+				w ||
+					(0, a.useSyncExternalStore)(
+						Q,
+						() => ((ec.current = !1), ec),
+						() => ((ec.current = !0), ec),
+					);
+				const eu = ec.current;
+				R &&
+					eu &&
+					!d &&
+					eo &&
+					console.warn(
+						`Missing pre-initiated data for serialized key "${T}" during server-side rendering. Data fetching should be initiated on the server and provided to SWR via fallback data. You can set "strictServerPrefetchWarning: false" to disable this warning.`,
+					);
+				const ed =
+						!(!T || !t || I.current.isPaused()) &&
+						(!er || !!c(es)) &&
+						(Z && !c(m) ? m : d ? !c(en) && g : c(en) || g),
+					ef = Z && ed,
+					ep = c(et.isValidating) ? ef : et.isValidating,
+					eh = c(et.isLoading) ? ef : et.isLoading,
+					em = (0, r.useCallback)(
+						async (e) => {
+							let t,
+								r,
+								a = P.current;
+							if (!T || !a || U.current || I.current.isPaused()) return !1;
+							let s = !0,
+								l = e || {},
+								u = !C[T] || !l.dedupe,
+								d = () =>
+									S
+										? !U.current && T === D.current && V.current
+										: T === D.current,
+								f = { isValidating: !1, isLoading: !1 },
+								p = () => {
+									q(f);
+								},
+								h = () => {
+									const e = C[T];
+									e && e[1] === r && delete C[T];
+								},
+								m = { isValidating: !0 };
+							c(W().data) && (m.isLoading = !0);
+							try {
+								if (
+									(u &&
+										(q(m),
+										n.loadingTimeout &&
+											c(W().data) &&
+											setTimeout(() => {
+												s && d() && I.current.onLoadingSlow(T, n);
+											}, n.loadingTimeout),
+										(C[T] = [a(A), M()])),
+									([t, r] = C[T]),
+									(t = await t),
+									u && setTimeout(h, n.dedupingInterval),
+									!C[T] || C[T][1] !== r)
+								)
+									return u && d() && I.current.onDiscarded(T), !1;
+								f.error = i;
+								const e = k[T];
+								if (!c(e) && (r <= e[0] || r <= e[1] || 0 === e[1]))
+									return p(), u && d() && I.current.onDiscarded(T), !1;
+								const l = W().data;
+								(f.data = o(l, t) ? l : t),
+									u && d() && I.current.onSuccess(t, T, n);
+							} catch (r) {
+								h();
+								const e = I.current,
+									{ shouldRetryOnError: t } = e;
+								!e.isPaused() &&
+									((f.error = r), u && d()) &&
+									(e.onError(r, T, e),
+									(!0 === t || ("function" == typeof t && t(r))) &&
+										(!I.current.revalidateOnFocus ||
+											!I.current.revalidateOnReconnect ||
+											F()) &&
+										e.onErrorRetry(
+											r,
+											T,
+											e,
+											(e) => {
+												const t = E[T];
+												t && t[0] && t[0]($.ERROR_REVALIDATE_EVENT, e);
+											},
+											{ retryCount: (l.retryCount || 0) + 1, dedupe: !0 },
+										));
+							}
+							return (s = !1), p(), !0;
+						},
+						[T, l],
+					),
+					eg = (0, r.useCallback)((...e) => _(l, D.current, ...e), []);
+				if (
+					(N(() => {
+						(P.current = t), (I.current = n), c(ea) || (el.current = ea);
+					}),
+					N(() => {
+						var e;
+						let t;
+						if (!T) return;
+						let r = em.bind(i, J),
+							a = 0;
+						I.current.revalidateOnFocus &&
+							(a = Date.now() + I.current.focusThrottleInterval);
+						const n =
+							((e = (e, t = {}) => {
+								if (e == $.FOCUS_EVENT) {
+									const e = Date.now();
+									I.current.revalidateOnFocus &&
+										e > a &&
+										F() &&
+										((a = e + I.current.focusThrottleInterval), r());
+								} else if (e == $.RECONNECT_EVENT)
+									I.current.revalidateOnReconnect && F() && r();
+								else if (e == $.MUTATE_EVENT) return em();
+								else if (e == $.ERROR_REVALIDATE_EVENT) return em(t);
+							}),
+							(t = E[T] || (E[T] = [])).push(e),
+							() => {
+								const r = t.indexOf(e);
+								r >= 0 && ((t[r] = t[t.length - 1]), t.pop());
+							});
+						if (
+							((U.current = !1),
+							(D.current = T),
+							(V.current = !0),
+							q({ _k: A }),
+							ed && !C[T])
+						)
+							if (c(en) || w) r();
+							else
+								h && typeof window.requestAnimationFrame != p
+									? window.requestAnimationFrame(r)
+									: setTimeout(r, 1);
+						return () => {
+							(U.current = !0), n();
+						};
+					}, [T]),
+					N(() => {
+						let e;
+						function t() {
+							const t = "function" == typeof x ? x(W().data) : x;
+							t && -1 !== e && (e = setTimeout(r, t));
+						}
+						function r() {
+							!W().error &&
+							(y || I.current.isVisible()) &&
+							(v || I.current.isOnline())
+								? em(J).then(t)
+								: t();
+						}
+						return (
+							t(),
+							() => {
+								e && (clearTimeout(e), (e = -1));
+							}
+						);
+					}, [x, y, v, T]),
+					(0, r.useDebugValue)(ei),
+					d)
+				) {
+					if (!S && w && eo)
+						throw Error(
+							"Fallback data is required when using Suspense in SSR.",
+						);
+					eo && ((P.current = t), (I.current = n), (U.current = !1));
+					const e = O[T];
+					if ((H(!c(e) && eo ? eg(e) : K), !c(es) && eo)) throw es;
+					const r = eo ? em(J) : K;
+					!c(ei) && eo && ((r.status = "fulfilled"), (r.value = !0)), H(r);
+				}
+				return {
+					mutate: eg,
+					get data() {
+						return (G.data = !0), ei;
+					},
+					get error() {
+						return (G.error = !0), es;
+					},
+					get isValidating() {
+						return (G.isValidating = !0), ep;
+					},
+					get isLoading() {
+						return (G.isLoading = !0), eh;
+					},
+				};
+			}),
+			(...e) => {
+				let a,
+					n = ((a = (0, r.useContext)(W)), (0, r.useMemo)(() => u(I, a), [a])),
+					[s, l, i] =
+						"function" == typeof e[1]
+							? [e[0], e[1], e[2] || {}]
+							: [e[0], null, (null === e[1] ? e[2] : e[1]) || {}],
+					o = F(n, i),
+					c = t,
+					{ use: d } = o,
+					f = (d || []).concat(B);
+				for (let e = f.length; e--; ) c = f[e](c);
+				return c(s, l || o.fetcher || null, o);
+			});
+		e.s(["default", () => X], 75307);
+	},
+	24182,
+	(e) => {
+		var t = e.i(11173),
+			r = e.i(41787);
+		function a({
+			label: e,
+			value: a,
+			prefix: n = "",
+			suffix: s = "",
+			icon: l,
+			trend: i,
+			variant: o = "blue",
+			animate: c = !0,
+		}) {
+			const [u, d] = (0, r.useState)(c ? 0 : a),
+				f = "number" == typeof a ? a : parseFloat(String(a)) || 0;
+			return (
+				(0, r.useEffect)(() => {
+					if (!c || "number" != typeof a) return void d(a);
+					let e = f / 30,
+						t = 0,
+						r = setInterval(() => {
+							d(Math.min(Math.round(e * ++t), f)),
+								t >= 30 && (clearInterval(r), d(f));
+						}, 1e3 / 30);
+					return () => clearInterval(r);
+				}, [a, c, f]),
+				(0, t.jsxs)("div", {
+					className: `stat-card ${o}`,
+					children: [
+						(0, t.jsxs)("div", {
+							className: "stat-header",
+							children: [
+								(0, t.jsx)("div", { className: "stat-icon", children: l }),
+								i &&
+									(0, t.jsxs)("div", {
+										className: `stat-trend ${i.direction}`,
+										children: [
+											"up" === i.direction ? "↑" : "↓",
+											" ",
+											Math.abs(i.value),
+											"%",
+										],
+									}),
+							],
+						}),
+						(0, t.jsxs)("div", {
+							className: "stat-value",
+							children: [n, "number" == typeof u ? u.toLocaleString() : u, s],
+						}),
+						(0, t.jsx)("div", { className: "stat-label", children: e }),
+					],
+				})
+			);
+		}
+		function n({
+			data: e,
+			columns: a,
+			searchPlaceholder: n = "Buscar...",
+			filterOptions: s,
+			onSearch: l,
+			onFilter: i,
+			emptyMessage: o = "No hay datos disponibles",
+		}) {
+			const [c, u] = (0, r.useState)(""),
+				[d, f] = (0, r.useState)(""),
+				[p, h] = (0, r.useState)(null),
+				[m, g] = (0, r.useState)("asc"),
+				b = e.filter((e) => {
+					const t =
+							"" === c ||
+							Object.values(e).some((e) =>
+								String(e).toLowerCase().includes(c.toLowerCase()),
+							),
+						r = "" === d || Object.values(e).some((e) => String(e) === d);
+					return t && r;
+				}),
+				x = p
+					? [...b].sort((e, t) => {
+							const r = e[p],
+								a = t[p],
+								n = String(r).localeCompare(String(a));
+							return "asc" === m ? n : -n;
+						})
+					: b;
+			return (0, t.jsxs)("div", {
+				className: "card",
+				children: [
+					(l || s) &&
+						(0, t.jsxs)("div", {
+							className: "card-header",
+							children: [
+								(0, t.jsx)("div", {
+									className: "table-filters",
+									children:
+										s &&
+										(0, t.jsxs)("select", {
+											className: "filter-select",
+											value: d,
+											onChange: (e) => {
+												var t;
+												f((t = e.target.value)), i?.(t);
+											},
+											children: [
+												(0, t.jsx)("option", { value: "", children: "Todos" }),
+												s.map((e) =>
+													(0, t.jsx)(
+														"option",
+														{ value: e.value, children: e.label },
+														e.value,
+													),
+												),
+											],
+										}),
+								}),
+								l &&
+									(0, t.jsxs)("div", {
+										className: "table-search",
+										children: [
+											(0, t.jsxs)("svg", {
+												width: "16",
+												height: "16",
+												viewBox: "0 0 24 24",
+												fill: "none",
+												stroke: "currentColor",
+												strokeWidth: "2",
+												"aria-hidden": "true",
+												children: [
+													(0, t.jsx)("circle", { cx: "11", cy: "11", r: "8" }),
+													(0, t.jsx)("path", { d: "m21 21-4.3-4.3" }),
+												],
+											}),
+											(0, t.jsx)("input", {
+												type: "text",
+												placeholder: n,
+												value: c,
+												onChange: (e) => {
+													var t;
+													u((t = e.target.value)), l?.(t);
+												},
+											}),
+										],
+									}),
+							],
+						}),
+					(0, t.jsx)("div", {
+						style: { overflowX: "auto" },
+						children: (0, t.jsxs)("table", {
+							className: "data-table",
+							children: [
+								(0, t.jsx)("thead", {
+									children: (0, t.jsx)("tr", {
+										children: a.map((e) =>
+											(0, t.jsxs)(
+												"th",
+												{
+													className: p === String(e.key) ? "sorted" : "",
+													onClick: () => {
+														var t;
+														return (
+															e.sortable &&
+															void (p === (t = String(e.key))
+																? g("asc" === m ? "desc" : "asc")
+																: (h(t), g("asc")))
+														);
+													},
+													children: [
+														e.label,
+														e.sortable &&
+															(0, t.jsx)("span", {
+																className: "sort-icon",
+																children:
+																	p === String(e.key)
+																		? "asc" === m
+																			? " ↑"
+																			: " ↓"
+																		: " ↕",
+															}),
+													],
+												},
+												String(e.key),
+											),
+										),
+									}),
+								}),
+								(0, t.jsx)("tbody", {
+									children:
+										0 === x.length
+											? (0, t.jsx)("tr", {
+													children: (0, t.jsx)("td", {
+														colSpan: a.length,
+														children: (0, t.jsxs)("div", {
+															className: "empty-state",
+															children: [
+																(0, t.jsxs)("svg", {
+																	width: "48",
+																	height: "48",
+																	viewBox: "0 0 24 24",
+																	fill: "none",
+																	stroke: "currentColor",
+																	strokeWidth: "1.5",
+																	"aria-hidden": "true",
+																	children: [
+																		(0, t.jsx)("path", {
+																			d: "M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z",
+																		}),
+																		(0, t.jsx)("path", { d: "M14 2v6h6" }),
+																		(0, t.jsx)("path", { d: "M12 18v-6" }),
+																		(0, t.jsx)("path", { d: "M9 15h6" }),
+																	],
+																}),
+																(0, t.jsx)("h4", { children: "Sin datos" }),
+																(0, t.jsx)("p", { children: o }),
+															],
+														}),
+													}),
+												})
+											: x.map((e) =>
+													(0, t.jsx)(
+														"tr",
+														{
+															children: a.map((r) =>
+																(0, t.jsx)(
+																	"td",
+																	{
+																		children: r.render
+																			? r.render(e)
+																			: String(e[String(r.key)] ?? ""),
+																	},
+																	String(r.key),
+																),
+															),
+														},
+														e.id,
+													),
+												),
+								}),
+							],
+						}),
+					}),
+				],
+			});
+		}
+		e.s(["DataTable", () => n, "default", () => a]);
+	},
+	13169,
+	(e) => {
+		var t = e.i(11173),
+			r = e.i(52624),
+			a = e.i(24182),
+			n = e.i(43513),
+			s = e.i(65237),
+			l = e.i(28075);
+		const i = [
+				n.UserRole.Admin,
+				n.UserRole.Manager,
+				n.UserRole.Sales,
+				n.UserRole.Support,
+			],
+			o = () =>
+				(0, s.getCollection)(
+					"users",
+					(0, l.where)("role", "in", i),
+					(0, l.orderBy)("createdAt", "desc"),
+				).then((e) =>
+					e.map((e) => ({
+						...e,
+						createdAt:
+							e.createdAt instanceof Date ? e.createdAt : new Date(e.createdAt),
+						updatedAt:
+							e.updatedAt instanceof Date ? e.updatedAt : new Date(e.updatedAt),
+					})),
+				);
+		var c = e.i(37133),
+			u = e.i(41787),
+			d = e.i(75307);
+		const f = {
+				[n.UserRole.Admin]: "Administrador",
+				[n.UserRole.Manager]: "Gerente",
+				[n.UserRole.Sales]: "Ventas",
+				[n.UserRole.Support]: "Soporte",
+				[n.UserRole.Viewer]: "Viewer",
+			},
+			p = {
+				[n.UserRole.Admin]: "badge-red",
+				[n.UserRole.Manager]: "badge-blue",
+				[n.UserRole.Sales]: "badge-green",
+				[n.UserRole.Support]: "badge-yellow",
+				[n.UserRole.Viewer]: "badge-gray",
+			},
+			h = [
+				n.UserRole.Admin,
+				n.UserRole.Manager,
+				n.UserRole.Sales,
+				n.UserRole.Support,
+			];
+		function m({ onClose: e, children: r }) {
+			return (0, t.jsx)("div", {
+				className:
+					"fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4",
+				onClick: e,
+				children: (0, t.jsx)("div", {
+					className: "bg-white rounded-2xl w-full max-w-md p-6 shadow-2xl",
+					onClick: (e) => e.stopPropagation(),
+					children: r,
+				}),
+			});
+		}
+		function g({ onClose: e, onSuccess: r }) {
+			const [a, l] = (0, u.useState)({
+					displayName: "",
+					email: "",
+					password: "",
+					role: n.UserRole.Sales,
+				}),
+				[i, o] = (0, u.useState)(!1),
+				[c, d] = (0, u.useState)(null),
+				p = async (e) => {
+					e.preventDefault(), o(!0), d(null);
+					try {
+						await (0, s.callFunction)("createStaffUser")(a), r();
+					} catch (e) {
+						d(e?.message ?? "Error al crear usuario.");
+					} finally {
+						o(!1);
+					}
+				};
+			return (0, t.jsxs)(m, {
+				onClose: e,
+				children: [
+					(0, t.jsx)("h3", {
+						className: "text-lg font-bold text-gray-900 mb-4",
+						children: "Nuevo Usuario Staff",
+					}),
+					(0, t.jsxs)("form", {
+						onSubmit: p,
+						className: "space-y-4",
+						children: [
+							(0, t.jsxs)("div", {
+								children: [
+									(0, t.jsx)("label", {
+										className:
+											"block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide",
+										children: "Nombre completo",
+									}),
+									(0, t.jsx)("input", {
+										type: "text",
+										required: !0,
+										className:
+											"w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30",
+										value: a.displayName,
+										onChange: (e) => l({ ...a, displayName: e.target.value }),
+										placeholder: "Juan Pérez",
+									}),
+								],
+							}),
+							(0, t.jsxs)("div", {
+								children: [
+									(0, t.jsx)("label", {
+										className:
+											"block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide",
+										children: "Email",
+									}),
+									(0, t.jsx)("input", {
+										type: "email",
+										required: !0,
+										className:
+											"w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30",
+										value: a.email,
+										onChange: (e) => l({ ...a, email: e.target.value }),
+										placeholder: "juan@abtec.mx",
+									}),
+								],
+							}),
+							(0, t.jsxs)("div", {
+								children: [
+									(0, t.jsx)("label", {
+										className:
+											"block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide",
+										children: "Contraseña temporal",
+									}),
+									(0, t.jsx)("input", {
+										type: "password",
+										required: !0,
+										minLength: 6,
+										className:
+											"w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30",
+										value: a.password,
+										onChange: (e) => l({ ...a, password: e.target.value }),
+										placeholder: "Mínimo 6 caracteres",
+									}),
+								],
+							}),
+							(0, t.jsxs)("div", {
+								children: [
+									(0, t.jsx)("label", {
+										className:
+											"block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide",
+										children: "Rol",
+									}),
+									(0, t.jsx)("select", {
+										className:
+											"w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30",
+										value: a.role,
+										onChange: (e) => l({ ...a, role: e.target.value }),
+										children: h.map((e) =>
+											(0, t.jsx)("option", { value: e, children: f[e] }, e),
+										),
+									}),
+								],
+							}),
+							c &&
+								(0, t.jsx)("p", {
+									className:
+										"text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2",
+									children: c,
+								}),
+							(0, t.jsxs)("div", {
+								className: "flex gap-3 pt-2",
+								children: [
+									(0, t.jsx)("button", {
+										type: "button",
+										onClick: e,
+										className: "btn flex-1",
+										children: "Cancelar",
+									}),
+									(0, t.jsx)("button", {
+										type: "submit",
+										disabled: i,
+										className: "btn btn-primary flex-1",
+										children: i ? "Creando..." : "Crear usuario",
+									}),
+								],
+							}),
+						],
+					}),
+				],
+			});
+		}
+		function b({ member: e, onClose: r, onSuccess: a }) {
+			const [n, l] = (0, u.useState)(e.role),
+				[i, o] = (0, u.useState)(!1),
+				[c, d] = (0, u.useState)(null),
+				p = async (t) => {
+					t.preventDefault(), o(!0), d(null);
+					try {
+						let t;
+						await ((t = e.id),
+						(0, s.callFunction)("setStaffRole")({ targetUid: t, role: n })),
+							a();
+					} catch (e) {
+						d(e?.message ?? "Error al actualizar rol.");
+					} finally {
+						o(!1);
+					}
+				};
+			return (0, t.jsxs)(m, {
+				onClose: r,
+				children: [
+					(0, t.jsx)("h3", {
+						className: "text-lg font-bold text-gray-900 mb-1",
+						children: "Editar Rol",
+					}),
+					(0, t.jsxs)("p", {
+						className: "text-sm text-gray-500 mb-4",
+						children: [e.displayName, " · ", e.email],
+					}),
+					(0, t.jsxs)("form", {
+						onSubmit: p,
+						className: "space-y-4",
+						children: [
+							(0, t.jsxs)("div", {
+								children: [
+									(0, t.jsx)("label", {
+										className:
+											"block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide",
+										children: "Nuevo Rol",
+									}),
+									(0, t.jsx)("select", {
+										className:
+											"w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30",
+										value: n,
+										onChange: (e) => l(e.target.value),
+										children: h.map((e) =>
+											(0, t.jsx)("option", { value: e, children: f[e] }, e),
+										),
+									}),
+								],
+							}),
+							c &&
+								(0, t.jsx)("p", {
+									className:
+										"text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2",
+									children: c,
+								}),
+							(0, t.jsxs)("div", {
+								className: "flex gap-3 pt-2",
+								children: [
+									(0, t.jsx)("button", {
+										type: "button",
+										onClick: r,
+										className: "btn flex-1",
+										children: "Cancelar",
+									}),
+									(0, t.jsx)("button", {
+										type: "submit",
+										disabled: i,
+										className: "btn btn-primary flex-1",
+										children: i ? "Guardando..." : "Guardar cambios",
+									}),
+								],
+							}),
+						],
+					}),
+				],
+			});
+		}
+		function x({ member: e, onClose: r, onSuccess: a }) {
+			const [n, l] = (0, u.useState)(!1),
+				[i, o] = (0, u.useState)(null),
+				c = async () => {
+					l(!0), o(null);
+					try {
+						let t;
+						await ((t = e.id),
+						(0, s.callFunction)("setStaffRole")({ targetUid: t, role: null })),
+							a();
+					} catch (e) {
+						o(e?.message ?? "Error al revocar acceso.");
+					} finally {
+						l(!1);
+					}
+				};
+			return (0, t.jsx)(m, {
+				onClose: r,
+				children: (0, t.jsxs)("div", {
+					className: "text-center",
+					children: [
+						(0, t.jsx)("div", {
+							className:
+								"w-12 h-12 bg-red-100 rounded-full flex items-center justify-center mx-auto mb-3",
+							children: (0, t.jsx)("svg", {
+								width: "20",
+								height: "20",
+								viewBox: "0 0 24 24",
+								fill: "none",
+								stroke: "#ef4444",
+								strokeWidth: "2",
+								"aria-hidden": "true",
+								children: (0, t.jsx)("path", {
+									d: "M3 6h18M8 6V4h8v2M19 6l-1 14H6L5 6",
+								}),
+							}),
+						}),
+						(0, t.jsx)("h3", {
+							className: "text-lg font-bold text-gray-900 mb-1",
+							children: "Revocar acceso",
+						}),
+						(0, t.jsxs)("p", {
+							className: "text-sm text-gray-500 mb-1",
+							children: [
+								(0, t.jsx)("span", {
+									className: "font-semibold",
+									children: e.displayName,
+								}),
+								" perderá acceso al CRM inmediatamente.",
+							],
+						}),
+						(0, t.jsx)("p", {
+							className: "text-xs text-gray-400 mb-4",
+							children:
+								"Su cuenta de Firebase permanecerá, solo se revoca el claim.",
+						}),
+						i &&
+							(0, t.jsx)("p", {
+								className:
+									"text-sm text-red-600 bg-red-50 border border-red-100 rounded-lg px-3 py-2 mb-3",
+								children: i,
+							}),
+						(0, t.jsxs)("div", {
+							className: "flex gap-3",
+							children: [
+								(0, t.jsx)("button", {
+									type: "button",
+									onClick: r,
+									className: "btn flex-1",
+									children: "Cancelar",
+								}),
+								(0, t.jsx)("button", {
+									type: "button",
+									disabled: n,
+									onClick: c,
+									className:
+										"flex-1 px-4 py-2 bg-red-600 hover:bg-red-700 text-white font-semibold rounded-lg text-sm transition-colors disabled:opacity-60",
+									children: n ? "Revocando..." : "Revocar acceso",
+								}),
+							],
+						}),
+					],
+				}),
+			});
+		}
+		function y() {
+			const { staffRole: e } = (0, r.useAuth)(),
+				n = (0, c.useRouter)(),
+				[s, l] = (0, u.useState)(!1),
+				[i, m] = (0, u.useState)(null),
+				[y, v] = (0, u.useState)(null);
+			(0, u.useEffect)(() => {
+				null !== e && "admin" !== e && n.replace("/");
+			}, [e, n]);
+			const {
+					data: j,
+					isLoading: S,
+					mutate: w,
+				} = (0, d.default)("staff-users", o, {
+					revalidateOnFocus: !1,
+					dedupingInterval: 3e4,
+				}),
+				N = () => {
+					w(), l(!1), m(null), v(null);
+				},
+				R = [
+					{ key: "displayName", label: "Nombre", sortable: !0 },
+					{ key: "email", label: "Email", sortable: !0 },
+					{
+						key: "role",
+						label: "Rol",
+						render: (e) =>
+							(0, t.jsx)("span", {
+								className: `badge ${p[e.role] ?? "badge-gray"}`,
+								children: f[e.role] ?? e.role,
+							}),
+					},
+					{
+						key: "status",
+						label: "Estado",
+						render: (e) =>
+							(0, t.jsx)("span", {
+								className: `badge ${"active" === e.status ? "badge-green" : "badge-gray"}`,
+								children: "active" === e.status ? "Activo" : "Inactivo",
+							}),
+					},
+					{
+						key: "createdAt",
+						label: "Creado",
+						render: (e) =>
+							e.createdAt
+								? new Date(e.createdAt).toLocaleDateString("es-MX", {
+										day: "2-digit",
+										month: "short",
+										year: "numeric",
+									})
+								: "—",
+					},
+					{
+						key: "actions",
+						label: "",
+						render: (e) =>
+							(0, t.jsxs)("div", {
+								className: "flex items-center gap-2 justify-end",
+								children: [
+									(0, t.jsx)("button", {
+										type: "button",
+										onClick: () => m(e),
+										className:
+											"text-xs px-3 py-1 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors",
+										children: "Editar rol",
+									}),
+									(0, t.jsx)("button", {
+										type: "button",
+										onClick: () => v(e),
+										className:
+											"text-xs px-3 py-1 border border-red-200 text-red-600 rounded-lg hover:bg-red-50 transition-colors",
+										children: "Revocar",
+									}),
+								],
+							}),
+					},
+				];
+			return "admin" !== e
+				? null
+				: (0, t.jsxs)("div", {
+						className: "page-container",
+						children: [
+							(0, t.jsxs)("div", {
+								className: "page-header",
+								children: [
+									(0, t.jsxs)("div", {
+										className: "page-header-content",
+										children: [
+											(0, t.jsx)("h2", { children: "Usuarios Staff" }),
+											(0, t.jsx)("p", {
+												children:
+													"Gestiona el acceso del equipo interno al CRM",
+											}),
+										],
+									}),
+									(0, t.jsx)("div", {
+										className: "page-actions",
+										children: (0, t.jsxs)("button", {
+											type: "button",
+											className: "btn btn-primary",
+											onClick: () => l(!0),
+											children: [
+												(0, t.jsx)("svg", {
+													width: "16",
+													height: "16",
+													viewBox: "0 0 24 24",
+													fill: "none",
+													stroke: "currentColor",
+													strokeWidth: "2",
+													"aria-hidden": "true",
+													children: (0, t.jsx)("path", {
+														d: "M12 5v14M5 12h14",
+													}),
+												}),
+												"Nuevo Usuario",
+											],
+										}),
+									}),
+								],
+							}),
+							(0, t.jsx)(a.DataTable, {
+								data: j ?? [],
+								columns: R,
+								searchPlaceholder: "Buscar por nombre o email...",
+								onSearch: () => {},
+								filterOptions: h.map((e) => ({ label: f[e], value: e })),
+								emptyMessage: S
+									? "Cargando usuarios..."
+									: "No hay usuarios staff registrados.",
+							}),
+							s && (0, t.jsx)(g, { onClose: () => l(!1), onSuccess: N }),
+							i &&
+								(0, t.jsx)(b, {
+									member: i,
+									onClose: () => m(null),
+									onSuccess: N,
+								}),
+							y &&
+								(0, t.jsx)(x, {
+									member: y,
+									onClose: () => v(null),
+									onSuccess: N,
+								}),
+						],
+					});
+		}
+		e.s(["default", () => y], 13169);
+	},
+]);

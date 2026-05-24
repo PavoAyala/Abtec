@@ -1,4 +1,15 @@
 {
+	"hosting": {
+		"site": "abtec-crm",
+		"public": "public",
+		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
+		"rewrites": [
+			{
+				"source": "**",
+				"destination": "/index.html"
+			}
+		]
+	},
 	"functions": [
 		{
 			"source": "functions",
@@ -16,25 +27,5 @@
 	"firestore": {
 		"rules": "firestore.rules",
 		"indexes": "firestore.indexes.json"
-	},
-	"emulators": {
-		"auth": {
-			"port": 9099
-		},
-		"functions": {
-			"port": 5001
-		},
-		"firestore": {
-			"port": 8080
-		},
-		"pubsub": {
-			"port": 8085
-		},
-		"database": {
-			"port": 9000
-		},
-		"ui": {
-			"enabled": true
-		}
 	}
 }

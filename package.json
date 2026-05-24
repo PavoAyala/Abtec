@@ -6,7 +6,8 @@
 	"workspaces": [
 		"apps/mobile",
 		"apps/web",
-		"apps/CRM"
+		"apps/CRM",
+		"apps/emulators"
 	],
 	"scripts": {
 		"dev": "turbo run dev --filter=web --filter=abtec-crm",
@@ -18,7 +19,12 @@
 		"biome:fix": "biome check --write .",
 		"firebase:dev": "firebase emulators:start --config apps/firebase/firebase.json --project abtec-8f31e",
 		"firebase:dev:import": "firebase emulators:start --config apps/firebase/firebase.json --project abtec-8f31e --import=apps/firebase/.emulator-data --export-on-exit",
-		"firebase:dev:ui": "firebase emulators:start --only auth,firestore,functions --config apps/firebase/firebase.json --project abtec-8f31e"
+		"firebase:dev:ui": "firebase emulators:start --only auth,firestore,functions --config apps/firebase/firebase.json --project abtec-8f31e",
+		"emulators:dev": "pnpm --filter @abtec/emulators run dev",
+		"emulators:export": "pnpm --filter @abtec/emulators run export-data",
+		"emulators:auth": "pnpm --filter @abtec/emulators run auth-emulators",
+		"emulators:test:firestore": "pnpm --filter @abtec/emulators run test:firestore",
+		"emulators:test:rtdb": "pnpm --filter @abtec/emulators run test:rtdb-analytics"
 	},
 	"devDependencies": {
 		"@biomejs/biome": "2.4.12",
@@ -41,5 +47,5 @@
 	"engines": {
 		"node": "20.x"
 	},
-	"packageManager": "pnpm@10.33.0"
+	"packageManager": "pnpm@8.15.4"
 }

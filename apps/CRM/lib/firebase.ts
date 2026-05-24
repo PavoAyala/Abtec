@@ -28,6 +28,12 @@ import {
 	updateDoc,
 	where,
 } from "firebase/firestore";
+import {
+	connectFunctionsEmulator,
+	type Functions,
+	getFunctions,
+	httpsCallable,
+} from "firebase/functions";
 
 // Configuración de Firebase - usar variables de entorno en producción
 const firebaseConfig = {
@@ -47,6 +53,7 @@ const firebaseConfig = {
 let app: FirebaseApp;
 let db: Firestore;
 let auth: Auth;
+let functions: Functions;
 const globalForFirebase = globalThis as typeof globalThis & {
 	__abtecCrmFirebaseEmulatorsConnected?: boolean;
 };
@@ -55,6 +62,7 @@ if (typeof window !== "undefined") {
 	app = getApps().length === 0 ? initializeApp(firebaseConfig) : getApps()[0];
 	db = getFirestore(app);
 	auth = getAuth(app);
+	functions = getFunctions(app);
 
 	if (
 		process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === "true" &&
@@ -62,8 +70,9 @@ if (typeof window !== "undefined") {
 	) {
 		connectFirestoreEmulator(db, "127.0.0.1", 8080);
 		connectAuthEmulator(auth, "http://127.0.0.1:9099");
+		connectFunctionsEmulator(functions, "127.0.0.1", 5001);
 		console.info(
-			"[Firebase][CRM] Usando emuladores: Firestore(127.0.0.1:8080), Auth(127.0.0.1:9099)",
+			"[Firebase][CRM] Usando emuladores: Firestore(8080), Auth(9099), Functions(5001)",
 		);
 		globalForFirebase.__abtecCrmFirebaseEmulatorsConnected = true;
 	}
@@ -162,6 +171,9 @@ export const convertTimestamp = (
 	});
 	return result;
 };
+
+export const callFunction = <TData, TResult>(name: string) =>
+	httpsCallable<TData, TResult>(functions, name);
 
 export {
 	auth,

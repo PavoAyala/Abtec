@@ -19,6 +19,7 @@ export default function RootLayout({
 		<html lang="es">
 			<head>
 				<title>Abtec CRM</title>
+				<link rel="icon" href="/logo.png" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link
 					rel="preconnect"

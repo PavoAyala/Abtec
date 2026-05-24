@@ -1,0 +1,141 @@
+{
+	"indexes": [
+		{
+			"collectionGroup": "contacts",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "companyId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "contacts",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "ownerId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "contacts",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "tags", "arrayConfig": "CONTAINS" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "contacts",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "lifecycleStage", "order": "ASCENDING" },
+				{ "fieldPath": "leadScore", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "deals",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "stage", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "deals",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "ownerId", "order": "ASCENDING" },
+				{ "fieldPath": "stage", "order": "ASCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "deals",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "contactId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "deals",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "companyId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "activities",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "contactId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "activities",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "dealId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "activities",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "ownerId", "order": "ASCENDING" },
+				{ "fieldPath": "dueDate", "order": "ASCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "activities",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "type", "order": "ASCENDING" },
+				{ "fieldPath": "dueDate", "order": "ASCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "tickets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "status", "order": "ASCENDING" },
+				{ "fieldPath": "priority", "order": "ASCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "tickets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "assigneeId", "order": "ASCENDING" },
+				{ "fieldPath": "status", "order": "ASCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "tickets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "contactId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "tickets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "companyId", "order": "ASCENDING" },
+				{ "fieldPath": "createdAt", "order": "DESCENDING" }
+			]
+		},
+		{
+			"collectionGroup": "tickets",
+			"queryScope": "COLLECTION",
+			"fields": [
+				{ "fieldPath": "slaDeadline", "order": "ASCENDING" },
+				{ "fieldPath": "status", "order": "ASCENDING" }
+			]
+		}
+	],
+	"fieldOverrides": []
+}

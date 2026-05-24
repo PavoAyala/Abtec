@@ -5,6 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
+import { useAuth } from "./AuthProvider";
 
 interface SidebarContextType {
 	collapsed: boolean;
@@ -161,6 +162,24 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				<circle cx="12" cy="12" r="3" />
 			</svg>
 		),
+		usersShield: (
+			<svg
+				width={size}
+				height={size}
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+				<circle cx="9" cy="7" r="4" />
+				<path d="M23 11l-4 4-2-2" />
+				<path d="M20 7v4" />
+			</svg>
+		),
 		chevronLeft: (
 			<svg
 				width={size}
@@ -201,6 +220,7 @@ export default function Sidebar({
 }: Readonly<{ children: ReactNode }>) {
 	const [collapsed, setCollapsed] = useState(false);
 	const pathname = usePathname();
+	const { staffRole } = useAuth();
 
 	const isActive = (href: string) => {
 		if (href === "/") return pathname === "/";
@@ -263,6 +283,17 @@ export default function Sidebar({
 									<span className="nav-item-text">{item.label}</span>
 								</Link>
 							))}
+							{staffRole === "admin" && (
+								<Link
+									href="/staff"
+									className={`nav-item ${isActive("/staff") ? "active" : ""}`}
+								>
+									<span className="nav-item-icon">
+										<Icon name="usersShield" />
+									</span>
+									<span className="nav-item-text">Usuarios Staff</span>
+								</Link>
+							)}
 						</div>
 					</nav>
 

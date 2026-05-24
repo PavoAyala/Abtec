@@ -1,0 +1,177 @@
+(globalThis.TURBOPACK || (globalThis.TURBOPACK = [])).push([
+	"object" == typeof document ? document.currentScript : void 0,
+	14248,
+	(e) => {
+		var a = e.i(11173),
+			l = e.i(75307),
+			s = e.i(25629),
+			t = e.i(43513);
+		const i = {
+			[t.DealStage.Lead]: { color: "lead", label: "Lead" },
+			[t.DealStage.Proposal]: { color: "proposal", label: "Propuesta" },
+			[t.DealStage.Negotiation]: { color: "negotiation", label: "Negociación" },
+			[t.DealStage.Won]: { color: "won", label: "Ganada" },
+			[t.DealStage.Lost]: { color: "lost", label: "Perdida" },
+		};
+		function n() {
+			const { data: e } = (0, l.default)(s.SWRKeys.deals, s.fetcher.deals, {
+					revalidateOnFocus: !1,
+					revalidateOnReconnect: !1,
+					dedupingInterval: 6e4,
+				}),
+				n = {
+					[t.DealStage.Lead]:
+						e?.filter((e) => e.stage === t.DealStage.Lead) || [],
+					[t.DealStage.Proposal]:
+						e?.filter((e) => e.stage === t.DealStage.Proposal) || [],
+					[t.DealStage.Negotiation]:
+						e?.filter((e) => e.stage === t.DealStage.Negotiation) || [],
+					[t.DealStage.Won]:
+						e?.filter((e) => e.stage === t.DealStage.Won) || [],
+					[t.DealStage.Lost]:
+						e?.filter((e) => e.stage === t.DealStage.Lost) || [],
+				};
+			return (0, a.jsxs)("div", {
+				className: "page-container",
+				children: [
+					(0, a.jsxs)("div", {
+						className: "page-header",
+						children: [
+							(0, a.jsxs)("div", {
+								className: "page-header-content",
+								children: [
+									(0, a.jsx)("h2", { children: "Pipeline de Deals" }),
+									(0, a.jsx)("p", {
+										children: "Gestiona tus oportunidades de venta",
+									}),
+								],
+							}),
+							(0, a.jsx)("div", {
+								className: "page-actions",
+								children: (0, a.jsxs)("button", {
+									type: "button",
+									className: "btn btn-primary",
+									children: [
+										(0, a.jsx)("svg", {
+											width: "16",
+											height: "16",
+											viewBox: "0 0 24 24",
+											fill: "none",
+											stroke: "currentColor",
+											strokeWidth: "2",
+											"aria-hidden": "true",
+											children: (0, a.jsx)("path", { d: "M12 5v14M5 12h14" }),
+										}),
+										"Nuevo Deal",
+									],
+								}),
+							}),
+						],
+					}),
+					(0, a.jsx)("div", {
+						className: "pipeline",
+						children: Object.values(t.DealStage).map((l) =>
+							(0, a.jsxs)(
+								"div",
+								{
+									className: "pipeline-column",
+									"data-stage": i[l].color,
+									children: [
+										(0, a.jsxs)("div", {
+											className: "pipeline-header",
+											children: [
+												(0, a.jsxs)("div", {
+													children: [
+														(0, a.jsx)("h4", { children: i[l].label }),
+														(0, a.jsxs)("span", {
+															className: "pipeline-count",
+															children: [n[l].length, " deals"],
+														}),
+													],
+												}),
+												(0, a.jsxs)("span", {
+													className: "pipeline-value",
+													children: [
+														"$",
+														(
+															e
+																?.filter((e) => e.stage === l)
+																.reduce((e, a) => e + a.value, 0) || 0
+														).toLocaleString(),
+													],
+												}),
+											],
+										}),
+										n[l].map((e) =>
+											(0, a.jsxs)(
+												"div",
+												{
+													className: "pipeline-card",
+													children: [
+														(0, a.jsx)("h5", { children: e.title }),
+														(0, a.jsx)("div", {
+															className: "meta",
+															children: (0, a.jsxs)("span", {
+																className: "value",
+																children: [
+																	e.currency,
+																	" ",
+																	e.value.toLocaleString(),
+																],
+															}),
+														}),
+														e.companyId &&
+															(0, a.jsxs)("div", {
+																className: "company",
+																children: [
+																	"Empresa ID: ",
+																	e.companyId.slice(0, 8),
+																],
+															}),
+													],
+												},
+												e.id,
+											),
+										),
+										(!n[l] || 0 === n[l].length) &&
+											(0, a.jsxs)("div", {
+												className: "empty-state",
+												style: { padding: "32px 16px" },
+												children: [
+													(0, a.jsxs)("svg", {
+														width: "32",
+														height: "32",
+														viewBox: "0 0 24 24",
+														fill: "none",
+														stroke: "currentColor",
+														strokeWidth: "1.5",
+														"aria-hidden": "true",
+														children: [
+															(0, a.jsx)("rect", {
+																width: "18",
+																height: "18",
+																x: "3",
+																y: "3",
+																rx: "2",
+															}),
+															(0, a.jsx)("path", { d: "M12 8v8M8 12h8" }),
+														],
+													}),
+													(0, a.jsx)("p", {
+														style: { fontSize: "13px", marginTop: "8px" },
+														children: "Sin deals",
+													}),
+												],
+											}),
+									],
+								},
+								l,
+							),
+						),
+					}),
+				],
+			});
+		}
+		e.s(["default", () => n]);
+	},
+]);

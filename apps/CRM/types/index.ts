@@ -128,6 +128,16 @@ export interface User {
 	createdAt: Date;
 }
 
+export interface StaffMember {
+	id: string;
+	email: string;
+	displayName: string;
+	role: UserRole;
+	status: "active" | "inactive";
+	createdAt: Date;
+	updatedAt: Date;
+}
+
 export interface Workflow {
 	id: string;
 	name: string;
