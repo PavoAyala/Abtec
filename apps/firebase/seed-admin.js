@@ -50,7 +50,7 @@ function ask(question) {
 	);
 }
 
-const VALID_ROLES = ["admin", "manager", "sales", "support"];
+const VALID_ROLES = ["admin", "manager", "sales", "support", "publisher"];
 
 async function main() {
 	console.log("\n=== Seed: Primer Usuario Staff ===\n");
@@ -84,9 +84,9 @@ async function main() {
 		console.log(`\n✅  Usuario creado en Auth (uid: ${uid})`);
 	}
 
-	// Setear custom claim { staff: role }
-	await auth.setCustomUserClaims(uid, { staff: role });
-	console.log(`✅  Custom claim seteado: { staff: "${role}" }`);
+	// Setear custom claim { staff: [role] }
+	await auth.setCustomUserClaims(uid, { staff: [role] });
+	console.log(`✅  Custom claim seteado: { staff: ["${role}"] }`);
 
 	// Crear/actualizar documento en /users/{uid}
 	await db.collection("users").doc(uid).set(
@@ -94,8 +94,10 @@ async function main() {
 			email,
 			displayName: name,
 			authUid: uid,
-			role,
+			roles: [role],
+			role: admin.firestore.FieldValue.delete(),
 			status: "active",
+			isActive: true,
 			createdAt: admin.firestore.FieldValue.serverTimestamp(),
 			updatedAt: admin.firestore.FieldValue.serverTimestamp(),
 		},

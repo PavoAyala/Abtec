@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import * as functions from "firebase-functions/v2";
 import { db } from "../config/firebase";
 import { TicketStatus } from "../models";
@@ -12,7 +12,7 @@ export const checkSlaDeadlines = functions.scheduler.onSchedule(
 	async () => {
 		functions.logger.info("Running SLA deadline check");
 
-		const now = admin.firestore.Timestamp.now();
+		const now = Timestamp.now();
 
 		const atRiskQuery = db
 			.collection("tickets")
@@ -20,7 +20,7 @@ export const checkSlaDeadlines = functions.scheduler.onSchedule(
 			.where(
 				"slaDeadline",
 				"<=",
-				admin.firestore.Timestamp.fromDate(
+				Timestamp.fromDate(
 					new Date(now.toDate().getTime() + 60 * 60 * 1000),
 				),
 			);
@@ -64,7 +64,7 @@ export const checkOverdueTasks = functions.scheduler.onSchedule(
 	async () => {
 		functions.logger.info("Running overdue tasks check");
 
-		const now = admin.firestore.Timestamp.now();
+		const now = Timestamp.now();
 
 		const overdueQuery = db
 			.collection("activities")

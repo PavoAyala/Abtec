@@ -1,12 +1,12 @@
 import { type StaffMember, UserRole } from "@/types";
 import { callFunction, getCollection, orderBy, where } from "./firebase";
 
-const STAFF_ROLES = [UserRole.Admin, UserRole.Manager, UserRole.Sales, UserRole.Support];
+const STAFF_ROLES = [UserRole.Admin, UserRole.Manager, UserRole.Sales, UserRole.Support, UserRole.Publisher];
 
 export const getStaffUsers = (): Promise<StaffMember[]> =>
 	getCollection<StaffMember>(
 		"users",
-		where("role", "in", STAFF_ROLES),
+		where("roles", "array-contains-any", STAFF_ROLES),
 		orderBy("createdAt", "desc"),
 	).then((docs) =>
 		docs.map((doc) => ({
@@ -20,17 +20,17 @@ export const createStaffUser = (data: {
 	email: string;
 	password: string;
 	displayName: string;
-	role: UserRole;
+	roles: UserRole[];
 }) => callFunction<typeof data, { uid: string }>("createStaffUser")(data);
 
-export const updateStaffRole = (targetUid: string, role: UserRole) =>
-	callFunction<{ targetUid: string; role: UserRole }, { success: boolean }>("setStaffRole")({
+export const updateStaffRoles = (targetUid: string, roles: UserRole[]) =>
+	callFunction<{ targetUid: string; roles: UserRole[] }, { success: boolean }>("setStaffRole")({
 		targetUid,
-		role,
+		roles,
 	});
 
 export const revokeStaffAccess = (targetUid: string) =>
-	callFunction<{ targetUid: string; role: null }, { success: boolean }>("setStaffRole")({
+	callFunction<{ targetUid: string; roles: [] }, { success: boolean }>("setStaffRole")({
 		targetUid,
-		role: null,
+		roles: [],
 	});

@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import {
@@ -52,7 +52,7 @@ export const onContactCreated = functions.firestore
 			contactId: context.params.contactId,
 			description: "Contacto creado en el sistema",
 			ownerId: contact.ownerId || (updates.ownerId as string),
-			createdAt: admin.firestore.Timestamp.now(),
+			createdAt: Timestamp.now(),
 		};
 
 		const activityRef = db.collection("activities").doc();
@@ -65,7 +65,7 @@ export const onContactCreated = functions.firestore
 			collection: "contacts",
 			documentId: context.params.contactId,
 			changes: { contact: { before: null, after: contact } },
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		const auditRef = db.collection("auditLog").doc();
@@ -138,7 +138,7 @@ export const onContactUpdated = functions.firestore
 				collection: "contacts",
 				documentId: context.params.contactId,
 				changes,
-				timestamp: admin.firestore.Timestamp.now(),
+				timestamp: Timestamp.now(),
 			};
 
 			const auditRef = db.collection("auditLog").doc();
@@ -155,7 +155,7 @@ async function getNextOwner(): Promise<string> {
 	const usersRef = db.collection("users");
 	const usersQuery = usersRef
 		.where("isActive", "==", true)
-		.where("role", "in", ["sales", "manager", "admin"])
+		.where("roles", "array-contains-any", ["sales", "manager", "admin"])
 		.limit(10);
 
 	const users = await usersQuery.get();
