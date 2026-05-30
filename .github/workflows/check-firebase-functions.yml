@@ -19,19 +19,22 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+        with:
+          version: 9
+
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 18
-          cache: 'npm'
-          cache-dependency-path: apps/firebase/functions/package-lock.json
+          cache: 'pnpm'
 
-      - name: Install Firebase Functions dependencies
-        run: npm ci
-        working-directory: apps/firebase/functions
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
 
       - name: Build Firebase Functions
-        run: npm run build
+        run: pnpm run build
         working-directory: apps/firebase/functions
 
       - name: Verify build output
