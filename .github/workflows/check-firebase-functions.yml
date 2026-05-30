@@ -1,7 +1,11 @@
 name: Check Firebase Functions
 
 on:
+  push:
+    branches:
+      - master
   pull_request:
+    types: [opened, synchronize, reopened, closed]
     branches:
       - master
     paths:
