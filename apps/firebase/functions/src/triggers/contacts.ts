@@ -9,6 +9,9 @@ import {
 	type Contact,
 } from "../models";
 
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+
+
 /**
  * onContactCreated - Trigger when a new contact is created
  * - Assigns owner (round-robin)
@@ -16,7 +19,7 @@ import {
  * - Creates welcome activity
  * - Logs audit
  */
-export const onContactCreated = functions.firestore
+export const onContactCreated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("contacts/{contactId}")
 	.onCreate(async (snap, context) => {
 		const contact = snap.data() as Contact;
@@ -84,7 +87,7 @@ export const onContactCreated = functions.firestore
  * - Logs changes
  * - Updates lead score based on stage changes
  */
-export const onContactUpdated = functions.firestore
+export const onContactUpdated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("contacts/{contactId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Contact;

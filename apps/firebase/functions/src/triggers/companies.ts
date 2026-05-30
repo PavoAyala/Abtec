@@ -3,11 +3,14 @@ import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import { AuditAction, type AuditLog, type Company } from "../models";
 
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+
+
 /**
  * onCompanyCreated - Trigger when a new company is created
  * - Logs audit
  */
-export const onCompanyCreated = functions.firestore
+export const onCompanyCreated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("companies/{companyId}")
 	.onCreate(async (snap, context) => {
 		const company = snap.data() as Company;
@@ -33,7 +36,7 @@ export const onCompanyCreated = functions.firestore
  * onCompanyUpdated - Trigger when a company is updated
  * - Logs changes to audit
  */
-export const onCompanyUpdated = functions.firestore
+export const onCompanyUpdated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("companies/{companyId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Company;

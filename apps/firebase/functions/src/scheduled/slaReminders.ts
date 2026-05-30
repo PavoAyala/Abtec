@@ -8,7 +8,10 @@ import { TicketStatus } from "../models";
  * Checks for tickets approaching SLA deadline and logs warnings
  */
 export const checkSlaDeadlines = functions.scheduler.onSchedule(
-	"every 15 minutes",
+	{
+		schedule: "every 15 minutes",
+		serviceAccount: process.env.FIREBASE_SERVICE_ACCOUNT!,
+	},
 	async () => {
 		functions.logger.info("Running SLA deadline check");
 
@@ -60,7 +63,10 @@ export const checkSlaDeadlines = functions.scheduler.onSchedule(
  * Checks for activities with due dates that have passed
  */
 export const checkOverdueTasks = functions.scheduler.onSchedule(
-	"every 60 minutes",
+	{
+		schedule: "every 60 minutes",
+		serviceAccount: process.env.FIREBASE_SERVICE_ACCOUNT!,
+	},
 	async () => {
 		functions.logger.info("Running overdue tasks check");
 

@@ -11,6 +11,9 @@ import {
 	TicketStatus,
 } from "../models";
 
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+
+
 // SLA deadlines by priority (in hours)
 const SLA_HOURS: Record<string, number> = {
 	[TicketPriority.Low]: 72,
@@ -26,7 +29,7 @@ const SLA_HOURS: Record<string, number> = {
  * - Creates activity
  * - Logs audit
  */
-export const onTicketCreated = functions.firestore
+export const onTicketCreated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("tickets/{ticketId}")
 	.onCreate(async (snap, context) => {
 		const ticket = snap.data() as Ticket;
@@ -105,7 +108,7 @@ export const onTicketCreated = functions.firestore
  * - Sets resolvedAt when status becomes Resolved
  * - Creates activity for status change
  */
-export const onTicketStatusChanged = functions.firestore
+export const onTicketStatusChanged = functions.runWith({ serviceAccount: SA }).firestore
 	.document("tickets/{ticketId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Ticket;
@@ -177,7 +180,7 @@ export const onTicketStatusChanged = functions.firestore
  * onTicketUpdated - General update trigger for tickets
  * - Logs changes to audit
  */
-export const onTicketUpdated = functions.firestore
+export const onTicketUpdated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("tickets/{ticketId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Ticket;
