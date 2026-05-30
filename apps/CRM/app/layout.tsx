@@ -7,6 +7,16 @@ import "./globals.css";
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/components/AuthProvider";
 
+if (typeof window !== "undefined") {
+	const originalLog = console.log;
+	console.log = (...args) => {
+		if (typeof args[0] === "string" && args[0].includes("[Fast Refresh]")) {
+			return;
+		}
+		originalLog(...args);
+	};
+}
+
 export default function RootLayout({
 	children,
 }: Readonly<{
@@ -19,6 +29,7 @@ export default function RootLayout({
 		<html lang="es">
 			<head>
 				<title>Abtec CRM</title>
+				<link rel="icon" href="/logo.png" />
 				<link rel="preconnect" href="https://fonts.googleapis.com" />
 				<link
 					rel="preconnect"

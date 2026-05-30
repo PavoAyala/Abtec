@@ -55,6 +55,7 @@ export function AuthProvider({
 							email: firebaseUser.email,
 							displayName: firebaseUser.displayName || "",
 							authUid: firebaseUser.uid,
+							role: "customer",
 							status: "active",
 							createdAt: serverTimestamp(),
 							updatedAt: serverTimestamp(),

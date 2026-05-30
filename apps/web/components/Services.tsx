@@ -1,199 +1,76 @@
+"use client";
+
+import { motion } from "framer-motion";
+import { ArrowRight, Lightbulb, Settings, Sun } from "lucide-react";
 import type { JSX } from "react";
 
-interface ServiceCard {
-	icon: string;
-	title: string;
-	description: string;
-	items: string[];
-	accent: "primary" | "secondary";
-}
-
-const services: ServiceCard[] = [
-	{
-		icon: "solar_power",
-		title: "Energía Solar & Eólica",
-		description:
-			"Soluciones integrales de energía renovable: desde el diseño hasta la instalación llave en mano y mantenimiento continuo.",
-		items: [
-			"Suministro e instalación de paneles solares",
-			"Proyectos de energía solar y eólica",
-			"Ingeniería energética para generación eléctrica",
-			"Mantenimiento a equipos solares y eólicos",
-			"Gestión ante autoridades para ejecución de proyectos",
-		],
-		accent: "primary",
-	},
-	{
-		icon: "lightbulb",
-		title: "Iluminación de Alta Eficiencia",
-		description:
-			"Diseño e implementación de sistemas de iluminación eficientes para espacios públicos e industriales.",
-		items: [
-			"Suministro de luminarias de alta eficiencia",
-			"Proyectos de alumbrado público e iluminación industrial",
-			"Ingeniería con software de iluminación Dialux",
-			"Instalación y ejecución de proyectos de alumbrado",
-		],
-		accent: "secondary",
-	},
-	{
-		icon: "engineering",
-		title: "Ingeniería & Construcción",
-		description:
-			"Ingeniería conceptual, básica, detallada y financiera para proyectos industriales y residenciales.",
-		items: [
-			"Ingeniería conceptual, básica, detallada y financiera",
-			"Obra industrial civil y electromecánica",
-			"Obra residencial e industrial",
-			"Instalaciones eléctricas generales y en media tensión",
-			"Protección catódica y mecánica de tuberías",
-			"Gerencia y planificación de proyectos",
-		],
-		accent: "primary",
-	},
-	{
-		icon: "eco",
-		title: "Control Ambiental",
-		description:
-			"Soluciones de remediación y gestión ambiental para industrias comprometidas con la sustentabilidad.",
-		items: [
-			"Site assessment y análisis de remediación",
-			"Manejo, reuso y reciclaje de residuos",
-			"Tratamientos in situ y ex situ",
-			"Atención a emergencias ambientales",
-			"Plantas de tratamiento de aguas",
-			"Control de ruido e insonorizaciones",
-		],
-		accent: "secondary",
-	},
-];
-
-const consultingSteps = [
-	{
-		number: "01",
-		label: "Visita técnica",
-		description:
-			"Nuestros ingenieros visitan tus instalaciones para un análisis completo.",
-	},
-	{
-		number: "02",
-		label: "Análisis de consumo",
-		description: "Evaluamos tu consumo eléctrico y los equipos instalados.",
-	},
-	{
-		number: "03",
-		label: "Evaluación solar",
-		description:
-			"Medimos la exposición solar y el potencial de generación de tu sitio.",
-	},
-	{
-		number: "04",
-		label: "Propuesta técnico-económica",
-		description:
-			"Recibes un plan a tu medida con ROI estimado y recomendaciones de ahorro.",
-	},
-];
-
 export default function Services(): JSX.Element {
+	const services = [
+		{
+			title: "Paneles Solares",
+			description:
+				"Venta, Instalación y Mantenimiento de Paneles Solares Monterrey con más de 15 años de experiencia en el mercado fotovoltaico.",
+			icon: <Sun className="w-10 h-10 text-abtec-blue" />,
+			link: "#contacto",
+		},
+		{
+			title: "Iluminación",
+			description:
+				"Venta e Instalación de Luminarias de Alta Eficiencia con distribución directa de fábrica de marcas como Philips, Lumiance y Acuity Brand.",
+			icon: <Lightbulb className="w-10 h-10 text-abtec-blue" />,
+			link: "#contacto",
+		},
+		{
+			title: "Ingeniería",
+			description:
+				"Estudios especializados de soluciones de ingeniería en producción de energía alternativa con diseños adaptados a las necesidades del cliente.",
+			icon: <Settings className="w-10 h-10 text-abtec-blue" />,
+			link: "#contacto",
+		},
+	];
+
 	return (
-		<>
-			{/* Services Section Header */}
-			<section id="servicios" className="pt-24 pb-12 bg-white scroll-mt-20">
-				<div className="max-w-7xl mx-auto px-6 lg:px-10">
-					<div className="flex flex-col md:flex-row md:items-end justify-between gap-6">
-						<div className="max-w-2xl">
-							<h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4">
-								Nuestros Servicios
-							</h2>
-							<h3 className="text-secondary text-4xl md:text-5xl font-bold tracking-tight">
-								Soluciones Energéticas & de Ingeniería
+		<section id="servicios" className="py-16 bg-[#f8fafc]">
+			<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
+				<div className="text-center max-w-4xl mx-auto mb-16">
+					<p className="text-abtec-green font-semibold text-sm uppercase tracking-[0.35em] mb-4">
+						NUESTROS
+					</p>
+					<h2 className="font-heading text-4xl md:text-5xl font-bold text-[#1f2a5c] uppercase">
+						SERVICIOS
+					</h2>
+				</div>
+
+				<div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+					{services.map((service, index) => (
+						<motion.div
+							key={service.title}
+							initial={{ opacity: 0, y: 30 }}
+							whileInView={{ opacity: 1, y: 0 }}
+							viewport={{ once: true }}
+							transition={{ delay: index * 0.15, duration: 0.5 }}
+							className="bg-white rounded-[32px] border border-slate-200 p-10 shadow-xl hover:shadow-2xl transition-all duration-300 flex flex-col items-center text-center"
+						>
+							<div className="w-24 h-24 bg-[#eef2f7] rounded-full flex items-center justify-center mb-8">
+								{service.icon}
+							</div>
+							<h3 className="font-heading text-2xl font-bold text-[#1f2a5c] mb-3">
+								{service.title}
 							</h3>
-						</div>
-						<p className="text-secondary/60 text-lg max-w-sm">
-							Servicios integrales en energía renovable, iluminación eficiente,
-							ingeniería de construcción y control ambiental.
-						</p>
-					</div>
-				</div>
-			</section>
-
-			{/* Service Cards Grid */}
-			<section className="pb-20 bg-white">
-				<div className="max-w-7xl mx-auto px-6 lg:px-10">
-					<div className="grid grid-cols-1 md:grid-cols-2 gap-8">
-						{services.map((service) => (
-							<div
-								key={service.title}
-								className="group p-8 rounded-2xl bg-background-light border border-secondary/5 hover:border-primary/50 transition-all duration-300 hover:shadow-2xl hover:shadow-primary/10"
+							<div className="w-16 h-1 bg-abtec-blue rounded-full mb-6 mx-auto" />
+							<p className="text-gray-600 text-sm leading-relaxed mb-8 font-sans">
+								{service.description}
+							</p>
+							<a
+								href={service.link}
+								className="inline-flex items-center justify-center rounded-full border border-abtec-blue px-8 py-3 text-abtec-blue text-sm font-semibold uppercase tracking-[0.15em] hover:bg-abtec-blue hover:text-white transition-colors"
 							>
-								<div
-									className={`w-14 h-14 rounded-xl ${service.accent === "primary" ? "bg-primary" : "bg-secondary"} flex items-center justify-center text-white mb-6 group-hover:scale-110 transition-transform`}
-								>
-									<span className="material-symbols-outlined text-3xl">
-										{service.icon}
-									</span>
-								</div>
-								<h4 className="text-secondary text-2xl font-bold mb-3">
-									{service.title}
-								</h4>
-								<p className="text-secondary/60 leading-relaxed mb-6">
-									{service.description}
-								</p>
-								<ul className="space-y-2">
-									{service.items.map((item) => (
-										<li
-											key={item}
-											className="flex items-start gap-2 text-secondary/70 text-sm"
-										>
-											<span className="material-symbols-outlined text-primary text-base mt-0.5">
-												check_circle
-											</span>
-											{item}
-										</li>
-									))}
-								</ul>
-							</div>
-						))}
-					</div>
+								Cotizar
+							</a>
+						</motion.div>
+					))}
 				</div>
-			</section>
-
-			{/* Consulting Process */}
-			<section className="py-20 bg-background-light">
-				<div className="max-w-7xl mx-auto px-6 lg:px-10">
-					<div className="mb-12 text-center">
-						<h2 className="text-primary font-bold text-sm uppercase tracking-widest mb-4">
-							Proceso de Consulta
-						</h2>
-						<h3 className="text-secondary text-3xl md:text-4xl font-bold tracking-tight">
-							Paneles Solares en Monterrey
-						</h3>
-						<p className="text-secondary/60 mt-4 max-w-xl mx-auto">
-							Venta · Instalación · Consulta y Propuesta a tu Medida.
-						</p>
-					</div>
-					<div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
-						{consultingSteps.map((step) => (
-							<div
-								key={step.number}
-								className="flex flex-col items-center text-center group"
-							>
-								<div className="w-16 h-16 rounded-full bg-primary/10 border-2 border-primary/30 flex items-center justify-center mb-4 group-hover:bg-primary group-hover:border-primary transition-all duration-300">
-									<span className="text-primary group-hover:text-white font-bold text-lg transition-colors duration-300">
-										{step.number}
-									</span>
-								</div>
-								<h4 className="text-secondary font-bold text-lg mb-2">
-									{step.label}
-								</h4>
-								<p className="text-secondary/60 text-sm leading-relaxed">
-									{step.description}
-								</p>
-							</div>
-						))}
-					</div>
-				</div>
-			</section>
-		</>
+			</div>
+		</section>
 	);
 }

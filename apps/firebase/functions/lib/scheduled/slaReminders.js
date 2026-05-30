@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.checkOverdueTasks = exports.checkSlaDeadlines = void 0;
-const admin = require("firebase-admin");
+const firestore_1 = require("firebase-admin/firestore");
 const functions = require("firebase-functions/v2");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
@@ -11,11 +11,11 @@ const models_1 = require("../models");
  */
 exports.checkSlaDeadlines = functions.scheduler.onSchedule("every 15 minutes", async () => {
     functions.logger.info("Running SLA deadline check");
-    const now = admin.firestore.Timestamp.now();
+    const now = firestore_1.Timestamp.now();
     const atRiskQuery = firebase_1.db
         .collection("tickets")
         .where("status", "in", [models_1.TicketStatus.Open, models_1.TicketStatus.InProgress])
-        .where("slaDeadline", "<=", admin.firestore.Timestamp.fromDate(new Date(now.toDate().getTime() + 60 * 60 * 1000)));
+        .where("slaDeadline", "<=", firestore_1.Timestamp.fromDate(new Date(now.toDate().getTime() + 60 * 60 * 1000)));
     const atRiskTickets = await atRiskQuery.get();
     if (atRiskTickets.empty) {
         functions.logger.info("No tickets at risk of SLA breach");
@@ -41,7 +41,7 @@ exports.checkSlaDeadlines = functions.scheduler.onSchedule("every 15 minutes", a
  */
 exports.checkOverdueTasks = functions.scheduler.onSchedule("every 60 minutes", async () => {
     functions.logger.info("Running overdue tasks check");
-    const now = admin.firestore.Timestamp.now();
+    const now = firestore_1.Timestamp.now();
     const overdueQuery = firebase_1.db
         .collection("activities")
         .where("type", "==", "Task")

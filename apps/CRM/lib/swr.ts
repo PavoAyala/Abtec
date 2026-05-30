@@ -1,4 +1,5 @@
 import { getActivities } from "./activities";
+import { getBlogPosts } from "./blog";
 import { getCompanies } from "./companies";
 import { getContacts } from "./contacts";
 import { getDeals, getPipelineStats } from "./deals";
@@ -13,6 +14,7 @@ export const fetcher = {
 	tickets: () => getTickets(),
 	ticketsStats: () => getTicketStats(),
 	activities: () => getActivities(),
+	blogPosts: () => getBlogPosts(),
 };
 
 // Keys para SWR
@@ -24,4 +26,5 @@ export const SWRKeys = {
 	tickets: "tickets",
 	ticketsStats: "tickets-stats",
 	activities: "activities",
+	blogPosts: "blog_posts",
 };

@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onTicketUpdated = exports.onTicketStatusChanged = exports.onTicketCreated = void 0;
-const admin = require("firebase-admin");
+const firestore_1 = require("firebase-admin/firestore");
 const functions = require("firebase-functions");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
@@ -33,7 +33,7 @@ exports.onTicketCreated = functions.firestore
         const slaHours = SLA_HOURS[ticket.priority] || SLA_HOURS[models_1.TicketPriority.Medium];
         const deadline = new Date();
         deadline.setHours(deadline.getHours() + slaHours);
-        updates.slaDeadline = admin.firestore.Timestamp.fromDate(deadline);
+        updates.slaDeadline = firestore_1.Timestamp.fromDate(deadline);
         functions.logger.info(`SLA deadline set: ${deadline.toISOString()} for priority ${ticket.priority}`);
     }
     // Set default status if not provided
@@ -56,7 +56,7 @@ exports.onTicketCreated = functions.firestore
         companyId: ticket.companyId,
         description: `Ticket "${ticket.title}" creado con prioridad ${ticket.priority}`,
         ownerId: ticket.assigneeId || updates.assigneeId,
-        createdAt: admin.firestore.Timestamp.now(),
+        createdAt: firestore_1.Timestamp.now(),
     };
     const activityRef = firebase_1.db.collection("activities").doc();
     batch.set(activityRef, createActivity);
@@ -67,7 +67,7 @@ exports.onTicketCreated = functions.firestore
         collection: "tickets",
         documentId: context.params.ticketId,
         changes: { ticket: { before: null, after: ticket } },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     const auditRef = firebase_1.db.collection("auditLog").doc();
     batch.set(auditRef, auditLog);
@@ -95,7 +95,7 @@ exports.onTicketStatusChanged = functions.firestore
     const updates = {};
     // Set resolvedAt when resolved
     if (after.status === models_1.TicketStatus.Resolved && !after.resolvedAt) {
-        updates.resolvedAt = admin.firestore.Timestamp.now();
+        updates.resolvedAt = firestore_1.Timestamp.now();
         const createdAt = after.createdAt.toDate();
         const resolvedAt = new Date();
         const resolutionHours = (resolvedAt.getTime() - createdAt.getTime()) / (1000 * 60 * 60);
@@ -109,7 +109,7 @@ exports.onTicketStatusChanged = functions.firestore
         companyId: after.companyId,
         description: `Ticket movido de "${before.status}" a "${after.status}"`,
         ownerId: after.assigneeId,
-        createdAt: admin.firestore.Timestamp.now(),
+        createdAt: firestore_1.Timestamp.now(),
     };
     const activityRef = firebase_1.db.collection("activities").doc();
     batch.set(activityRef, statusActivity);
@@ -123,7 +123,7 @@ exports.onTicketStatusChanged = functions.firestore
             status: { before: before.status, after: after.status },
             resolvedAt: { before: before.resolvedAt, after: updates.resolvedAt },
         },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     const auditRef = firebase_1.db.collection("auditLog").doc();
     batch.set(auditRef, auditLog);
@@ -165,7 +165,7 @@ exports.onTicketUpdated = functions.firestore
             collection: "tickets",
             documentId: context.params.ticketId,
             changes,
-            timestamp: admin.firestore.Timestamp.now(),
+            timestamp: firestore_1.Timestamp.now(),
         };
         return firebase_1.db.collection("auditLog").add(auditLog);
     }
@@ -178,7 +178,7 @@ async function getNextAssignee() {
     const usersRef = firebase_1.db.collection("users");
     const usersQuery = usersRef
         .where("isActive", "==", true)
-        .where("role", "in", ["support", "manager", "admin"]);
+        .where("roles", "array-contains-any", ["support", "manager", "admin"]);
     const users = await usersQuery.get();
     if (users.empty) {
         return null;

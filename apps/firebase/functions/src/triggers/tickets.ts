@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import {
@@ -44,7 +44,7 @@ export const onTicketCreated = functions.firestore
 				SLA_HOURS[ticket.priority] || SLA_HOURS[TicketPriority.Medium];
 			const deadline = new Date();
 			deadline.setHours(deadline.getHours() + slaHours);
-			updates.slaDeadline = admin.firestore.Timestamp.fromDate(deadline);
+			updates.slaDeadline = Timestamp.fromDate(deadline);
 			functions.logger.info(
 				`SLA deadline set: ${deadline.toISOString()} for priority ${ticket.priority}`,
 			);
@@ -74,7 +74,7 @@ export const onTicketCreated = functions.firestore
 			companyId: ticket.companyId,
 			description: `Ticket "${ticket.title}" creado con prioridad ${ticket.priority}`,
 			ownerId: ticket.assigneeId || (updates.assigneeId as string),
-			createdAt: admin.firestore.Timestamp.now(),
+			createdAt: Timestamp.now(),
 		};
 
 		const activityRef = db.collection("activities").doc();
@@ -87,7 +87,7 @@ export const onTicketCreated = functions.firestore
 			collection: "tickets",
 			documentId: context.params.ticketId,
 			changes: { ticket: { before: null, after: ticket } },
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		const auditRef = db.collection("auditLog").doc();
@@ -125,7 +125,7 @@ export const onTicketStatusChanged = functions.firestore
 
 		// Set resolvedAt when resolved
 		if (after.status === TicketStatus.Resolved && !after.resolvedAt) {
-			updates.resolvedAt = admin.firestore.Timestamp.now();
+			updates.resolvedAt = Timestamp.now();
 
 			const createdAt = after.createdAt.toDate();
 			const resolvedAt = new Date();
@@ -144,7 +144,7 @@ export const onTicketStatusChanged = functions.firestore
 			companyId: after.companyId,
 			description: `Ticket movido de "${before.status}" a "${after.status}"`,
 			ownerId: after.assigneeId,
-			createdAt: admin.firestore.Timestamp.now(),
+			createdAt: Timestamp.now(),
 		};
 
 		const activityRef = db.collection("activities").doc();
@@ -160,7 +160,7 @@ export const onTicketStatusChanged = functions.firestore
 				status: { before: before.status, after: after.status },
 				resolvedAt: { before: before.resolvedAt, after: updates.resolvedAt },
 			},
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		const auditRef = db.collection("auditLog").doc();
@@ -210,7 +210,7 @@ export const onTicketUpdated = functions.firestore
 				collection: "tickets",
 				documentId: context.params.ticketId,
 				changes,
-				timestamp: admin.firestore.Timestamp.now(),
+				timestamp: Timestamp.now(),
 			};
 
 			return db.collection("auditLog").add(auditLog);
@@ -226,7 +226,7 @@ async function getNextAssignee(): Promise<string | null> {
 	const usersRef = db.collection("users");
 	const usersQuery = usersRef
 		.where("isActive", "==", true)
-		.where("role", "in", ["support", "manager", "admin"]);
+		.where("roles", "array-contains-any", ["support", "manager", "admin"]);
 
 	const users = await usersQuery.get();
 

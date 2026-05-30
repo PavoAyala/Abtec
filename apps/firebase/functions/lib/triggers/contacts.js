@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onContactUpdated = exports.onContactCreated = void 0;
-const admin = require("firebase-admin");
+const firestore_1 = require("firebase-admin/firestore");
 const functions = require("firebase-functions");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
@@ -41,7 +41,7 @@ exports.onContactCreated = functions.firestore
         contactId: context.params.contactId,
         description: "Contacto creado en el sistema",
         ownerId: contact.ownerId || updates.ownerId,
-        createdAt: admin.firestore.Timestamp.now(),
+        createdAt: firestore_1.Timestamp.now(),
     };
     const activityRef = firebase_1.db.collection("activities").doc();
     batch.set(activityRef, welcomeActivity);
@@ -52,7 +52,7 @@ exports.onContactCreated = functions.firestore
         collection: "contacts",
         documentId: context.params.contactId,
         changes: { contact: { before: null, after: contact } },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     const auditRef = firebase_1.db.collection("auditLog").doc();
     batch.set(auditRef, auditLog);
@@ -112,7 +112,7 @@ exports.onContactUpdated = functions.firestore
             collection: "contacts",
             documentId: context.params.contactId,
             changes,
-            timestamp: admin.firestore.Timestamp.now(),
+            timestamp: firestore_1.Timestamp.now(),
         };
         const auditRef = firebase_1.db.collection("auditLog").doc();
         batch.set(auditRef, auditLog);
@@ -126,7 +126,7 @@ async function getNextOwner() {
     const usersRef = firebase_1.db.collection("users");
     const usersQuery = usersRef
         .where("isActive", "==", true)
-        .where("role", "in", ["sales", "manager", "admin"])
+        .where("roles", "array-contains-any", ["sales", "manager", "admin"])
         .limit(10);
     const users = await usersQuery.get();
     if (users.empty) {

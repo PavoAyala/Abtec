@@ -5,6 +5,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import type { ReactNode } from "react";
 import { createContext, useContext, useMemo, useState } from "react";
+import { useAuth } from "./AuthProvider";
+import useSWR from "swr";
+import { fetcher, SWRKeys } from "@/lib/swr";
 
 interface SidebarContextType {
 	collapsed: boolean;
@@ -18,18 +21,7 @@ const SidebarContext = createContext<SidebarContextType>({
 
 export const useSidebar = () => useContext(SidebarContext);
 
-const navItems = [
-	{ href: "/", label: "Dashboard", icon: "dashboard" },
-	{ href: "/contacts", label: "Contactos", icon: "people", badge: "12" },
-	{ href: "/companies", label: "Empresas", icon: "business" },
-	{ href: "/deals", label: "Pipeline", icon: "handshake" },
-	{ href: "/tickets", label: "Tickets", icon: "support", badge: "5" },
-	{ href: "/activities", label: "Actividades", icon: "event" },
-];
-
-const settingsItems = [
-	{ href: "/settings", label: "Configuración", icon: "settings" },
-];
+// Nav items definition will be dynamic inside the component
 
 function Icon({ name, size = 20 }: { name: string; size?: number }) {
 	const icons: Record<string, JSX.Element> = {
@@ -161,6 +153,42 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				<circle cx="12" cy="12" r="3" />
 			</svg>
 		),
+		newspaper: (
+			<svg
+				width={size}
+				height={size}
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2" />
+				<path d="M18 14h-8" />
+				<path d="M15 18h-5" />
+				<path d="M10 6h8v4h-8V6Z" />
+			</svg>
+		),
+		usersShield: (
+			<svg
+				width={size}
+				height={size}
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2" />
+				<circle cx="9" cy="7" r="4" />
+				<path d="M23 11l-4 4-2-2" />
+				<path d="M20 7v4" />
+			</svg>
+		),
 		chevronLeft: (
 			<svg
 				width={size}
@@ -201,6 +229,33 @@ export default function Sidebar({
 }: Readonly<{ children: ReactNode }>) {
 	const [collapsed, setCollapsed] = useState(false);
 	const pathname = usePathname();
+	const { staffRoles } = useAuth();
+
+	const { data: contacts } = useSWR(SWRKeys.contacts, fetcher.contacts);
+	const { data: tickets } = useSWR(SWRKeys.tickets, fetcher.tickets);
+
+	const filteredNavItems = useMemo(() => {
+		if (staffRoles.includes("publisher") && staffRoles.length === 1) {
+			return [
+				{ href: "/", label: "Dashboard", icon: "dashboard" },
+				{ href: "/blog", label: "Blog", icon: "newspaper" },
+			];
+		}
+
+		const contactsBadge = contacts?.length ? String(contacts.length) : undefined;
+		const ticketsBadge = tickets?.length ? String(tickets.length) : undefined;
+
+		return [
+			{ href: "/", label: "Dashboard", icon: "dashboard" },
+			{ href: "/clientes", label: "Clientes", icon: "usersShield" },
+			{ href: "/contacts", label: "Contactos", icon: "people", badge: contactsBadge },
+			{ href: "/companies", label: "Empresas", icon: "business" },
+			{ href: "/deals", label: "Pipeline", icon: "handshake" },
+			{ href: "/tickets", label: "Tickets", icon: "support", badge: ticketsBadge },
+			{ href: "/activities", label: "Actividades", icon: "event" },
+			{ href: "/blog", label: "Blog", icon: "newspaper" },
+		];
+	}, [staffRoles, contacts?.length, tickets?.length]);
 
 	const isActive = (href: string) => {
 		if (href === "/") return pathname === "/";
@@ -232,7 +287,7 @@ export default function Sidebar({
 					<nav className="sidebar-nav">
 						<div className="nav-section">
 							<div className="nav-section-title">Menú</div>
-							{navItems.map((item) => (
+							{filteredNavItems.map((item) => (
 								<Link
 									key={item.href}
 									href={item.href}
@@ -251,18 +306,17 @@ export default function Sidebar({
 
 						<div className="nav-section">
 							<div className="nav-section-title">Sistema</div>
-							{settingsItems.map((item) => (
+							{staffRoles.includes("admin") && (
 								<Link
-									key={item.href}
-									href={item.href}
-									className={`nav-item ${isActive(item.href) ? "active" : ""}`}
+									href="/staff"
+									className={`nav-item ${isActive("/staff") ? "active" : ""}`}
 								>
 									<span className="nav-item-icon">
-										<Icon name={item.icon} />
+										<Icon name="usersShield" />
 									</span>
-									<span className="nav-item-text">{item.label}</span>
+									<span className="nav-item-text">Usuarios Staff</span>
 								</Link>
-							))}
+							)}
 						</div>
 					</nav>
 

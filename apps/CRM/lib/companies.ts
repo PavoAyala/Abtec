@@ -6,13 +6,19 @@ import {
 	deleteDocument,
 	getCollection,
 	getDocument,
+	QueryConstraint,
 	orderBy,
 	subscribeToCollection,
 	updateDocument,
+	where,
 } from "./firebase";
+import { LifecycleStage } from "@/types";
 
-export const getCompanies = (_filters?: { search?: string }) => {
-	const constraints = [orderBy("createdAt", "desc")];
+export const getCompanies = (filters?: { search?: string; lifecycleStage?: LifecycleStage }) => {
+	const constraints: QueryConstraint[] = [orderBy("createdAt", "desc")];
+	if (filters?.lifecycleStage) {
+		constraints.unshift(where("lifecycleStage", "==", filters.lifecycleStage));
+	}
 	return getCollection<Company>("companies", ...constraints);
 };
 
@@ -24,6 +30,7 @@ export const createCompany = async (data: Partial<Company>) => {
 		industry: data.industry || "",
 		size: data.size || "",
 		website: data.website || null,
+		lifecycleStage: data.lifecycleStage || LifecycleStage.Lead,
 	};
 	return createDocument("companies", companyData);
 };
