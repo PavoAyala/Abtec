@@ -10,7 +10,7 @@ import {
 	DealStage,
 } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
 
 
 /**
