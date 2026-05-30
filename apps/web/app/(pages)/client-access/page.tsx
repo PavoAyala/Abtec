@@ -55,14 +55,14 @@ export default function ClientAccess(): JSX.Element {
 				const q = query(collection(db, "contacts"), where("email", "==", user.email));
 				const querySnapshot = await getDocs(q);
 				
-				if (!querySnapshot.empty) {
+				if (!querySnapshot.empty && querySnapshot.docs[0]) {
 					data = querySnapshot.docs[0].data();
 					docId = querySnapshot.docs[0].id;
 				} else {
 					// Si no está, buscamos en users (por si solo se registró pero no se ha movido)
 					const q2 = query(collection(db, "users"), where("email", "==", user.email));
 					const querySnapshot2 = await getDocs(q2);
-					if (!querySnapshot2.empty) {
+					if (!querySnapshot2.empty && querySnapshot2.docs[0]) {
 						data = querySnapshot2.docs[0].data();
 						docId = querySnapshot2.docs[0].id;
 						source = "users";
