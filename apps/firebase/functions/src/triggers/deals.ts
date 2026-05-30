@@ -10,13 +10,16 @@ import {
 	DealStage,
 } from "../models";
 
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+
+
 /**
  * onDealCreated - Trigger when a new deal is created
  * - Sets initial probability based on stage
  * - Creates activity log
  * - Logs audit
  */
-export const onDealCreated = functions.firestore
+export const onDealCreated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("deals/{dealId}")
 	.onCreate(async (snap, context) => {
 		const deal = snap.data() as Deal;
@@ -86,7 +89,7 @@ export const onDealCreated = functions.firestore
  * - Updates contact lead score if won/lost
  * - Logs audit
  */
-export const onDealStageChanged = functions.firestore
+export const onDealStageChanged = functions.runWith({ serviceAccount: SA }).firestore
 	.document("deals/{dealId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Deal;
@@ -178,7 +181,7 @@ export const onDealStageChanged = functions.firestore
  * onDealUpdated - General update trigger for deals
  * - Logs changes to audit
  */
-export const onDealUpdated = functions.firestore
+export const onDealUpdated = functions.runWith({ serviceAccount: SA }).firestore
 	.document("deals/{dealId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Deal;

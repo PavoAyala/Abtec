@@ -1,10 +1,13 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+
+
 const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
 type StaffRole = (typeof STAFF_ROLES)[number];
 
-export const onUserWritten = functions.firestore
+export const onUserWritten = functions.runWith({ serviceAccount: SA }).firestore
 	.document("users/{userId}")
 	.onWrite(async (change, context) => {
 		const userId = context.params.userId;
