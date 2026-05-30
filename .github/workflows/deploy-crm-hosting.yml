@@ -1,9 +1,10 @@
 name: Deploy CRM to Firebase Hosting
 
 on:
-  push:
+  pull_request:
+    types: [closed]
     branches:
-      - main
+      - master
     paths:
       - 'apps/CRM/**'
       - 'apps/firebase/firebase.json'
@@ -11,6 +12,7 @@ on:
 
 jobs:
   build_and_deploy:
+    if: github.event.pull_request.merged == true
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository

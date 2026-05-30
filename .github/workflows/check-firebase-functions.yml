@@ -3,7 +3,7 @@ name: Check Firebase Functions
 on:
   pull_request:
     branches:
-      - main
+      - master
     paths:
       - 'apps/firebase/functions/**'
       - 'apps/firebase/firebase.json'
