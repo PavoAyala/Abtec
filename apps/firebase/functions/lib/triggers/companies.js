@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onCompanyUpdated = exports.onCompanyCreated = void 0;
-const admin = require("firebase-admin");
+const firestore_1 = require("firebase-admin/firestore");
 const functions = require("firebase-functions");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
@@ -23,7 +23,7 @@ exports.onCompanyCreated = functions.firestore
         collection: "companies",
         documentId: context.params.companyId,
         changes: { company: { before: null, after: company } },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     return firebase_1.db.collection("auditLog").add(auditLog);
 });
@@ -58,7 +58,7 @@ exports.onCompanyUpdated = functions.firestore
             collection: "companies",
             documentId: context.params.companyId,
             changes,
-            timestamp: admin.firestore.Timestamp.now(),
+            timestamp: firestore_1.Timestamp.now(),
         };
         return firebase_1.db.collection("auditLog").add(auditLog);
     }

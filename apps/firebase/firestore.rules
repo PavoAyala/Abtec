@@ -12,29 +12,33 @@ service cloud.firestore {
       return request.auth.uid == userId;
     }
 
+    function hasRole(role) {
+      return isAuthenticated() && (
+        ('roles' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+         role in get(/databases/$(database)/documents/users/$(request.auth.uid)).data.roles) ||
+        ('role' in get(/databases/$(database)/documents/users/$(request.auth.uid)).data &&
+         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == role)
+      );
+    }
+
     function isAdmin() {
-      return isAuthenticated() &&
-        get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin';
+      return hasRole('admin');
     }
 
     function isManager() {
-      return isAuthenticated() &&
-        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'manager' ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      return hasRole('manager') || hasRole('admin');
     }
 
     function isSales() {
-      return isAuthenticated() &&
-        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'sales' ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'manager' ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      return hasRole('sales') || hasRole('manager') || hasRole('admin');
     }
 
     function isSupport() {
-      return isAuthenticated() &&
-        (get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'support' ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'manager' ||
-         get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == 'admin');
+      return hasRole('support') || hasRole('manager') || hasRole('admin');
+    }
+
+    function isPublisher() {
+      return hasRole('publisher') || hasRole('manager') || hasRole('admin');
     }
 
     // Users collection
@@ -92,6 +96,12 @@ service cloud.firestore {
     match /knowledgeBase/{articleId} {
       allow read: if isAuthenticated();
       allow write: if isSupport() || isAdmin();
+    }
+
+    // Blog Posts collection
+    match /blog_posts/{postId} {
+      allow read: if true;
+      allow write: if isPublisher();
     }
 
     // Workflows collection

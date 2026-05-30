@@ -212,6 +212,7 @@ export default function TravelConnectSignIn({
 }: TravelConnectSignInProps) {
 	const [isPasswordVisible, setIsPasswordVisible] = useState(false);
 	const [isHovered, setIsHovered] = useState(false);
+	const isEmulatorMode = process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === "true";
 
 	return (
 		<div
@@ -531,6 +532,87 @@ export default function TravelConnectSignIn({
 								</button>
 							</motion.div>
 						</form>
+
+						{isEmulatorMode && (
+							<div
+								style={{
+									marginTop: "24px",
+									padding: "16px",
+									borderRadius: "12px",
+									background: "rgba(120, 179, 9, 0.05)",
+									border: "1px dashed rgba(120, 179, 9, 0.3)",
+									display: "flex",
+									flexDirection: "column",
+									gap: "10px",
+								}}
+							>
+								<div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
+									<motion.div
+										animate={{ scale: [1, 1.2, 1], opacity: [0.7, 1, 0.7] }}
+										transition={{ repeat: Infinity, duration: 2 }}
+										style={{
+											width: "8px",
+											height: "8px",
+											borderRadius: "50%",
+											backgroundColor: "#78b309",
+										}}
+									/>
+									<span style={{ fontSize: "0.72rem", fontWeight: 700, color: "#a3d430", letterSpacing: "0.05em", textTransform: "uppercase" }}>
+										Modo Desarrollo: Acceso Rápido (Staff)
+									</span>
+								</div>
+								<div
+									style={{
+										display: "grid",
+										gridTemplateColumns: "repeat(auto-fit, minmax(80px, 1fr))",
+										gap: "8px",
+									}}
+								>
+									{[
+										{ label: "Admin", email: "admin@abtec.com", color: "#ef4444" },
+										{ label: "Manager", email: "manager@abtec.com", color: "#3b82f6" },
+										{ label: "Ventas", email: "sales@abtec.com", color: "#10b981" },
+										{ label: "Soporte", email: "support@abtec.com", color: "#f59e0b" },
+										{ label: "Editor", email: "publisher@abtec.com", color: "#8b5cf6" },
+									].map((role) => (
+										<motion.button
+											key={role.label}
+											type="button"
+											whileHover={{ scale: 1.05, backgroundColor: "rgba(255,255,255,0.08)" }}
+											whileTap={{ scale: 0.95 }}
+											onClick={() => {
+												setEmail(role.email);
+												setPassword("password123");
+											}}
+											style={{
+												padding: "8px 6px",
+												borderRadius: "8px",
+												background: "rgba(255, 255, 255, 0.03)",
+												border: "1px solid rgba(255, 255, 255, 0.08)",
+												color: "#e5e7eb",
+												fontSize: "0.75rem",
+												fontWeight: 500,
+												cursor: "pointer",
+												textAlign: "center",
+												display: "flex",
+												flexDirection: "column",
+												alignItems: "center",
+												gap: "4px",
+												transition: "border-color 0.2s",
+											}}
+											onMouseEnter={(e) => {
+												e.currentTarget.style.borderColor = role.color;
+											}}
+											onMouseLeave={(e) => {
+												e.currentTarget.style.borderColor = "rgba(255, 255, 255, 0.08)";
+											}}
+										>
+											<span style={{ color: role.color, fontWeight: 700 }}>{role.label}</span>
+										</motion.button>
+									))}
+								</div>
+							</div>
+						)}
 
 						<div
 							style={{

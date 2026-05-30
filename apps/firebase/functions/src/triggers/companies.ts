@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import { AuditAction, type AuditLog, type Company } from "../models";
@@ -23,7 +23,7 @@ export const onCompanyCreated = functions.firestore
 			collection: "companies",
 			documentId: context.params.companyId,
 			changes: { company: { before: null, after: company } },
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		return db.collection("auditLog").add(auditLog);
@@ -64,7 +64,7 @@ export const onCompanyUpdated = functions.firestore
 				collection: "companies",
 				documentId: context.params.companyId,
 				changes,
-				timestamp: admin.firestore.Timestamp.now(),
+				timestamp: Timestamp.now(),
 			};
 
 			return db.collection("auditLog").add(auditLog);

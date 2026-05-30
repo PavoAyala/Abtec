@@ -47,7 +47,19 @@ function LoginForm() {
 			const { user } = await signInWithEmailAndPassword(auth, email, password);
 
 			// Verify the staff custom claim before allowing access
-			const { claims } = await user.getIdTokenResult(true);
+			let claims;
+			try {
+				const result = await user.getIdTokenResult(true);
+				claims = result.claims;
+			} catch (error: any) {
+				if (error?.code === "auth/network-request-failed") {
+					console.warn("Network request failed, falling back to cached claims");
+					const result = await user.getIdTokenResult(false);
+					claims = result.claims;
+				} else {
+					throw error;
+				}
+			}
 			if (!claims.staff) {
 				await auth.signOut();
 				throw new Error("Access Denied: You do not have staff privileges.");

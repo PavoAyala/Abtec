@@ -35,7 +35,9 @@ export enum UserRole {
 	Manager = "manager",
 	Sales = "sales",
 	Support = "support",
+	Publisher = "publisher",
 	Viewer = "viewer",
+	Customer = "customer",
 }
 
 export enum LifecycleStage {
@@ -59,6 +61,12 @@ export interface Contact {
 	lifecycleStage: LifecycleStage;
 	leadScore: number;
 	ownerId?: string;
+	// Detalles de Implementación / Cliente
+	panelBrand?: string;
+	warrantyEndDate?: Date;
+	lastMaintenanceDate?: Date;
+	contractUrl?: string;
+	relevantInfo?: string;
 	createdAt: Date;
 	updatedAt: Date;
 }
@@ -69,6 +77,13 @@ export interface Company {
 	industry: string;
 	size: string;
 	website?: string;
+	lifecycleStage?: LifecycleStage;
+	// Detalles de Implementación / Cliente
+	panelBrand?: string;
+	warrantyEndDate?: Date;
+	lastMaintenanceDate?: Date;
+	contractUrl?: string;
+	relevantInfo?: string;
 	createdAt: Date;
 }
 
@@ -96,6 +111,7 @@ export interface Ticket {
 	priority: TicketPriority;
 	category: string;
 	contactId?: string;
+	contactEmail?: string;
 	companyId?: string;
 	assigneeId?: string;
 	slaDeadline?: Date;
@@ -123,7 +139,7 @@ export interface User {
 	id: string;
 	name: string;
 	email: string;
-	role: UserRole;
+	roles: UserRole[];
 	isActive: boolean;
 	createdAt: Date;
 }
@@ -132,7 +148,7 @@ export interface StaffMember {
 	id: string;
 	email: string;
 	displayName: string;
-	role: UserRole;
+	roles: UserRole[];
 	status: "active" | "inactive";
 	createdAt: Date;
 	updatedAt: Date;
@@ -194,4 +210,17 @@ export interface Report {
 	schedule?: string;
 	createdAt: Date;
 	ownerId: string;
+}
+
+export interface BlogPost {
+	id: string;
+	title: string;
+	slug: string;
+	excerpt: string;
+	content: string;
+	category: string;
+	author: string;
+	image: string;
+	createdAt: Date;
+	updatedAt: Date;
 }

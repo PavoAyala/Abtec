@@ -9,7 +9,7 @@ import {
 	createStaffUser,
 	getStaffUsers,
 	revokeStaffAccess,
-	updateStaffRole,
+	updateStaffRoles,
 } from "@/lib/staff";
 import { type StaffMember, UserRole } from "@/types";
 
@@ -18,7 +18,9 @@ const ROLE_LABELS: Record<UserRole, string> = {
 	[UserRole.Manager]: "Gerente",
 	[UserRole.Sales]: "Ventas",
 	[UserRole.Support]: "Soporte",
+	[UserRole.Publisher]: "Editor",
 	[UserRole.Viewer]: "Viewer",
+	[UserRole.Customer]: "Cliente",
 };
 
 const ROLE_BADGE: Record<UserRole, string> = {
@@ -26,7 +28,9 @@ const ROLE_BADGE: Record<UserRole, string> = {
 	[UserRole.Manager]: "badge-blue",
 	[UserRole.Sales]: "badge-green",
 	[UserRole.Support]: "badge-yellow",
+	[UserRole.Publisher]: "badge-purple",
 	[UserRole.Viewer]: "badge-gray",
+	[UserRole.Customer]: "badge-green",
 };
 
 const STAFF_ROLES = [
@@ -34,6 +38,7 @@ const STAFF_ROLES = [
 	UserRole.Manager,
 	UserRole.Sales,
 	UserRole.Support,
+	UserRole.Publisher,
 ];
 
 // ── Modals ──────────────────────────────────────────────────────────────────
@@ -71,13 +76,25 @@ function CreateModal({
 		displayName: "",
 		email: "",
 		password: "",
-		role: UserRole.Sales,
+		roles: [UserRole.Sales] as UserRole[],
 	});
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
+	const handleRoleChange = (role: UserRole, checked: boolean) => {
+		if (checked) {
+			setForm((prev) => ({ ...prev, roles: [...prev.roles, role] }));
+		} else {
+			setForm((prev) => ({ ...prev, roles: prev.roles.filter((r) => r !== role) }));
+		}
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (form.roles.length === 0) {
+			setError("Debes seleccionar al menos un rol.");
+			return;
+		}
 		setLoading(true);
 		setError(null);
 		try {
@@ -139,22 +156,22 @@ function CreateModal({
 					/>
 				</div>
 				<div>
-					<label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">
-						Rol
+					<label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+						Roles
 					</label>
-					<select
-						className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-						value={form.role}
-						onChange={(e) =>
-							setForm({ ...form, role: e.target.value as UserRole })
-						}
-					>
+					<div className="space-y-2 border border-gray-200 rounded-lg p-3">
 						{STAFF_ROLES.map((r) => (
-							<option key={r} value={r}>
-								{ROLE_LABELS[r]}
-							</option>
+							<label key={r} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+								<input
+									type="checkbox"
+									checked={form.roles.includes(r)}
+									onChange={(e) => handleRoleChange(r, e.target.checked)}
+									className="rounded border-gray-300 text-primary focus:ring-primary/30"
+								/>
+								<span>{ROLE_LABELS[r]}</span>
+							</label>
 						))}
-					</select>
+					</div>
 				</div>
 
 				{error && (
@@ -189,16 +206,28 @@ function EditRoleModal({
 	onClose: () => void;
 	onSuccess: () => void;
 }) {
-	const [role, setRole] = useState<UserRole>(member.role);
+	const [roles, setRoles] = useState<UserRole[]>(member.roles || []);
 	const [loading, setLoading] = useState(false);
 	const [error, setError] = useState<string | null>(null);
 
+	const handleRoleChange = (role: UserRole, checked: boolean) => {
+		if (checked) {
+			setRoles((prev) => [...prev, role]);
+		} else {
+			setRoles((prev) => prev.filter((r) => r !== role));
+		}
+	};
+
 	const handleSubmit = async (e: React.FormEvent) => {
 		e.preventDefault();
+		if (roles.length === 0) {
+			setError("Debes seleccionar al menos un rol.");
+			return;
+		}
 		setLoading(true);
 		setError(null);
 		try {
-			await updateStaffRole(member.id, role);
+			await updateStaffRoles(member.id, roles);
 			onSuccess();
 		} catch (err: unknown) {
 			const msg =
@@ -211,26 +240,28 @@ function EditRoleModal({
 
 	return (
 		<ModalOverlay onClose={onClose}>
-			<h3 className="text-lg font-bold text-gray-900 mb-1">Editar Rol</h3>
+			<h3 className="text-lg font-bold text-gray-900 mb-1">Editar Roles</h3>
 			<p className="text-sm text-gray-500 mb-4">
 				{member.displayName} · {member.email}
 			</p>
 			<form onSubmit={handleSubmit} className="space-y-4">
 				<div>
-					<label className="block text-xs font-semibold text-gray-500 mb-1 uppercase tracking-wide">
-						Nuevo Rol
+					<label className="block text-xs font-semibold text-gray-500 mb-2 uppercase tracking-wide">
+						Roles
 					</label>
-					<select
-						className="w-full px-3 py-2 border border-gray-200 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-primary/30"
-						value={role}
-						onChange={(e) => setRole(e.target.value as UserRole)}
-					>
+					<div className="space-y-2 border border-gray-200 rounded-lg p-3">
 						{STAFF_ROLES.map((r) => (
-							<option key={r} value={r}>
-								{ROLE_LABELS[r]}
-							</option>
+							<label key={r} className="flex items-center gap-2 text-sm text-gray-700 cursor-pointer">
+								<input
+									type="checkbox"
+									checked={roles.includes(r)}
+									onChange={(e) => handleRoleChange(r, e.target.checked)}
+									className="rounded border-gray-300 text-primary focus:ring-primary/30"
+								/>
+								<span>{ROLE_LABELS[r]}</span>
+							</label>
 						))}
-					</select>
+					</div>
 				</div>
 
 				{error && (
@@ -335,7 +366,7 @@ function RevokeModal({
 // ── Page ────────────────────────────────────────────────────────────────────
 
 export default function StaffPage() {
-	const { staffRole } = useAuth();
+	const { staffRoles } = useAuth();
 	const router = useRouter();
 
 	const [createOpen, setCreateOpen] = useState(false);
@@ -344,10 +375,10 @@ export default function StaffPage() {
 
 	// Redirect si no es admin
 	useEffect(() => {
-		if (staffRole !== null && staffRole !== "admin") {
+		if (staffRoles && !staffRoles.includes("admin")) {
 			router.replace("/");
 		}
-	}, [staffRole, router]);
+	}, [staffRoles, router]);
 
 	const {
 		data: staff,
@@ -377,12 +408,16 @@ export default function StaffPage() {
 			sortable: true,
 		},
 		{
-			key: "role",
-			label: "Rol",
+			key: "roles",
+			label: "Roles",
 			render: (item: StaffMember) => (
-				<span className={`badge ${ROLE_BADGE[item.role] ?? "badge-gray"}`}>
-					{ROLE_LABELS[item.role] ?? item.role}
-				</span>
+				<div className="flex flex-wrap gap-1">
+					{(item.roles || []).map((role) => (
+						<span key={role} className={`badge ${ROLE_BADGE[role] ?? "badge-gray"}`}>
+							{ROLE_LABELS[role] ?? role}
+						</span>
+					))}
+				</div>
 			),
 		},
 		{
@@ -418,7 +453,7 @@ export default function StaffPage() {
 						onClick={() => setEditTarget(item)}
 						className="text-xs px-3 py-1 border border-gray-200 rounded-lg hover:bg-gray-50 transition-colors"
 					>
-						Editar rol
+						Editar roles
 					</button>
 					<button
 						type="button"
@@ -432,7 +467,7 @@ export default function StaffPage() {
 		},
 	];
 
-	if (staffRole !== "admin") return null;
+	if (!staffRoles.includes("admin")) return null;
 
 	return (
 		<div className="page-container">

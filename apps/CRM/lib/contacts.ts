@@ -13,7 +13,7 @@ import {
 	where,
 } from "./firebase";
 
-export const getContacts = (filters?: {
+export const getContacts = async (filters?: {
 	ownerId?: string;
 	companyId?: string;
 	lifecycleStage?: LifecycleStage;
@@ -31,15 +31,45 @@ export const getContacts = (filters?: {
 		constraints.unshift(where("lifecycleStage", "==", filters.lifecycleStage));
 	}
 
-	return getCollection<Contact>("contacts", ...constraints).then((data) =>
-		data.map((doc) => ({
-			...doc,
-			createdAt:
-				doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt),
-			updatedAt:
-				doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt),
-		})),
-	);
+	const rawContacts = await getCollection<Contact>("contacts", ...constraints);
+	let contacts = rawContacts.map((doc) => ({
+		...doc,
+		createdAt:
+			doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt),
+		updatedAt:
+			doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt),
+	}));
+
+	// Fetch registered web users
+	try {
+		const webUsers = await getCollection<any>("users", where("role", "==", "customer"));
+		
+		const webContacts: Contact[] = webUsers.map((u) => ({
+			id: u.id,
+			name: u.displayName || `${u.firstName || ""} ${u.lastName || ""}`.trim() || u.email,
+			email: u.email,
+			phone: u.phone || "",
+			tags: ["Web Registered"],
+			customFields: {},
+			lifecycleStage: LifecycleStage.Subscriber,
+			leadScore: 10,
+			createdAt: u.createdAt?.toDate ? u.createdAt.toDate() : new Date(u.createdAt || Date.now()),
+			updatedAt: u.updatedAt?.toDate ? u.updatedAt.toDate() : new Date(u.updatedAt || Date.now()),
+		}));
+
+		const contactIds = new Set(contacts.map(c => c.id));
+		const uniqueWebContacts = webContacts.filter(c => !contactIds.has(c.id));
+
+		contacts = [...contacts, ...uniqueWebContacts].sort((a, b) => b.createdAt.getTime() - a.createdAt.getTime());
+
+		if (filters?.lifecycleStage) {
+			contacts = contacts.filter(c => c.lifecycleStage === filters.lifecycleStage);
+		}
+	} catch (err) {
+		console.warn("Error fetching web users:", err);
+	}
+
+	return contacts;
 };
 
 export const getContact = (id: string) =>

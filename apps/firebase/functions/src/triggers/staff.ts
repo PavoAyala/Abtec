@@ -1,8 +1,9 @@
 import * as admin from "firebase-admin";
+import { FieldValue } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 
-const STAFF_ROLES = ["admin", "manager", "sales", "support"] as const;
+const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
 type StaffRole = (typeof STAFF_ROLES)[number];
 
 /**
@@ -26,9 +27,9 @@ export const setStaffRole = functions.https.onCall(async (data, context) => {
 		);
 	}
 
-	const { targetUid, role } = data as {
+	const { targetUid, roles } = data as {
 		targetUid?: string;
-		role?: StaffRole | null;
+		roles?: StaffRole[];
 	};
 
 	if (!targetUid || typeof targetUid !== "string") {
@@ -38,37 +39,45 @@ export const setStaffRole = functions.https.onCall(async (data, context) => {
 		);
 	}
 
-	if (role !== null && role !== undefined && !STAFF_ROLES.includes(role)) {
-		throw new functions.https.HttpsError(
-			"invalid-argument",
-			`role debe ser uno de: ${STAFF_ROLES.join(", ")} o null para revocar.`,
-		);
+	if (roles !== undefined && roles !== null) {
+		if (!Array.isArray(roles)) {
+			throw new functions.https.HttpsError(
+				"invalid-argument",
+				"roles debe ser un array.",
+			);
+		}
+		for (const r of roles) {
+			if (!STAFF_ROLES.includes(r)) {
+				throw new functions.https.HttpsError(
+					"invalid-argument",
+					`Cada rol debe ser uno de: ${STAFF_ROLES.join(", ")}`,
+				);
+			}
+		}
 	}
 
 	await admin.auth().getUser(targetUid);
-
-	const newClaims = role ? { staff: role } : {};
-	await admin.auth().setCustomUserClaims(targetUid, newClaims);
 
 	await db
 		.collection("users")
 		.doc(targetUid)
 		.set(
 			{
-				role: role ?? admin.firestore.FieldValue.delete(),
-				updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+				roles: roles && roles.length > 0 ? roles : FieldValue.delete(),
+				role: FieldValue.delete(),
+				updatedAt: FieldValue.serverTimestamp(),
 			},
 			{ merge: true },
 		);
 
 	functions.logger.info(
-		`Staff role updated: ${targetUid} → ${role ?? "revoked"}`,
+		`Staff roles updated: ${targetUid} → ${roles ? roles.join(", ") : "revoked"}`,
 		{
 			by: context.auth.uid,
 		},
 	);
 
-	return { success: true, uid: targetUid, role: role ?? null };
+	return { success: true, uid: targetUid, roles: roles ?? [] };
 });
 
 /**
@@ -91,25 +100,27 @@ export const createStaffUser = functions.https.onCall(async (data, context) => {
 		);
 	}
 
-	const { email, password, displayName, role } = data as {
+	const { email, password, displayName, roles } = data as {
 		email?: string;
 		password?: string;
 		displayName?: string;
-		role?: StaffRole;
+		roles?: StaffRole[];
 	};
 
-	if (!email || !password || !displayName || !role) {
+	if (!email || !password || !displayName || !roles || !Array.isArray(roles) || roles.length === 0) {
 		throw new functions.https.HttpsError(
 			"invalid-argument",
-			"email, password, displayName y role son requeridos.",
+			"email, password, displayName y roles (no vacío) son requeridos.",
 		);
 	}
 
-	if (!STAFF_ROLES.includes(role)) {
-		throw new functions.https.HttpsError(
-			"invalid-argument",
-			`role debe ser uno de: ${STAFF_ROLES.join(", ")}`,
-		);
+	for (const r of roles) {
+		if (!STAFF_ROLES.includes(r)) {
+			throw new functions.https.HttpsError(
+				"invalid-argument",
+				`Cada rol debe ser uno de: ${STAFF_ROLES.join(", ")}`,
+			);
+		}
 	}
 
 	if (password.length < 6) {
@@ -124,26 +135,24 @@ export const createStaffUser = functions.https.onCall(async (data, context) => {
 		.auth()
 		.createUser({ email, password, displayName });
 
-	// Setear custom claim
-	await admin.auth().setCustomUserClaims(newUser.uid, { staff: role });
-
 	// Crear documento en Firestore
 	await db.collection("users").doc(newUser.uid).set({
 		email,
 		displayName,
 		authUid: newUser.uid,
-		role,
+		roles,
 		status: "active",
-		createdAt: admin.firestore.FieldValue.serverTimestamp(),
-		updatedAt: admin.firestore.FieldValue.serverTimestamp(),
+		isActive: true,
+		createdAt: FieldValue.serverTimestamp(),
+		updatedAt: FieldValue.serverTimestamp(),
 	});
 
 	functions.logger.info(
-		`Staff user created: ${newUser.uid} (${email}) with role: ${role}`,
+		`Staff user created: ${newUser.uid} (${email}) with roles: ${roles.join(", ")}`,
 		{
 			by: context.auth.uid,
 		},
 	);
 
-	return { success: true, uid: newUser.uid, email, role };
+	return { success: true, uid: newUser.uid, email, roles };
 });

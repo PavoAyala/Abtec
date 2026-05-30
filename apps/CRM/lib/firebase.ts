@@ -26,6 +26,7 @@ import {
 	query,
 	Timestamp,
 	updateDoc,
+	setDoc,
 	where,
 } from "firebase/firestore";
 import {
@@ -34,6 +35,7 @@ import {
 	getFunctions,
 	httpsCallable,
 } from "firebase/functions";
+import { connectStorageEmulator, getStorage, type FirebaseStorage } from "firebase/storage";
 
 // Configuración de Firebase - usar variables de entorno en producción
 const firebaseConfig = {
@@ -54,6 +56,7 @@ let app: FirebaseApp;
 let db: Firestore;
 let auth: Auth;
 let functions: Functions;
+let storage: FirebaseStorage;
 const globalForFirebase = globalThis as typeof globalThis & {
 	__abtecCrmFirebaseEmulatorsConnected?: boolean;
 };
@@ -63,6 +66,7 @@ if (typeof window !== "undefined") {
 	db = getFirestore(app);
 	auth = getAuth(app);
 	functions = getFunctions(app);
+	storage = getStorage(app);
 
 	if (
 		process.env.NEXT_PUBLIC_USE_FIREBASE_EMULATORS === "true" &&
@@ -71,8 +75,9 @@ if (typeof window !== "undefined") {
 		connectFirestoreEmulator(db, "127.0.0.1", 8080);
 		connectAuthEmulator(auth, "http://127.0.0.1:9099");
 		connectFunctionsEmulator(functions, "127.0.0.1", 5001);
+		connectStorageEmulator(storage, "127.0.0.1", 9199);
 		console.info(
-			"[Firebase][CRM] Usando emuladores: Firestore(8080), Auth(9099), Functions(5001)",
+			"[Firebase][CRM] Usando emuladores: Firestore(8080), Auth(9099), Functions(5001), Storage(9199)",
 		);
 		globalForFirebase.__abtecCrmFirebaseEmulatorsConnected = true;
 	}
@@ -130,10 +135,10 @@ export const updateDocument = async <T extends DocumentData>(
 	data: Partial<T>,
 ): Promise<void> => {
 	const docRef = doc(db, collectionName, id);
-	await updateDoc(docRef, {
+	await setDoc(docRef, {
 		...data,
 		updatedAt: Timestamp.now(),
-	});
+	}, { merge: true });
 };
 
 export const deleteDocument = async (
@@ -183,6 +188,7 @@ export {
 	orderBy,
 	QueryConstraint,
 	query,
+	storage,
 	Timestamp,
 	where,
 };

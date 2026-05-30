@@ -1,4 +1,4 @@
-import * as admin from "firebase-admin";
+import { Timestamp } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import {
@@ -53,7 +53,7 @@ export const onDealCreated = functions.firestore
 			companyId: deal.companyId,
 			description: `Deal "${deal.title}" creado con valor ${deal.currency} ${deal.value}`,
 			ownerId: deal.ownerId,
-			createdAt: admin.firestore.Timestamp.now(),
+			createdAt: Timestamp.now(),
 		};
 
 		const activityRef = db.collection("activities").doc();
@@ -66,7 +66,7 @@ export const onDealCreated = functions.firestore
 			collection: "deals",
 			documentId: context.params.dealId,
 			changes: { deal: { before: null, after: deal } },
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		const auditRef = db.collection("auditLog").doc();
@@ -127,7 +127,7 @@ export const onDealStageChanged = functions.firestore
 			companyId: after.companyId,
 			description: `Deal movido de "${before.stage}" a "${after.stage}"`,
 			ownerId: after.ownerId,
-			createdAt: admin.firestore.Timestamp.now(),
+			createdAt: Timestamp.now(),
 		};
 
 		const activityRef = db.collection("activities").doc();
@@ -161,7 +161,7 @@ export const onDealStageChanged = functions.firestore
 				stage: { before: before.stage, after: after.stage },
 				probability: { before: before.probability, after: updates.probability },
 			},
-			timestamp: admin.firestore.Timestamp.now(),
+			timestamp: Timestamp.now(),
 		};
 
 		const auditRef = db.collection("auditLog").doc();
@@ -211,7 +211,7 @@ export const onDealUpdated = functions.firestore
 				collection: "deals",
 				documentId: context.params.dealId,
 				changes,
-				timestamp: admin.firestore.Timestamp.now(),
+				timestamp: Timestamp.now(),
 			};
 
 			return db.collection("auditLog").add(auditLog);

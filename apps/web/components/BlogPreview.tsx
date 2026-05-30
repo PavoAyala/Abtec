@@ -4,42 +4,104 @@ import { motion } from "framer-motion";
 import { Calendar, User } from "lucide-react";
 import Image from "next/image";
 import type { JSX } from "react";
+import { useEffect, useState } from "react";
+import { getClientDb } from "../lib/firebase";
+import { collection, query, orderBy, limit, getDocs } from "firebase/firestore";
+
+interface PostItem {
+	image: string;
+	category: string;
+	author: string;
+	date: string;
+	title: string;
+	excerpt: string;
+	slug: string;
+}
+
+const STATIC_POSTS: PostItem[] = [
+	{
+		image: "/images/abtec1.jpeg",
+		category: "Paneles Solares Monterrey",
+		author: "Ingeniería ABTEC",
+		date: "agosto 23, 2023",
+		title:
+			"Paneles Solares Monterrey: Cómo aprovechar al máximo la energía del sol",
+		excerpt:
+			"Los paneles solares Monterrey se han convertido en una forma cada vez más popular y efectiva de aprovechar la energía...",
+		slug: "https://www.abtec.com.mx/blog/paneles-solares-cómo-aprovechar-al-máximo-la-energía-del-sol",
+	},
+	{
+		image: "/images/proyecto residencial.png",
+		category: "Paneles Solares Monterrey",
+		author: "Ingeniería ABTEC",
+		date: "mayo 22, 2023",
+		title: "Beneficios ambientales y económicos de la energía solar",
+		excerpt:
+			"La energía solar se ha consolidado como una fuente de energía renovable que ofrece una amplia gama de beneficios tanto...",
+		slug: "https://www.abtec.com.mx/blog/beneficios-ambientales-y-económicos-de-la-energía-solar",
+	},
+	{
+		image: "/images/solar_panel.png",
+		category: "Paneles Solares Monterrey",
+		author: "Ingeniería ABTEC",
+		date: "mayo 22, 2023",
+		title:
+			"El futuro de la energía solar: avances tecnológicos y perspectivas",
+		excerpt:
+			"La energía solar ha experimentado un crecimiento exponencial en las últimas décadas, convirtiéndose en una de las...",
+		slug: "https://www.abtec.com.mx/blog/el-futuro-de-la-energía-solar-avances-tecnológicos-y-perspectivas",
+	},
+];
 
 export default function BlogPreview(): JSX.Element {
-	const posts = [
-		{
-			image: "/images/abtec1.jpeg",
-			category: "Paneles Solares Monterrey",
-			author: "Ingeniería ABTEC",
-			date: "agosto 23, 2023",
-			title:
-				"Paneles Solares Monterrey: Cómo aprovechar al máximo la energía del sol",
-			excerpt:
-				"Los paneles solares Monterrey se han convertido en una forma cada vez más popular y efectiva de aprovechar la energía...",
-			slug: "https://www.abtec.com.mx/blog/paneles-solares-cómo-aprovechar-al-máximo-la-energía-del-sol",
-		},
-		{
-			image: "/images/proyecto residencial.png",
-			category: "Paneles Solares Monterrey",
-			author: "Ingeniería ABTEC",
-			date: "mayo 22, 2023",
-			title: "Beneficios ambientales y económicos de la energía solar",
-			excerpt:
-				"La energía solar se ha consolidado como una fuente de energía renovable que ofrece una amplia gama de beneficios tanto...",
-			slug: "https://www.abtec.com.mx/blog/beneficios-ambientales-y-económicos-de-la-energía-solar",
-		},
-		{
-			image: "/images/solar_panel.png",
-			category: "Paneles Solares Monterrey",
-			author: "Ingeniería ABTEC",
-			date: "mayo 22, 2023",
-			title:
-				"El futuro de la energía solar: avances tecnológicos y perspectivas",
-			excerpt:
-				"La energía solar ha experimentado un crecimiento exponencial en las últimas décadas, convirtiéndose en una de las...",
-			slug: "https://www.abtec.com.mx/blog/el-futuro-de-la-energía-solar-avances-tecnológicos-y-perspectivas",
-		},
-	];
+	const [posts, setPosts] = useState<PostItem[]>(STATIC_POSTS);
+
+	useEffect(() => {
+		async function fetchLatestPosts() {
+			try {
+				const db = getClientDb();
+				const postsQuery = query(
+					collection(db, "blog_posts"),
+					orderBy("createdAt", "desc"),
+					limit(3)
+				);
+				const querySnapshot = await getDocs(postsQuery);
+				if (!querySnapshot.empty) {
+					const fetched = querySnapshot.docs.map((doc) => {
+						const data = doc.data();
+						const createdAt = data.createdAt && typeof data.createdAt === "object" && "toDate" in data.createdAt
+							? data.createdAt.toDate()
+							: (data.createdAt ? new Date(data.createdAt) : new Date());
+
+						const formattedDate = createdAt.toLocaleDateString("es-MX", {
+							year: "numeric",
+							month: "long",
+							day: "numeric",
+						});
+
+						let slug = data.slug || "";
+						if (slug && !slug.startsWith("http")) {
+							slug = `https://www.abtec.com.mx/blog/${slug}`;
+						}
+
+						return {
+							image: data.image || "/images/solar_panel.png",
+							category: data.category || "Paneles Solares Monterrey",
+							author: data.author || "Ingeniería ABTEC",
+							date: formattedDate,
+							title: data.title || "",
+							excerpt: data.excerpt || "",
+							slug: slug || "#",
+						};
+					});
+					setPosts(fetched);
+				}
+			} catch (error) {
+				console.error("[Web][BlogPreview] Error loading blog posts:", error);
+			}
+		}
+		fetchLatestPosts();
+	}, []);
 
 	return (
 		<section id="blog" className="py-16 bg-white">

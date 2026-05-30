@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onDealUpdated = exports.onDealStageChanged = exports.onDealCreated = void 0;
-const admin = require("firebase-admin");
+const firestore_1 = require("firebase-admin/firestore");
 const functions = require("firebase-functions");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
@@ -43,7 +43,7 @@ exports.onDealCreated = functions.firestore
         companyId: deal.companyId,
         description: `Deal "${deal.title}" creado con valor ${deal.currency} ${deal.value}`,
         ownerId: deal.ownerId,
-        createdAt: admin.firestore.Timestamp.now(),
+        createdAt: firestore_1.Timestamp.now(),
     };
     const activityRef = firebase_1.db.collection("activities").doc();
     batch.set(activityRef, createActivity);
@@ -54,7 +54,7 @@ exports.onDealCreated = functions.firestore
         collection: "deals",
         documentId: context.params.dealId,
         changes: { deal: { before: null, after: deal } },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     const auditRef = firebase_1.db.collection("auditLog").doc();
     batch.set(auditRef, auditLog);
@@ -103,7 +103,7 @@ exports.onDealStageChanged = functions.firestore
         companyId: after.companyId,
         description: `Deal movido de "${before.stage}" a "${after.stage}"`,
         ownerId: after.ownerId,
-        createdAt: admin.firestore.Timestamp.now(),
+        createdAt: firestore_1.Timestamp.now(),
     };
     const activityRef = firebase_1.db.collection("activities").doc();
     batch.set(activityRef, stageActivity);
@@ -129,7 +129,7 @@ exports.onDealStageChanged = functions.firestore
             stage: { before: before.stage, after: after.stage },
             probability: { before: before.probability, after: updates.probability },
         },
-        timestamp: admin.firestore.Timestamp.now(),
+        timestamp: firestore_1.Timestamp.now(),
     };
     const auditRef = firebase_1.db.collection("auditLog").doc();
     batch.set(auditRef, auditLog);
@@ -171,7 +171,7 @@ exports.onDealUpdated = functions.firestore
             collection: "deals",
             documentId: context.params.dealId,
             changes,
-            timestamp: admin.firestore.Timestamp.now(),
+            timestamp: firestore_1.Timestamp.now(),
         };
         return firebase_1.db.collection("auditLog").add(auditLog);
     }

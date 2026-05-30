@@ -17,14 +17,14 @@ import {
 } from "react";
 import { auth } from "../lib/firebase";
 
-const STAFF_ROLES = ["admin", "manager", "sales", "support"] as const;
+const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
 type StaffRole = (typeof STAFF_ROLES)[number];
 
 interface AuthContextType {
 	user: User | null;
 	loading: boolean;
 	isStaff: boolean;
-	staffRole: StaffRole | null;
+	staffRoles: StaffRole[];
 	signOut: () => Promise<void>;
 }
 
@@ -32,22 +32,42 @@ const AuthContext = createContext<AuthContextType>({
 	user: null,
 	loading: true,
 	isStaff: false,
-	staffRole: null,
+	staffRoles: [],
 	signOut: async () => {},
 });
 
-async function resolveStaffRole(user: User): Promise<StaffRole | null> {
-	// Force-refresh so newly set claims are picked up immediately
-	const { claims } = await user.getIdTokenResult(true);
-	const role = claims.staff as string | undefined;
-	return STAFF_ROLES.includes(role as StaffRole) ? (role as StaffRole) : null;
+async function resolveStaffRoles(user: User): Promise<StaffRole[]> {
+	let claims;
+	try {
+		// Force-refresh so newly set claims are picked up immediately
+		const result = await user.getIdTokenResult(true);
+		claims = result.claims;
+	} catch (error: any) {
+		if (error?.code === "auth/network-request-failed") {
+			console.warn("Network request failed, falling back to cached claims");
+			const result = await user.getIdTokenResult(false);
+			claims = result.claims;
+		} else {
+			throw error;
+		}
+	}
+
+	const roles = claims.staff;
+
+	if (Array.isArray(roles)) {
+		return roles.filter((r): r is StaffRole => STAFF_ROLES.includes(r as StaffRole));
+	}
+	if (typeof roles === "string" && STAFF_ROLES.includes(roles as StaffRole)) {
+		return [roles as StaffRole];
+	}
+	return [];
 }
 
 export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 	const [user, setUser] = useState<User | null>(null);
 	const [loading, setLoading] = useState(true);
 	const [isStaff, setIsStaff] = useState(false);
-	const [staffRole, setStaffRole] = useState<StaffRole | null>(null);
+	const [staffRoles, setStaffRoles] = useState<StaffRole[]>([]);
 	const router = useRouter();
 	const pathname = usePathname();
 
@@ -55,7 +75,7 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 		if (signOutFirst) await firebaseSignOut(auth);
 		setUser(null);
 		setIsStaff(false);
-		setStaffRole(null);
+		setStaffRoles([]);
 	}, []);
 
 	useEffect(() => {
@@ -68,12 +88,12 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 			}
 
 			try {
-				const role = await resolveStaffRole(firebaseUser);
+				const roles = await resolveStaffRoles(firebaseUser);
 
-				if (role) {
+				if (roles.length > 0) {
 					setUser(firebaseUser);
 					setIsStaff(true);
-					setStaffRole(role);
+					setStaffRoles(roles);
 					if (pathname === "/login") router.push("/");
 				} else {
 					await resetAuth(true);
@@ -95,8 +115,8 @@ export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {
 	}, [router]);
 
 	const contextValue = useMemo(
-		() => ({ user, loading, isStaff, staffRole, signOut }),
-		[user, loading, isStaff, staffRole, signOut],
+		() => ({ user, loading, isStaff, staffRoles, signOut }),
+		[user, loading, isStaff, staffRoles, signOut],
 	);
 
 	if (loading) {

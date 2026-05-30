@@ -18,5 +18,7 @@ __exportStar(require("./scheduled/slaReminders"), exports);
 __exportStar(require("./triggers/companies"), exports);
 __exportStar(require("./triggers/contacts"), exports);
 __exportStar(require("./triggers/deals"), exports);
+__exportStar(require("./triggers/staff"), exports);
 __exportStar(require("./triggers/tickets"), exports);
+__exportStar(require("./triggers/users"), exports);
 //# sourceMappingURL=index.js.map
