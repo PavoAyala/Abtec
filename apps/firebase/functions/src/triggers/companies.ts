@@ -3,7 +3,7 @@ import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 import { AuditAction, type AuditLog, type Company } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
 
 
 /**

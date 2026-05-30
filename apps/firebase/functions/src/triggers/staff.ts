@@ -3,7 +3,7 @@ import { FieldValue } from "firebase-admin/firestore";
 import * as functions from "firebase-functions";
 import { db } from "../config/firebase";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
 
 
 const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;

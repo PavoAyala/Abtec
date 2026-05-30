@@ -1,7 +1,7 @@
 import * as admin from "firebase-admin";
 import * as functions from "firebase-functions";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT!;
+const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
 
 
 const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
