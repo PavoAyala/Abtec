@@ -37,7 +37,7 @@ jobs:
         run: pnpm run build
         working-directory: apps/firebase/functions
         env:
-          FIREBASE_SERVICE_ACCOUNT: compute-fallback@abtec-8f31e.iam.gserviceaccount.com
+          FIREBASE_SERVICE_ACCOUNT: firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com
 
       - name: Verify build output
         run: |
@@ -52,8 +52,8 @@ jobs:
       - name: Deploy Firebase Functions
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions --project abtec-8f31e --config apps/firebase/firebase.json
+          args: deploy --only functions --project abtec-6831c --config apps/firebase/firebase.json
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}
-          FIREBASE_SERVICE_ACCOUNT: compute-fallback@abtec-8f31e.iam.gserviceaccount.com
+          FIREBASE_SERVICE_ACCOUNT: firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com
 
