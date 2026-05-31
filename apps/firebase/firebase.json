@@ -1,6 +1,6 @@
 {
 	"hosting": {
-		"site": "abtec-crm",
+		"site": "abtec-6831c",
 		"public": "public",
 		"ignore": ["firebase.json", "**/.*", "**/node_modules/**"],
 		"rewrites": [
