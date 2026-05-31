@@ -1,0 +1,50 @@
+name: Preview CRM to Firebase Hosting
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+    branches:
+      - master
+      - dev
+    paths:
+      - 'apps/CRM/**'
+      - 'apps/firebase/firebase.json'
+      - '.github/workflows/preview-crm-hosting.yml'
+
+jobs:
+  build_and_preview:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Install pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+          cache: 'pnpm'
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Build CRM
+        run: cd apps/CRM && pnpm run deploy
+        env:
+          NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyAekOf71cRpHalw2cWQ6Mvbvl4RqIfoCxE
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: abtec-6831c.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: abtec-6831c
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: abtec-6831c.firebasestorage.app
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: 579456196075
+          NEXT_PUBLIC_FIREBASE_APP_ID: 1:579456196075:web:74dba7d6c548d7f3700dae
+          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: G-F0YDQEET2M
+
+      - name: Deploy to Firebase Hosting Preview
+        uses: FirebaseExtended/action-hosting-deploy@v0
+        with:
+          repoToken: '${{ secrets.GITHUB_TOKEN }}'
+          firebaseServiceAccount: '${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}'
+          projectId: abtec-6831c
+          entryPoint: apps/firebase
