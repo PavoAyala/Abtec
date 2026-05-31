@@ -11,6 +11,11 @@ on:
       - 'apps/firebase/firebase.json'
       - '.github/workflows/preview-crm-hosting.yml'
 
+permissions:
+  checks: write
+  pull-requests: write
+  contents: read
+
 jobs:
   build_and_preview:
     runs-on: ubuntu-latest
