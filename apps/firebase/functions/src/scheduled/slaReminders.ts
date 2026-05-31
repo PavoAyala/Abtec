@@ -10,7 +10,7 @@ import { TicketStatus } from "../models";
 export const checkSlaDeadlines = functions.scheduler.onSchedule(
 	{
 		schedule: "every 15 minutes",
-		serviceAccount: process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com",
+		serviceAccount: "firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com",
 	},
 	async () => {
 		functions.logger.info("Running SLA deadline check");
@@ -65,7 +65,7 @@ export const checkSlaDeadlines = functions.scheduler.onSchedule(
 export const checkOverdueTasks = functions.scheduler.onSchedule(
 	{
 		schedule: "every 60 minutes",
-		serviceAccount: process.env.FIREBASE_SERVICE_ACCOUNT!,
+		serviceAccount: "firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com",
 	},
 	async () => {
 		functions.logger.info("Running overdue tasks check");
