@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { db } from "../config/firebase";
 import {
 	type Activity,
@@ -10,7 +10,7 @@ import {
 	DealStage,
 } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
+
 
 
 /**
@@ -19,7 +19,7 @@ const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e
  * - Creates activity log
  * - Logs audit
  */
-export const onDealCreated = functions.runWith({ serviceAccount: SA }).firestore
+export const onDealCreated = functions.firestore
 	.document("deals/{dealId}")
 	.onCreate(async (snap, context) => {
 		const deal = snap.data() as Deal;
@@ -89,7 +89,7 @@ export const onDealCreated = functions.runWith({ serviceAccount: SA }).firestore
  * - Updates contact lead score if won/lost
  * - Logs audit
  */
-export const onDealStageChanged = functions.runWith({ serviceAccount: SA }).firestore
+export const onDealStageChanged = functions.firestore
 	.document("deals/{dealId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Deal;
@@ -181,7 +181,7 @@ export const onDealStageChanged = functions.runWith({ serviceAccount: SA }).fire
  * onDealUpdated - General update trigger for deals
  * - Logs changes to audit
  */
-export const onDealUpdated = functions.runWith({ serviceAccount: SA }).firestore
+export const onDealUpdated = functions.firestore
 	.document("deals/{dealId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Deal;

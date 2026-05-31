@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { db } from "../config/firebase";
 import {
 	type Activity,
@@ -9,7 +9,7 @@ import {
 	type Contact,
 } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
+
 
 
 /**
@@ -19,7 +19,7 @@ const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e
  * - Creates welcome activity
  * - Logs audit
  */
-export const onContactCreated = functions.runWith({ serviceAccount: SA }).firestore
+export const onContactCreated = functions.firestore
 	.document("contacts/{contactId}")
 	.onCreate(async (snap, context) => {
 		const contact = snap.data() as Contact;
@@ -87,7 +87,7 @@ export const onContactCreated = functions.runWith({ serviceAccount: SA }).firest
  * - Logs changes
  * - Updates lead score based on stage changes
  */
-export const onContactUpdated = functions.runWith({ serviceAccount: SA }).firestore
+export const onContactUpdated = functions.firestore
 	.document("contacts/{contactId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Contact;

@@ -9,7 +9,9 @@ const models_1 = require("../models");
  * checkSlaDeadlines - Runs every 15 minutes
  * Checks for tickets approaching SLA deadline and logs warnings
  */
-exports.checkSlaDeadlines = functions.scheduler.onSchedule("every 15 minutes", async () => {
+exports.checkSlaDeadlines = functions.scheduler.onSchedule({
+    schedule: "every 15 minutes",
+}, async () => {
     functions.logger.info("Running SLA deadline check");
     const now = firestore_1.Timestamp.now();
     const atRiskQuery = firebase_1.db
@@ -39,7 +41,9 @@ exports.checkSlaDeadlines = functions.scheduler.onSchedule("every 15 minutes", a
  * checkOverdueTasks - Runs every hour
  * Checks for activities with due dates that have passed
  */
-exports.checkOverdueTasks = functions.scheduler.onSchedule("every 60 minutes", async () => {
+exports.checkOverdueTasks = functions.scheduler.onSchedule({
+    schedule: "every 60 minutes",
+}, async () => {
     functions.logger.info("Running overdue tasks check");
     const now = firestore_1.Timestamp.now();
     const overdueQuery = firebase_1.db

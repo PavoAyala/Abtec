@@ -1,9 +1,9 @@
 import * as admin from "firebase-admin";
 import { FieldValue } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { db } from "../config/firebase";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
+
 
 
 const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
@@ -14,7 +14,7 @@ type StaffRole = (typeof STAFF_ROLES)[number];
  * Payload: { targetUid: string; role: StaffRole | null }
  * role=null revoca el acceso al CRM.
  */
-export const setStaffRole = functions.runWith({ serviceAccount: SA }).https.onCall(async (data, context) => {
+export const setStaffRole = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		throw new functions.https.HttpsError(
 			"unauthenticated",
@@ -87,7 +87,7 @@ export const setStaffRole = functions.runWith({ serviceAccount: SA }).https.onCa
  * createStaffUser — crea un nuevo usuario con acceso al CRM.
  * Payload: { email, password, displayName, role }
  */
-export const createStaffUser = functions.runWith({ serviceAccount: SA }).https.onCall(async (data, context) => {
+export const createStaffUser = functions.https.onCall(async (data, context) => {
 	if (!context.auth) {
 		throw new functions.https.HttpsError(
 			"unauthenticated",

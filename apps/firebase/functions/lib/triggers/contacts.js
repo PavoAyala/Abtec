@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onContactUpdated = exports.onContactCreated = void 0;
 const firestore_1 = require("firebase-admin/firestore");
-const functions = require("firebase-functions");
+const functions = require("firebase-functions/v1");
 const firebase_1 = require("../config/firebase");
 const models_1 = require("../models");
 /**

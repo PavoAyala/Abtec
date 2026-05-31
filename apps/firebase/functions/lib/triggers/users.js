@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.onUserWritten = void 0;
 const admin = require("firebase-admin");
-const functions = require("firebase-functions");
+const functions = require("firebase-functions/v1");
 const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"];
 exports.onUserWritten = functions.firestore
     .document("users/{userId}")

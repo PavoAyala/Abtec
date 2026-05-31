@@ -1,5 +1,5 @@
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { db } from "../config/firebase";
 import {
 	type Activity,
@@ -11,7 +11,7 @@ import {
 	TicketStatus,
 } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
+
 
 
 // SLA deadlines by priority (in hours)
@@ -29,7 +29,7 @@ const SLA_HOURS: Record<string, number> = {
  * - Creates activity
  * - Logs audit
  */
-export const onTicketCreated = functions.runWith({ serviceAccount: SA }).firestore
+export const onTicketCreated = functions.firestore
 	.document("tickets/{ticketId}")
 	.onCreate(async (snap, context) => {
 		const ticket = snap.data() as Ticket;
@@ -108,7 +108,7 @@ export const onTicketCreated = functions.runWith({ serviceAccount: SA }).firesto
  * - Sets resolvedAt when status becomes Resolved
  * - Creates activity for status change
  */
-export const onTicketStatusChanged = functions.runWith({ serviceAccount: SA }).firestore
+export const onTicketStatusChanged = functions.firestore
 	.document("tickets/{ticketId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Ticket;
@@ -180,7 +180,7 @@ export const onTicketStatusChanged = functions.runWith({ serviceAccount: SA }).f
  * onTicketUpdated - General update trigger for tickets
  * - Logs changes to audit
  */
-export const onTicketUpdated = functions.runWith({ serviceAccount: SA }).firestore
+export const onTicketUpdated = functions.firestore
 	.document("tickets/{ticketId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Ticket;
