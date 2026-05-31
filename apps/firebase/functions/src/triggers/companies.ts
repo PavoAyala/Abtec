@@ -1,16 +1,16 @@
 import { Timestamp } from "firebase-admin/firestore";
-import * as functions from "firebase-functions";
+import * as functions from "firebase-functions/v1";
 import { db } from "../config/firebase";
 import { AuditAction, type AuditLog, type Company } from "../models";
 
-const SA = process.env.FIREBASE_SERVICE_ACCOUNT ?? "compute-fallback@abtec-8f31e.iam.gserviceaccount.com";
+
 
 
 /**
  * onCompanyCreated - Trigger when a new company is created
  * - Logs audit
  */
-export const onCompanyCreated = functions.runWith({ serviceAccount: SA }).firestore
+export const onCompanyCreated = functions.firestore
 	.document("companies/{companyId}")
 	.onCreate(async (snap, context) => {
 		const company = snap.data() as Company;
@@ -36,7 +36,7 @@ export const onCompanyCreated = functions.runWith({ serviceAccount: SA }).firest
  * onCompanyUpdated - Trigger when a company is updated
  * - Logs changes to audit
  */
-export const onCompanyUpdated = functions.runWith({ serviceAccount: SA }).firestore
+export const onCompanyUpdated = functions.firestore
 	.document("companies/{companyId}")
 	.onUpdate(async (change, context) => {
 		const before = change.before.data() as Company;
