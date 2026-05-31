@@ -22,6 +22,6 @@ jobs:
       - name: Deploy Firestore Rules
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only firestore:rules --project abtec-8f31e --config apps/firebase/firebase.json
+          args: deploy --only firestore:rules --project abtec-6831c --config apps/firebase/firebase.json
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}

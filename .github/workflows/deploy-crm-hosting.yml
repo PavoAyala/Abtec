@@ -33,17 +33,17 @@ jobs:
       - name: Build CRM
         run: cd apps/CRM && pnpm run deploy
         env:
-          NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyDogjn3RauIxH19tqldSxu_dAuX0U97P44
-          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: abtec-8f31e.firebaseapp.com
-          NEXT_PUBLIC_FIREBASE_PROJECT_ID: abtec-8f31e
-          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: abtec-8f31e.firebasestorage.app
-          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: 453551453612
-          NEXT_PUBLIC_FIREBASE_APP_ID: 1:453551453612:web:93f83eff2f9e279f177609
-          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: G-B7PNVX0KKF
+          NEXT_PUBLIC_FIREBASE_API_KEY: AIzaSyAekOf71cRpHalw2cWQ6Mvbvl4RqIfoCxE
+          NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN: abtec-6831c.firebaseapp.com
+          NEXT_PUBLIC_FIREBASE_PROJECT_ID: abtec-6831c
+          NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET: abtec-6831c.firebasestorage.app
+          NEXT_PUBLIC_FIREBASE_MESSAGING_SENDER_ID: 579456196075
+          NEXT_PUBLIC_FIREBASE_APP_ID: 1:579456196075:web:74dba7d6c548d7f3700dae
+          NEXT_PUBLIC_FIREBASE_MEASUREMENT_ID: G-F0YDQEET2M
 
       - name: Deploy to Firebase Hosting
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only hosting --project abtec-8f31e --config apps/firebase/firebase.json
+          args: deploy --only hosting --project abtec-6831c --config apps/firebase/firebase.json
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}
