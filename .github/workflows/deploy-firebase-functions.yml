@@ -36,8 +36,6 @@ jobs:
       - name: Build Firebase Functions
         run: pnpm run build
         working-directory: apps/firebase/functions
-        env:
-          FIREBASE_SERVICE_ACCOUNT: firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com
 
       - name: Verify build output
         run: |
@@ -55,5 +53,4 @@ jobs:
           args: deploy --only functions --project abtec-6831c --config apps/firebase/firebase.json
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}
-          FIREBASE_SERVICE_ACCOUNT: firebase-adminsdk-fbsvc@abtec-6831c.iam.gserviceaccount.com
 
