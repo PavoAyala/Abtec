@@ -17,7 +17,7 @@ import {
 } from "react";
 import { auth } from "../lib/firebase";
 
-const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher", "unassigned"] as const;
+const STAFF_ROLES = ["admin", "manager", "sales", "support", "publisher"] as const;
 type StaffRole = (typeof STAFF_ROLES)[number];
 
 interface AuthContextType {
@@ -55,13 +55,12 @@ async function resolveStaffRoles(user: User): Promise<StaffRole[]> {
 	const roles = claims.staff;
 
 	if (Array.isArray(roles)) {
-		const validRoles = roles.filter((r): r is StaffRole => STAFF_ROLES.includes(r as StaffRole));
-		return validRoles.length > 0 ? validRoles : ["unassigned"];
+		return roles.filter((r): r is StaffRole => STAFF_ROLES.includes(r as StaffRole));
 	}
 	if (typeof roles === "string" && STAFF_ROLES.includes(roles as StaffRole)) {
 		return [roles as StaffRole];
 	}
-	return ["unassigned"];
+	return [];
 }
 
 export function AuthProvider({ children }: Readonly<{ children: ReactNode }>) {

@@ -5,7 +5,7 @@ import Sidebar from "@/components/Sidebar";
 import "./globals.css";
 
 import { usePathname } from "next/navigation";
-import { AuthProvider, useAuth } from "@/components/AuthProvider";
+import { AuthProvider } from "@/components/AuthProvider";
 
 if (typeof window !== "undefined") {
 	const originalLog = console.log;
@@ -46,41 +46,14 @@ export default function RootLayout({
 					{isLoginPage ? (
 						children
 					) : (
-						<RoleGuard>
-							<CommandPaletteWrapper>
-								<Sidebar>{children}</Sidebar>
-							</CommandPaletteWrapper>
-						</RoleGuard>
+						<CommandPaletteWrapper>
+							<Sidebar>{children}</Sidebar>
+						</CommandPaletteWrapper>
 					)}
 				</AuthProvider>
 			</body>
 		</html>
 	);
-}
-
-function RoleGuard({ children }: { children: React.ReactNode }) {
-	const { staffRoles, isStaff } = useAuth();
-	
-	if (isStaff && staffRoles.includes("unassigned") && staffRoles.length === 1) {
-		return (
-			<div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#0a1628] to-[#0d1a0d] p-4 text-white text-center">
-				<div className="max-w-md p-8 bg-[#0d1020] rounded-2xl shadow-2xl border border-white/10">
-					<div className="w-16 h-16 bg-red-500/10 rounded-full flex items-center justify-center mx-auto mb-6">
-						<svg width="32" height="32" viewBox="0 0 24 24" fill="none" stroke="#ef4444" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-							<rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect>
-							<path d="M7 11V7a5 5 0 0 1 10 0v4"></path>
-						</svg>
-					</div>
-					<h1 className="text-2xl font-bold text-red-500 mb-4">Acceso Restringido</h1>
-					<p className="text-gray-300">
-						No tienes roles asignados. No puedes realizar acciones en el CRM. Por favor, contacte al administrador.
-					</p>
-				</div>
-			</div>
-		);
-	}
-	
-	return <>{children}</>;
 }
 
 function CommandPaletteWrapper({
