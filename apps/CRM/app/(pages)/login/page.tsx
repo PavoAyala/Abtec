@@ -1,10 +1,11 @@
 "use client";
 
 import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, type User } from "firebase/auth";
+import { doc, getDoc, setDoc, serverTimestamp } from "firebase/firestore";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
-import { auth } from "../../../lib/firebase";
+import { auth, db } from "../../../lib/firebase";
 
 function LoginForm() {
 	const [email, setEmail] = useState("");
@@ -38,26 +39,24 @@ function LoginForm() {
 		return "Ocurrió un error inesperado al iniciar sesión. Inténtalo de nuevo.";
 	};
 
-	const verifyStaffAccess = async (user: User) => {
-		let claims;
+	const ensureUserDocument = async (user: User) => {
 		try {
-			const result = await user.getIdTokenResult(true);
-			claims = result.claims;
-		} catch (error: any) {
-			if (error?.code === "auth/network-request-failed") {
-				console.warn("Network request failed, falling back to cached claims");
-				const result = await user.getIdTokenResult(false);
-				claims = result.claims;
-			} else {
-				throw error;
+			const userDocRef = doc(db, "users", user.uid);
+			const userDoc = await getDoc(userDocRef);
+			if (!userDoc.exists()) {
+				await setDoc(userDocRef, {
+					email: user.email,
+					name: user.displayName || user.email?.split('@')[0] || "Nuevo Usuario",
+					roles: [],
+					status: "active",
+					createdAt: serverTimestamp(),
+					updatedAt: serverTimestamp(),
+				});
 			}
+		} catch (err) {
+			console.error("Error creating user document:", err);
+			// We don't throw here to avoid blocking login flow
 		}
-		if (!claims.staff) {
-			await auth.signOut();
-			throw new Error("Access Denied: You do not have staff privileges.");
-		}
-
-		router.push("/");
 	};
 
 	const handleLogin = async (e: React.FormEvent) => {
@@ -66,8 +65,7 @@ function LoginForm() {
 		setLoading(true);
 
 		try {
-			const { user } = await signInWithEmailAndPassword(auth, email, password);
-			await verifyStaffAccess(user);
+			await signInWithEmailAndPassword(auth, email, password);
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
 		} finally {
@@ -82,7 +80,7 @@ function LoginForm() {
 
 		try {
 			const { user } = await createUserWithEmailAndPassword(auth, email, password);
-			await verifyStaffAccess(user);
+			await ensureUserDocument(user);
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
 		} finally {
@@ -97,7 +95,7 @@ function LoginForm() {
 		try {
 			const provider = new GoogleAuthProvider();
 			const { user } = await signInWithPopup(auth, provider);
-			await verifyStaffAccess(user);
+			await ensureUserDocument(user);
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
 		} finally {
