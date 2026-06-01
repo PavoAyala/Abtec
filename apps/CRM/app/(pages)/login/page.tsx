@@ -1,6 +1,6 @@
 "use client";
 
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, signInWithPopup, GoogleAuthProvider, type User } from "firebase/auth";
 import { useRouter, useSearchParams } from "next/navigation";
 import { Suspense, useState } from "react";
 import TravelConnectSignIn from "@/components/ui/travel-connect-signin";
@@ -34,8 +34,30 @@ function LoginForm() {
 		if (code.includes("auth/network-request-failed"))
 			return "Error de conexión. Revisa tu internet e intenta de nuevo.";
 		if (code.includes("Access Denied"))
-			return "Acceso denegado: cuenta no autorizada en el CRM.";
+			return "No tienes permisos para ver esta página";
 		return "Ocurrió un error inesperado al iniciar sesión. Inténtalo de nuevo.";
+	};
+
+	const verifyStaffAccess = async (user: User) => {
+		let claims;
+		try {
+			const result = await user.getIdTokenResult(true);
+			claims = result.claims;
+		} catch (error: any) {
+			if (error?.code === "auth/network-request-failed") {
+				console.warn("Network request failed, falling back to cached claims");
+				const result = await user.getIdTokenResult(false);
+				claims = result.claims;
+			} else {
+				throw error;
+			}
+		}
+		if (!claims.staff) {
+			await auth.signOut();
+			throw new Error("Access Denied: You do not have staff privileges.");
+		}
+
+		router.push("/");
 	};
 
 	const handleLogin = async (e: React.FormEvent) => {
@@ -45,27 +67,37 @@ function LoginForm() {
 
 		try {
 			const { user } = await signInWithEmailAndPassword(auth, email, password);
+			await verifyStaffAccess(user);
+		} catch (err: unknown) {
+			setError(getFriendlyErrorMessage(err));
+		} finally {
+			setLoading(false);
+		}
+	};
 
-			// Verify the staff custom claim before allowing access
-			let claims;
-			try {
-				const result = await user.getIdTokenResult(true);
-				claims = result.claims;
-			} catch (error: any) {
-				if (error?.code === "auth/network-request-failed") {
-					console.warn("Network request failed, falling back to cached claims");
-					const result = await user.getIdTokenResult(false);
-					claims = result.claims;
-				} else {
-					throw error;
-				}
-			}
-			if (!claims.staff) {
-				await auth.signOut();
-				throw new Error("Access Denied: You do not have staff privileges.");
-			}
+	const handleRegister = async (e: React.FormEvent) => {
+		e.preventDefault();
+		setError(null);
+		setLoading(true);
 
-			router.push("/");
+		try {
+			const { user } = await createUserWithEmailAndPassword(auth, email, password);
+			await verifyStaffAccess(user);
+		} catch (err: unknown) {
+			setError(getFriendlyErrorMessage(err));
+		} finally {
+			setLoading(false);
+		}
+	};
+
+	const handleGoogleSignIn = async () => {
+		setError(null);
+		setLoading(true);
+
+		try {
+			const provider = new GoogleAuthProvider();
+			const { user } = await signInWithPopup(auth, provider);
+			await verifyStaffAccess(user);
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
 		} finally {
@@ -76,11 +108,13 @@ function LoginForm() {
 	return (
 		<TravelConnectSignIn
 			onSubmit={handleLogin}
+			onRegister={handleRegister}
+			onGoogleSignIn={handleGoogleSignIn}
 			loading={loading}
 			error={
 				error ||
 				(queryError === "not_staff"
-					? "Acceso denegado: esta cuenta no pertenece al personal interno."
+					? "No tienes permisos para ver esta página"
 					: null)
 			}
 			email={email}
