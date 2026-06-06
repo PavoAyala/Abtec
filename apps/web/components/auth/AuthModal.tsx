@@ -4,6 +4,7 @@ import {
 	GoogleAuthProvider,
 	signInWithEmailAndPassword,
 	signInWithPopup,
+	getAdditionalUserInfo,
 } from "firebase/auth";
 import { doc, serverTimestamp, setDoc } from "firebase/firestore";
 import Image from "next/image";
@@ -107,7 +108,28 @@ export default function AuthModal(): ReactElement | null {
 		try {
 			const auth = getClientAuth();
 			const provider = new GoogleAuthProvider();
-			await signInWithPopup(auth, provider);
+			const result = await signInWithPopup(auth, provider);
+			
+			const additionalInfo = getAdditionalUserInfo(result);
+			if (additionalInfo?.isNewUser) {
+				try {
+					const db = getClientDb();
+					await setDoc(doc(db, "users", result.user.uid), {
+						email: result.user.email,
+						displayName: result.user.displayName || "",
+						firstName: result.user.displayName?.split(" ")[0] || "",
+						lastName: result.user.displayName?.split(" ").slice(1).join(" ") || "",
+						authUid: result.user.uid,
+						role: "customer",
+						status: "active",
+						createdAt: serverTimestamp(),
+						updatedAt: serverTimestamp(),
+					});
+				} catch (dbError) {
+					console.error("Failed to create profile document", dbError);
+				}
+			}
+
 			closeAuthModal();
 		} catch (err: unknown) {
 			setError(getFriendlyErrorMessage(err));
