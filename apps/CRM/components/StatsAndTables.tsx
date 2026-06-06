@@ -93,6 +93,7 @@ interface DataTableProps<T> {
 	}[];
 	onSearch?: (query: string) => void;
 	onFilter?: (value: string) => void;
+	filterFn?: (item: T, filterValue: string) => boolean;
 	emptyMessage?: string;
 }
 
@@ -103,16 +104,25 @@ export function DataTable<T extends { id: string | number }>({
 	filterOptions,
 	onSearch,
 	onFilter,
+	filterFn,
 	emptyMessage = "No hay datos disponibles",
 }: DataTableProps<T>) {
 	const [search, setSearch] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [filter, setFilter] = useState("");
 	const [sortKey, setSortKey] = useState<string | null>(null);
 	const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+			onSearch?.(search);
+		}, 3000);
+		return () => clearTimeout(timer);
+	}, [search, onSearch]);
+
 	const handleSearch = (value: string) => {
 		setSearch(value);
-		onSearch?.(value);
 	};
 
 	const handleFilter = (value: string) => {
@@ -131,15 +141,27 @@ export function DataTable<T extends { id: string | number }>({
 
 	const filteredData = data.filter((item) => {
 		const matchesSearch =
-			search === "" ||
+			debouncedSearch === "" ||
 			Object.values(item as Record<string, unknown>).some((val) =>
-				String(val).toLowerCase().includes(search.toLowerCase()),
+				String(val).toLowerCase().includes(debouncedSearch.toLowerCase()),
 			);
-		const matchesFilter =
-			filter === "" ||
-			Object.values(item as Record<string, unknown>).some(
-				(val) => String(val) === filter,
-			);
+			
+		let matchesFilter = true;
+		if (filter !== "") {
+			if (filterFn) {
+				matchesFilter = filterFn(item, filter);
+			} else {
+				matchesFilter = Object.values(item as Record<string, unknown>).some(
+					(val) => {
+						if (Array.isArray(val)) {
+							return val.some((v) => String(v) === filter);
+						}
+						return String(val) === filter;
+					}
+				);
+			}
+		}
+
 		return matchesSearch && matchesFilter;
 	});
 
