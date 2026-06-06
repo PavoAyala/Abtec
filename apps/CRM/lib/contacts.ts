@@ -46,7 +46,7 @@ export const getContacts = async (filters?: {
 		
 		const webContacts: Contact[] = webUsers.map((u) => ({
 			id: u.id,
-			name: u.displayName || `${u.firstName || ""} ${u.lastName || ""}`.trim() || u.email,
+			name: u.name || u.displayName || `${u.firstName || ""} ${u.lastName || ""}`.trim() || u.email,
 			email: u.email,
 			phone: u.phone || "",
 			tags: ["Web Registered"],

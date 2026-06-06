@@ -98,6 +98,7 @@ export default function ClientesPage() {
 	const personasColumns = [
 		{ key: "name", label: "Nombre", sortable: true },
 		{ key: "email", label: "Email", sortable: true },
+		{ key: "phone", label: "Teléfono", render: (item: Contact) => item.phone || "-" },
 		{ key: "panelBrand", label: "Marca Paneles", render: (item: Contact) => item.panelBrand || "-" },
 		{
 			key: "warranty",
