@@ -16,7 +16,8 @@ exports.setStaffRole = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("unauthenticated", "Debes estar autenticado.");
     }
     const callerClaim = context.auth.token.staff;
-    if (callerClaim !== "admin") {
+    const isAdmin = Array.isArray(callerClaim) ? callerClaim.includes("admin") : callerClaim === "admin";
+    if (!isAdmin) {
         throw new functions.https.HttpsError("permission-denied", "Solo un admin puede asignar roles.");
     }
     const { targetUid, roles } = data;
@@ -56,7 +57,8 @@ exports.createStaffUser = functions.https.onCall(async (data, context) => {
         throw new functions.https.HttpsError("unauthenticated", "Debes estar autenticado.");
     }
     const callerClaim = context.auth.token.staff;
-    if (callerClaim !== "admin") {
+    const isAdmin = Array.isArray(callerClaim) ? callerClaim.includes("admin") : callerClaim === "admin";
+    if (!isAdmin) {
         throw new functions.https.HttpsError("permission-denied", "Solo un admin puede crear usuarios staff.");
     }
     const { email, password, displayName, roles } = data;
