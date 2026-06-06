@@ -557,10 +557,8 @@ export default function StaffPage() {
 					value: r,
 				}))}
 				filterFn={(item: StaffMember, filterVal: string) => {
-					const requiredWeight = ROLE_WEIGHT[filterVal] ?? 0;
-					return (item.roles || []).some(
-						(r) => (ROLE_WEIGHT[r] ?? 0) >= requiredWeight
-					);
+					// Filtro exacto: si se selecciona "Gerente", solo mostrar aquellos que tengan "Gerente" en sus roles.
+					return (item.roles || []).includes(filterVal as UserRole) || item.role === filterVal;
 				}}
 				emptyMessage={
 					isLoading

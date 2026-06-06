@@ -108,13 +108,21 @@ export function DataTable<T extends { id: string | number }>({
 	emptyMessage = "No hay datos disponibles",
 }: DataTableProps<T>) {
 	const [search, setSearch] = useState("");
+	const [debouncedSearch, setDebouncedSearch] = useState("");
 	const [filter, setFilter] = useState("");
 	const [sortKey, setSortKey] = useState<string | null>(null);
 	const [sortDir, setSortDir] = useState<"asc" | "desc">("asc");
 
+	useEffect(() => {
+		const timer = setTimeout(() => {
+			setDebouncedSearch(search);
+			onSearch?.(search);
+		}, 3000);
+		return () => clearTimeout(timer);
+	}, [search, onSearch]);
+
 	const handleSearch = (value: string) => {
 		setSearch(value);
-		onSearch?.(value);
 	};
 
 	const handleFilter = (value: string) => {
@@ -133,9 +141,9 @@ export function DataTable<T extends { id: string | number }>({
 
 	const filteredData = data.filter((item) => {
 		const matchesSearch =
-			search === "" ||
+			debouncedSearch === "" ||
 			Object.values(item as Record<string, unknown>).some((val) =>
-				String(val).toLowerCase().includes(search.toLowerCase()),
+				String(val).toLowerCase().includes(debouncedSearch.toLowerCase()),
 			);
 			
 		let matchesFilter = true;

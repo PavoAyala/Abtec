@@ -47,10 +47,10 @@ export const getStaffUsers = async (lastCreatedAt?: Date): Promise<StaffMember[]
 
 		console.log(`[getStaffUsers] Fetched ${finalDocs.length} users (Array: ${docs1.length}, String: ${docs2.length})`, finalDocs);
 
-		return finalDocs.map((doc) => ({
+		return finalDocs.map((doc: any) => ({
 			...doc,
-			createdAt: doc.createdAt instanceof Date ? doc.createdAt : new Date(doc.createdAt),
-			updatedAt: doc.updatedAt instanceof Date ? doc.updatedAt : new Date(doc.updatedAt),
+			createdAt: doc.createdAt?.toDate ? doc.createdAt.toDate() : (doc.createdAt ? new Date(doc.createdAt) : null),
+			updatedAt: doc.updatedAt?.toDate ? doc.updatedAt.toDate() : (doc.updatedAt ? new Date(doc.updatedAt) : null),
 		}));
 	} catch (error) {
 		console.error("[getStaffUsers] Fatal error fetching staff users", error);
