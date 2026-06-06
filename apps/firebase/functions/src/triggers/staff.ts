@@ -22,8 +22,9 @@ export const setStaffRole = functions.https.onCall(async (data, context) => {
 		);
 	}
 
-	const callerClaim = context.auth.token.staff as string | undefined;
-	if (callerClaim !== "admin") {
+	const callerClaim = context.auth.token.staff;
+	const isAdmin = Array.isArray(callerClaim) ? callerClaim.includes("admin") : callerClaim === "admin";
+	if (!isAdmin) {
 		throw new functions.https.HttpsError(
 			"permission-denied",
 			"Solo un admin puede asignar roles.",
@@ -95,8 +96,9 @@ export const createStaffUser = functions.https.onCall(async (data, context) => {
 		);
 	}
 
-	const callerClaim = context.auth.token.staff as string | undefined;
-	if (callerClaim !== "admin") {
+	const callerClaim = context.auth.token.staff;
+	const isAdmin = Array.isArray(callerClaim) ? callerClaim.includes("admin") : callerClaim === "admin";
+	if (!isAdmin) {
 		throw new functions.https.HttpsError(
 			"permission-denied",
 			"Solo un admin puede crear usuarios staff.",
