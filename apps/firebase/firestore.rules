@@ -44,7 +44,7 @@ service cloud.firestore {
     // Users collection
     match /users/{userId} {
       allow read: if isAuthenticated();
-      allow write: if isAdmin() || isOwner(userId);
+      allow write: if isAdmin() || isManager() || isSales() || isOwner(userId);
     }
 
     // Contacts collection

@@ -83,6 +83,10 @@ export default function ClientAccess(): JSX.Element {
 					});
 					setEditName(data.name || data.displayName || `${data.firstName || ""} ${data.lastName || ""}`.trim() || user.email);
 					setEditPhone(data.phone || "");
+					
+					if (!data.phone) {
+						setShowProfileModal(true);
+					}
 				}
 			} catch (err) {
 				console.error("Error fetching client data", err);
@@ -324,10 +328,14 @@ export default function ClientAccess(): JSX.Element {
 					<div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50 p-4">
 						<div className="bg-white rounded-2xl w-full max-w-md shadow-2xl overflow-hidden animate-in fade-in zoom-in-95">
 							<div className="px-6 py-4 border-b border-gray-100 flex justify-between items-center bg-gray-50">
-								<h3 className="font-bold text-lg text-abtec-navy-900">Editar Perfil</h3>
-								<button onClick={() => setShowProfileModal(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
-									<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
-								</button>
+								<h3 className="font-bold text-lg text-abtec-navy-900">
+									{(!clientData?.phone) ? "Completa tu Perfil" : "Editar Perfil"}
+								</h3>
+								{clientData?.phone && (
+									<button onClick={() => setShowProfileModal(false)} className="text-gray-400 hover:text-gray-600 transition-colors">
+										<svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M6 18L18 6M6 6l12 12" /></svg>
+									</button>
+								)}
 							</div>
 							
 							<form onSubmit={handleUpdateProfile} className="p-6">
@@ -345,6 +353,7 @@ export default function ClientAccess(): JSX.Element {
 									<label className="block text-sm font-medium text-gray-700 mb-1">Número de Teléfono</label>
 									<input 
 										type="tel" 
+										required
 										value={editPhone}
 										onChange={e => setEditPhone(e.target.value)}
 										placeholder="Ej. 55 1234 5678"
@@ -352,13 +361,15 @@ export default function ClientAccess(): JSX.Element {
 									/>
 								</div>
 								<div className="flex justify-end gap-3">
-									<button 
-										type="button" 
-										onClick={() => setShowProfileModal(false)}
-										className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors"
-									>
-										Cancelar
-									</button>
+									{clientData?.phone && (
+										<button 
+											type="button" 
+											onClick={() => setShowProfileModal(false)}
+											className="px-4 py-2 text-gray-600 font-medium hover:bg-gray-100 rounded-lg transition-colors"
+										>
+											Cancelar
+										</button>
+									)}
 									<button 
 										type="submit" 
 										disabled={isSubmittingProfile}
