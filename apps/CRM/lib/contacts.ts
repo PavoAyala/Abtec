@@ -99,8 +99,18 @@ export const createContact = async (data: Partial<Contact>) => {
 	return createDocument("contacts", contactData);
 };
 
-export const updateContact = (id: string, data: Partial<Contact>) =>
-	updateDocument("contacts", id, data);
+export const updateContact = async (id: string, data: Partial<Contact>) => {
+	// Si es un usuario web, actualizamos la colección users para no crear duplicados
+	const userDoc = await getDocument<any>("users", id);
+	if (userDoc && userDoc.role === "customer") {
+		const payload: any = {};
+		if (data.name !== undefined) payload.displayName = data.name;
+		if (data.phone !== undefined) payload.phone = data.phone;
+		if (data.lifecycleStage !== undefined) payload.lifecycleStage = data.lifecycleStage;
+		return updateDocument("users", id, payload);
+	}
+	return updateDocument("contacts", id, data);
+};
 
 export const deleteContact = (id: string) => deleteDocument("contacts", id);
 
