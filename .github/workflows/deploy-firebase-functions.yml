@@ -50,7 +50,7 @@ jobs:
       - name: Deploy Firebase Functions
         uses: w9jds/firebase-action@master
         with:
-          args: deploy --only functions --project abtec-6831c --config apps/firebase/firebase.json
+          args: deploy --only functions --force --project abtec-6831c --config apps/firebase/firebase.json
         env:
           GCP_SA_KEY: ${{ secrets.FIREBASE_SERVICE_ACCOUNT_ABTEC }}
 
