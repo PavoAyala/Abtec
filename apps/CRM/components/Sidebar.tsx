@@ -189,6 +189,23 @@ function Icon({ name, size = 20 }: { name: string; size?: number }) {
 				<path d="M20 7v4" />
 			</svg>
 		),
+		logOut: (
+			<svg
+				width={size}
+				height={size}
+				viewBox="0 0 24 24"
+				fill="none"
+				stroke="currentColor"
+				strokeWidth="2"
+				strokeLinecap="round"
+				strokeLinejoin="round"
+				aria-hidden="true"
+			>
+				<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4" />
+				<polyline points="16 17 21 12 16 7" />
+				<line x1="21" y1="12" x2="9" y2="12" />
+			</svg>
+		),
 		chevronLeft: (
 			<svg
 				width={size}
@@ -229,7 +246,7 @@ export default function Sidebar({
 }: Readonly<{ children: ReactNode }>) {
 	const [collapsed, setCollapsed] = useState(false);
 	const pathname = usePathname();
-	const { staffRoles } = useAuth();
+	const { staffRoles, signOut } = useAuth();
 
 	const { data: contacts } = useSWR(SWRKeys.contacts, fetcher.contacts);
 	const { data: tickets } = useSWR(SWRKeys.tickets, fetcher.tickets);
@@ -321,6 +338,15 @@ export default function Sidebar({
 					</nav>
 
 					<div className="sidebar-footer">
+						<button
+							type="button"
+							className="sidebar-toggle"
+							onClick={signOut}
+							title="Cerrar sesión"
+						>
+							<Icon name="logOut" size={16} />
+							{!collapsed && <span>Cerrar sesión</span>}
+						</button>
 						<button
 							type="button"
 							className="sidebar-toggle"
