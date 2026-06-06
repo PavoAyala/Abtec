@@ -93,6 +93,7 @@ interface DataTableProps<T> {
 	}[];
 	onSearch?: (query: string) => void;
 	onFilter?: (value: string) => void;
+	filterFn?: (item: T, filterValue: string) => boolean;
 	emptyMessage?: string;
 }
 
@@ -103,6 +104,7 @@ export function DataTable<T extends { id: string | number }>({
 	filterOptions,
 	onSearch,
 	onFilter,
+	filterFn,
 	emptyMessage = "No hay datos disponibles",
 }: DataTableProps<T>) {
 	const [search, setSearch] = useState("");
@@ -135,11 +137,23 @@ export function DataTable<T extends { id: string | number }>({
 			Object.values(item as Record<string, unknown>).some((val) =>
 				String(val).toLowerCase().includes(search.toLowerCase()),
 			);
-		const matchesFilter =
-			filter === "" ||
-			Object.values(item as Record<string, unknown>).some(
-				(val) => String(val) === filter,
-			);
+			
+		let matchesFilter = true;
+		if (filter !== "") {
+			if (filterFn) {
+				matchesFilter = filterFn(item, filter);
+			} else {
+				matchesFilter = Object.values(item as Record<string, unknown>).some(
+					(val) => {
+						if (Array.isArray(val)) {
+							return val.some((v) => String(v) === filter);
+						}
+						return String(val) === filter;
+					}
+				);
+			}
+		}
+
 		return matchesSearch && matchesFilter;
 	});
 

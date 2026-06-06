@@ -2,7 +2,7 @@
 
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
-import useSWR from "swr";
+import useSWRInfinite from "swr/infinite";
 import { useAuth } from "@/components/AuthProvider";
 import { DataTable } from "@/components/StatsAndTables";
 import {
@@ -42,6 +42,16 @@ const STAFF_ROLES = [
 	UserRole.Support,
 	UserRole.Publisher,
 ];
+
+const ROLE_WEIGHT: Record<string, number> = {
+	[UserRole.Admin]: 100,
+	[UserRole.Manager]: 80,
+	[UserRole.Sales]: 50,
+	[UserRole.Support]: 50,
+	[UserRole.Publisher]: 50,
+	[UserRole.Viewer]: 10,
+	[UserRole.Customer]: 0,
+};
 
 // ── Modals ──────────────────────────────────────────────────────────────────
 
@@ -403,14 +413,30 @@ export default function StaffPage() {
 		}
 	}, [staffRoles, router]);
 
+	const getKey = (pageIndex: number, previousPageData: StaffMember[] | null) => {
+		if (previousPageData && previousPageData.length < 15) return null; // reached the end
+		if (pageIndex === 0) return "staff-users-0";
+		const lastDoc = previousPageData![previousPageData!.length - 1];
+		return ["staff-users", lastDoc.createdAt.getTime()];
+	};
+
 	const {
-		data: staff,
+		data,
+		size,
+		setSize,
 		isLoading,
 		mutate,
-	} = useSWR<StaffMember[]>("staff-users", getStaffUsers, {
+	} = useSWRInfinite<StaffMember[]>(getKey, (key: any) => {
+		if (typeof key === "string") return getStaffUsers();
+		return getStaffUsers(new Date(key[1]));
+	}, {
 		revalidateOnFocus: false,
 		dedupingInterval: 30000,
 	});
+
+	const staff = data ? data.flat() : [];
+	const isReachingEnd = data && data[data.length - 1]?.length < 15;
+	const isLoadingMore = isLoading || (size > 0 && data && typeof data[size - 1] === "undefined");
 
 	const handleSuccess = () => {
 		mutate();
@@ -530,12 +556,31 @@ export default function StaffPage() {
 					label: ROLE_LABELS[r],
 					value: r,
 				}))}
+				filterFn={(item: StaffMember, filterVal: string) => {
+					const requiredWeight = ROLE_WEIGHT[filterVal] ?? 0;
+					return (item.roles || []).some(
+						(r) => (ROLE_WEIGHT[r] ?? 0) >= requiredWeight
+					);
+				}}
 				emptyMessage={
 					isLoading
 						? "Cargando usuarios..."
 						: "No hay usuarios staff registrados."
 				}
 			/>
+
+			{!isReachingEnd && staff.length > 0 && (
+				<div className="flex justify-center mt-6 mb-8">
+					<button
+						type="button"
+						className="px-6 py-2 bg-white border border-slate-200 rounded-xl text-sm font-medium text-slate-600 hover:bg-slate-50 hover:text-slate-800 transition-colors shadow-sm"
+						onClick={() => setSize(size + 1)}
+						disabled={isLoadingMore}
+					>
+						{isLoadingMore ? "Cargando..." : "Cargar más usuarios"}
+					</button>
+				</div>
+			)}
 
 			<AnimatePresence>
 				{createOpen && (
