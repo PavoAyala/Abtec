@@ -52,7 +52,8 @@ service cloud.firestore {
       allow read: if isAuthenticated();
       allow create: if isSales() || isAdmin();
       allow update: if isSales() || isAdmin() ||
-        (resource.data.ownerId == request.auth.uid);
+        (resource.data.ownerId == request.auth.uid) ||
+        (resource.data.email == request.auth.token.email);
       allow delete: if isAdmin() || isManager();
     }
 
