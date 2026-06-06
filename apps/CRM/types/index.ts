@@ -149,6 +149,7 @@ export interface StaffMember {
 	email: string;
 	displayName: string;
 	roles: UserRole[];
+	role?: string | UserRole;
 	status: "active" | "inactive";
 	createdAt: Date;
 	updatedAt: Date;
