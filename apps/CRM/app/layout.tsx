@@ -6,6 +6,7 @@ import "./globals.css";
 
 import { usePathname } from "next/navigation";
 import { AuthProvider } from "@/components/AuthProvider";
+import { Analytics } from "@vercel/analytics/next";
 
 if (typeof window !== "undefined") {
 	const originalLog = console.log;
@@ -51,6 +52,7 @@ export default function RootLayout({
 						</CommandPaletteWrapper>
 					)}
 				</AuthProvider>
+				<Analytics />
 			</body>
 		</html>
 	);
