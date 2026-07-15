@@ -1,6 +1,7 @@
 import { Analytics } from "@vercel/analytics/next";
 import type { Metadata } from "next";
 import { Oswald, Roboto } from "next/font/google";
+import Script from "next/script";
 import type { JSX } from "react";
 
 import AuthModal from "../components/auth/AuthModal";
@@ -49,6 +50,19 @@ export default function RootLayout({
 					rel="stylesheet"
 				/>
 				{/* eslint-enable @next/next/no-page-custom-font */}
+				<Script
+					src="https://www.googletagmanager.com/gtag/js?id=G-F0YDQEET2M"
+					strategy="afterInteractive"
+				/>
+				<Script id="google-analytics" strategy="afterInteractive">
+					{`
+						window.dataLayer = window.dataLayer || [];
+						function gtag(){dataLayer.push(arguments);}
+						gtag('js', new Date());
+
+						gtag('config', 'G-F0YDQEET2M');
+					`}
+				</Script>
 			</head>
 			<body className="bg-white text-gray-800 antialiased font-sans">
 				<FirebaseEmulatorBootstrap />
