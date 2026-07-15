@@ -28,7 +28,7 @@ const STATIC_POSTS: PostItem[] = [
 			"Paneles Solares Monterrey: Cómo aprovechar al máximo la energía del sol",
 		excerpt:
 			"Los paneles solares Monterrey se han convertido en una forma cada vez más popular y efectiva de aprovechar la energía...",
-		slug: "https://www.abtec.com.mx/blog/paneles-solares-cómo-aprovechar-al-máximo-la-energía-del-sol",
+		slug: "/blog?slug=paneles-solares-como-aprovechar-al-maximo-la-energia-del-sol",
 	},
 	{
 		image: "/images/proyecto residencial.png",
@@ -38,7 +38,7 @@ const STATIC_POSTS: PostItem[] = [
 		title: "Beneficios ambientales y económicos de la energía solar",
 		excerpt:
 			"La energía solar se ha consolidado como una fuente de energía renovable que ofrece una amplia gama de beneficios tanto...",
-		slug: "https://www.abtec.com.mx/blog/beneficios-ambientales-y-económicos-de-la-energía-solar",
+		slug: "/blog?slug=beneficios-ambientales-y-economicos-de-la-energia-solar",
 	},
 	{
 		image: "/images/solar_panel.png",
@@ -49,7 +49,7 @@ const STATIC_POSTS: PostItem[] = [
 			"El futuro de la energía solar: avances tecnológicos y perspectivas",
 		excerpt:
 			"La energía solar ha experimentado un crecimiento exponencial en las últimas décadas, convirtiéndose en una de las...",
-		slug: "https://www.abtec.com.mx/blog/el-futuro-de-la-energía-solar-avances-tecnológicos-y-perspectivas",
+		slug: "/blog?slug=el-futuro-de-la-energia-solar-avances-tecnologicos-y-perspectivas",
 	},
 ];
 
@@ -81,7 +81,7 @@ export default function BlogPreview(): JSX.Element {
 
 						let slug = data.slug || "";
 						if (slug && !slug.startsWith("http")) {
-							slug = `https://www.abtec.com.mx/blog/${slug}`;
+							slug = `/blog?slug=${slug}`;
 						}
 
 						return {
