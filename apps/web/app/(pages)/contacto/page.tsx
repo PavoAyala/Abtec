@@ -1,45 +1,17 @@
 "use client";
 
 import type { JSX } from "react";
-import { useState } from "react";
+
 import Image from "next/image";
 import Footer from "../../../components/Footer";
 import Header from "../../../components/Header";
 import { 
-	CheckCircle2, ChevronDown, User, Phone, Mail, MapPin, Map,
+	Phone, Mail, MapPin, Map,
 	Facebook, Instagram, Linkedin, Twitter, MessageCircle
 } from "lucide-react";
 
 export default function ContactoPage(): JSX.Element {
-	const [formSubmitted, setFormSubmitted] = useState(false);
-	const [activeBranch, setActiveBranch] = useState<"monterrey" | "saltillo">("monterrey");
-	const [formData, setFormData] = useState({
-		nombre: "",
-		telefono: "",
-		correo: "",
-		servicio: "",
-		comentarios: ""
-	});
 
-	const handleSubmit = (e: React.FormEvent) => {
-		e.preventDefault();
-		setFormSubmitted(true);
-		setTimeout(() => {
-			setFormSubmitted(false);
-			setFormData({
-				nombre: "",
-				telefono: "",
-				correo: "",
-				servicio: "",
-				comentarios: ""
-			});
-		}, 5000);
-	};
-
-	const mapUrls = {
-		monterrey: "https://maps.google.com/maps?q=Rafael%20Plat%C3%B3n%20S%C3%A1nchez%201015%20NTE.%20Colonia%20Centro%2C%20Monterrey&t=&z=15&ie=UTF8&iwloc=&output=embed",
-		saltillo: "https://maps.google.com/maps?q=Lerdo%20de%20Tejada%20665.%20Colonia%20Centro%2C%20Saltillo&t=&z=15&ie=UTF8&iwloc=&output=embed"
-	};
 
 	return (
 		<>
@@ -81,138 +53,35 @@ export default function ContactoPage(): JSX.Element {
 					<div className="max-w-[1400px] mx-auto px-4 sm:px-6 lg:px-8">
 						<div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
 							
-							{/* Left Side: Form */}
+							{/* Left Side: Direct WhatsApp Contact */}
 							<div className="lg:col-span-7 flex flex-col gap-8">
-								<div className="bg-white rounded-[32px] p-6 sm:p-8 md:p-10 shadow-[0_15px_50px_rgba(15,23,42,0.04)] border border-slate-200/60">
-									<div className="mb-8">
-										<h2 className="text-abtec-green text-3xl font-bold font-display mb-3">
-											¿Deseas cotizar?
-										</h2>
-										<p className="text-slate-600 text-sm md:text-base">
-											Déjanos tus datos y pronto nos pondremos en contacto contigo.
-										</p>
+								<div className="bg-white rounded-[32px] p-8 sm:p-10 md:p-12 shadow-[0_15px_50px_rgba(15,23,42,0.04)] border border-slate-200/60 flex flex-col items-center text-center">
+									<div className="w-20 h-20 bg-[#25D366]/10 rounded-full flex items-center justify-center mb-6">
+										<MessageCircle className="w-10 h-10 text-[#25D366] animate-bounce" />
 									</div>
+									
+									<h2 className="text-[#262660] text-2xl sm:text-3xl font-bold font-heading uppercase mb-4">
+										Contacto Directo vía <span className="text-[#25D366]">WhatsApp</span>
+									</h2>
+									
+									<p className="text-slate-600 text-sm sm:text-base leading-relaxed max-w-md mb-8">
+										Para brindarte una atención rápida y personalizada, hemos simplificado nuestro proceso de contacto. Haz clic abajo para iniciar una conversación directa en WhatsApp con uno de nuestros asesores técnicos certificados y resolver todas tus dudas sobre paneles solares.
+									</p>
 
-									{formSubmitted ? (
-										<div className="flex flex-col items-center justify-center py-16 text-center bg-[#f8fafc] rounded-2xl p-8 shadow-sm">
-											<CheckCircle2 className="w-16 h-16 text-abtec-green mb-4 animate-bounce" />
-											<h4 className="text-abtec-blue font-bold text-xl mb-2">¡Solicitud Recibida!</h4>
-											<p className="text-slate-500 text-sm max-w-sm">
-												Muchas gracias por contactarnos. Un especialista se comunicará contigo a la brevedad.
-											</p>
-										</div>
-									) : (
-										<form onSubmit={handleSubmit} className="flex flex-col gap-6">
-											<div className="grid grid-cols-1 md:grid-cols-2 gap-6">
-												{/* Input: Nombre */}
-												<div className="space-y-2">
-													<label className="text-xs font-bold text-abtec-blue-900/80 tracking-wide block">
-														Nombre y apellido
-													</label>
-													<div className="relative">
-														<div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-															<User className="w-4 h-4 text-slate-400" />
-														</div>
-														<input 
-															type="text" 
-															required
-															value={formData.nombre}
-															onChange={(e) => setFormData({...formData, nombre: e.target.value})}
-															className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm"
-														/>
-													</div>
-												</div>
+									<a 
+										href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Quisiera%20obtener%20una%20cotizaci%C3%B3n%20para%20un%20proyecto%20de%20energ%C3%ADa%20solar%20con%20ABTEC." 
+										target="_blank" 
+										rel="noopener noreferrer" 
+										className="inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 px-10 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm sm:text-base uppercase tracking-wider cursor-pointer w-full max-w-sm"
+									>
+										<MessageCircle className="w-5 h-5 fill-current" />
+										<span>Enviar Mensaje</span>
+									</a>
 
-												{/* Input: Teléfono */}
-												<div className="space-y-2">
-													<label className="text-xs font-bold text-abtec-blue-900/80 tracking-wide block">
-														Número de teléfono
-													</label>
-													<div className="relative">
-														<div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-															<Phone className="w-4 h-4 text-slate-400" />
-														</div>
-														<input 
-															type="tel" 
-															required
-															value={formData.telefono}
-															onChange={(e) => setFormData({...formData, telefono: e.target.value})}
-															className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm"
-														/>
-													</div>
-												</div>
-											</div>
-
-											{/* Input: Correo */}
-											<div className="space-y-2">
-												<label className="text-xs font-bold text-abtec-blue-900/80 tracking-wide block">
-													Correo electrónico
-												</label>
-												<div className="relative">
-													<div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
-														<Mail className="w-4 h-4 text-slate-400" />
-													</div>
-													<input 
-														type="email" 
-														required
-														value={formData.correo}
-														onChange={(e) => setFormData({...formData, correo: e.target.value})}
-														className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl pl-11 pr-4 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm"
-													/>
-												</div>
-											</div>
-
-											{/* Dropdown: Servicio */}
-											<div className="space-y-2">
-												<label className="text-xs font-bold text-abtec-blue-900/80 tracking-wide block">
-													Tipo de servicio
-												</label>
-												<div className="relative">
-													<select
-														required
-														value={formData.servicio}
-														onChange={(e) => setFormData({...formData, servicio: e.target.value})}
-														className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl px-6 py-3.5 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm text-gray-700 appearance-none cursor-pointer"
-													>
-														<option value="" disabled>Selecciona un servicio o producto</option>
-														<option value="paneles">Paneles Solares</option>
-														<option value="iluminacion">Iluminación</option>
-														<option value="ingenieria">Ingeniería</option>
-														<option value="boiler">Boiler Solar</option>
-														<option value="otro">Otro</option>
-													</select>
-													<div className="pointer-events-none absolute inset-y-0 right-0 flex items-center px-6 text-slate-500">
-														<ChevronDown className="w-4 h-4" />
-													</div>
-												</div>
-											</div>
-											
-											{/* Input: Comentarios */}
-											<div className="space-y-2">
-												<label className="text-xs font-bold text-abtec-blue-900/80 tracking-wide block">
-													Comentarios
-												</label>
-												<textarea 
-													required
-													rows={4}
-													placeholder="Coméntanos el servicio o producto que te gustaría cotizar con nosotros."
-													value={formData.comentarios}
-													onChange={(e) => setFormData({...formData, comentarios: e.target.value})}
-													className="w-full bg-[#f8fafc] border border-slate-200 rounded-2xl p-4 text-sm focus:outline-none focus:ring-2 focus:ring-abtec-green/50 focus:border-abtec-green transition-all shadow-sm resize-none"
-												/>
-											</div>
-
-											{/* Submit button */}
-											<div className="pt-2">
-												<button 
-													type="submit"
-													className="w-full bg-abtec-green hover:bg-[#86b53a] text-white font-bold py-4 px-10 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm cursor-pointer"
-												>
-													Enviar mensaje
-												</button>
-											</div>
-										</form>
-									)}
+									<div className="flex items-center gap-2 mt-6 text-xs text-slate-400">
+										<span className="w-1.5 h-1.5 rounded-full bg-[#25D366] animate-ping"></span>
+										<span>Asesores disponibles en línea</span>
+									</div>
 								</div>
 
 								{/* Social Media Section */}
@@ -283,6 +152,23 @@ export default function ContactoPage(): JSX.Element {
 											</div>
 										</div>
 
+										<div className="flex items-start gap-4">
+											<div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0">
+												<MessageCircle className="w-5 h-5 text-abtec-green" />
+											</div>
+											<div>
+												<p className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-1">WhatsApp</p>
+												<a 
+													href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" 
+													target="_blank" 
+													rel="noopener noreferrer" 
+													className="text-[#262660] font-bold text-lg hover:text-abtec-green transition-colors"
+												>
+													(81) 3129 2192
+												</a>
+											</div>
+										</div>
+
 										<div className="w-full h-px bg-slate-300 my-6"></div>
 
 										<div className="flex items-start gap-4">
@@ -299,19 +185,7 @@ export default function ContactoPage(): JSX.Element {
 											</div>
 										</div>
 
-										<div className="flex items-start gap-4">
-											<div className="w-10 h-10 rounded-full bg-white shadow-sm flex items-center justify-center shrink-0 mt-1">
-												<MapPin className="w-5 h-5 text-[#262660]" />
-											</div>
-											<div>
-												<p className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-1">Suc. Saltillo</p>
-												<p className="text-slate-700 text-sm leading-relaxed">
-													Lerdo de Tejada 665.<br/>
-													Colonia Centro, Saltillo.<br/>
-													C.P. 25000. Coah.
-												</p>
-											</div>
-										</div>
+
 									</div>
 								</div>
 
@@ -320,47 +194,21 @@ export default function ContactoPage(): JSX.Element {
 									
 									<div className="flex items-center gap-2 px-2">
 										<Map className="w-5 h-5 text-abtec-blue" />
-										<h4 className="text-[#262660] font-bold font-heading">Nuestras Sucursales</h4>
-									</div>
-
-									{/* Map Toggle Buttons */}
-									<div className="flex bg-slate-100 p-1.5 rounded-2xl w-full">
-										<button
-											type="button"
-											onClick={() => setActiveBranch("monterrey")}
-											className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-bold transition-all ${
-												activeBranch === "monterrey" 
-													? "bg-white text-abtec-blue shadow-sm" 
-													: "text-slate-500 hover:text-slate-700"
-											}`}
-										>
-											Monterrey
-										</button>
-										<button
-											type="button"
-											onClick={() => setActiveBranch("saltillo")}
-											className={`flex-1 py-2.5 px-4 rounded-xl text-sm font-bold transition-all ${
-												activeBranch === "saltillo" 
-													? "bg-white text-abtec-blue shadow-sm" 
-													: "text-slate-500 hover:text-slate-700"
-											}`}
-										>
-											Saltillo
-										</button>
+										<h4 className="text-[#262660] font-bold font-heading">Nuestra Ubicación</h4>
 									</div>
 
 									{/* Iframe container */}
 									<div className="w-full rounded-[20px] overflow-hidden bg-slate-100 aspect-video relative border border-slate-200">
 										<iframe 
-											src={mapUrls[activeBranch]} 
+											src="https://maps.google.com/maps?q=ABTEC%20Paneles%20Solares%20Monterrey&t=&z=16&ie=UTF8&iwloc=&output=embed" 
 											width="100%" 
 											height="100%" 
 											style={{ border: 0 }} 
 											allowFullScreen={false} 
 											loading="lazy" 
 											referrerPolicy="no-referrer-when-downgrade"
-											className="absolute inset-0 transition-opacity duration-500"
-											title={`Mapa Sucursal ${activeBranch}`}
+											className="absolute inset-0"
+											title="Mapa Sucursal Monterrey - ABTEC Paneles Solares"
 										></iframe>
 									</div>
 								</div>

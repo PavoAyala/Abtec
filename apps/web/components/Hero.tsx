@@ -52,19 +52,19 @@ export default function Hero(): JSX.Element {
 								initial={{ opacity: 0, y: 20 }}
 								animate={{ opacity: 1, y: 0 }}
 								transition={{ duration: 0.5, delay: 0.2 }}
-								className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4"
+								className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xs mx-auto sm:max-w-none"
 							>
 								<a
-									href="#contacto"
-									className="inline-flex items-center justify-center rounded-full bg-white text-slate-950 px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-sm transition hover:bg-slate-100"
+									href="/contacto"
+									className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-white text-slate-950 px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-sm transition hover:bg-slate-100"
 								>
 									Cotizar
 								</a>
 								<a
-									href="https://wa.me/528132476565"
+									href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20Quisiera%20obtener%20una%20cotizaci%C3%B3n"
 									target="_blank"
 									rel="noopener noreferrer"
-									className="inline-flex items-center justify-center rounded-full bg-[#262660] text-white px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-md hover:bg-[#1f2a5c] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
+									className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#262660] text-white px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-md hover:bg-[#1f2a5c] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
 								>
 									WhatsApp
 								</a>

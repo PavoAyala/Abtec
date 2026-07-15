@@ -154,13 +154,13 @@ export default function Header(): JSX.Element {
 						Financiamiento
 					</Link>
 					<Link
-						href="#blog"
+						href="/blog"
 						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
 					>
 						Blog
 					</Link>
 					<Link
-						href="#contacto"
+						href="/contacto"
 						className="text-gray-700 hover:text-abtec-green transition-colors text-sm font-medium"
 					>
 						Contacto
@@ -273,13 +273,13 @@ export default function Header(): JSX.Element {
 						Financiamiento
 					</Link>
 					<Link
-						href="#blog"
+						href="/blog"
 						className="text-gray-700 font-medium pb-2 border-b"
 					>
 						Blog
 					</Link>
 					<Link
-						href="#contacto"
+						href="/contacto"
 						className="text-gray-700 font-medium pb-2 border-b"
 					>
 						Contacto

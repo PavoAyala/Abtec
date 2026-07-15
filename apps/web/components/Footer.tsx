@@ -14,8 +14,8 @@ export default function Footer(): JSX.Element {
 		{ name: "Servicios", href: "#servicios" },
 		{ name: "Equipos", href: "#equipos" },
 		{ name: "Financiamiento", href: "/financiamiento" },
-		{ name: "Blog", href: "#blog" },
-		{ name: "Contacto", href: "#contacto" },
+		{ name: "Blog", href: "/blog" },
+		{ name: "Contacto", href: "/contacto" },
 	];
 
 	const articles = [
@@ -154,21 +154,21 @@ export default function Footer(): JSX.Element {
 						<ul className="flex flex-col gap-4">
 							{blogLinks.map((blog, index) => (
 								<li key={index}>
-									<a
-										href="#"
+									<Link
+										href="/blog"
 										className="text-gray-700 hover:text-abtec-green transition-colors font-sans text-sm leading-tight block"
 									>
 										{blog}
-									</a>
+									</Link>
 								</li>
 							))}
 						</ul>
-						<a
-							href="#contacto"
+						<Link
+							href="/contacto"
 							className="inline-block mt-8 bg-abtec-blue text-white font-bold px-6 py-3 rounded hover:bg-opacity-90 transition-colors uppercase text-sm"
 						>
 							¡Contáctanos!
-						</a>
+						</Link>
 					</div>
 				</div>
 
