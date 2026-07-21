@@ -55,7 +55,9 @@ export default function Hero(): JSX.Element {
 								className="mt-8 flex flex-col sm:flex-row items-center justify-center gap-4 w-full max-w-xs mx-auto sm:max-w-none"
 							>
 								<a
-									href="/contacto"
+									href="https://wa.link/rwcs6i"
+									target="_blank"
+									rel="noopener noreferrer"
 									className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-white text-slate-950 px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-sm transition hover:bg-slate-100"
 								>
 									Cotizar
