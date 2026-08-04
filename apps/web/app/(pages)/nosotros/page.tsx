@@ -175,7 +175,7 @@ export default function NosotrosPortal(): JSX.Element {
 								</div>
 								<div className="absolute -bottom-6 -right-6 bg-white p-6 rounded-2xl shadow-xl border border-gray-100 hidden md:block">
 									<div className="flex items-center gap-4">
-										<div className="text-4xl font-bold text-primary font-display">+15</div>
+										<div className="text-4xl font-bold text-primary font-display">+24</div>
 										<div className="text-secondary/60 text-xs font-bold uppercase tracking-wider leading-tight">
 											Años de
 											<br />

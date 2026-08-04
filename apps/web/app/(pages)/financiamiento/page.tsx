@@ -376,7 +376,7 @@ export default function FinanciamientoPage(): JSX.Element {
 									</h3>
 									
 									<p className="text-slate-700 text-sm md:text-base leading-relaxed mb-6 font-sans">
-										Recibir una corrida financiera para tu proyecto es fácil y rápido a través de nuestros expertos con más de 15 años de experiencia en el mercado. Compártenos tus datos y encontraremos el esquema que mejor se adapte a ti.
+										Recibir una corrida financiera para tu proyecto es fácil y rápido a través de nuestros expertos con más de 24 años de experiencia en el mercado. Compártenos tus datos y encontraremos el esquema que mejor se adapte a ti.
 									</p>
 								</div>
 

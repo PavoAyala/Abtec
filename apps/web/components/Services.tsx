@@ -9,7 +9,7 @@ export default function Services(): JSX.Element {
 		{
 			title: "Paneles Solares",
 			description:
-				"Venta, Instalación y Mantenimiento de Paneles Solares Monterrey con más de 15 años de experiencia en el mercado fotovoltaico.",
+				"Venta, Instalación y Mantenimiento de Paneles Solares Monterrey con más de 24 años de experiencia en el mercado fotovoltaico.",
 			icon: <Sun className="w-10 h-10 text-abtec-blue" />,
 			link: "#contacto",
 		},

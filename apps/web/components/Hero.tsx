@@ -6,10 +6,10 @@ import type { JSX } from "react";
 
 export default function Hero(): JSX.Element {
 	const stats = [
-		{ value: "15 +", label: "AÑOS EXPERIENCIA" },
+		{ value: "24 +", label: "AÑOS EXPERIENCIA" },
 		{ value: "30 +", label: "COBERTURA ESTADOS" },
-		{ value: "50 +", label: "RECOMENDACIONES" },
-		{ value: "7000 +", label: "PANELES SOLARES" },
+		{ value: "1000 +", label: "RECOMENDACIONES" },
+		{ value: "20,000 +", label: "PANELES SOLARES" },
 	];
 
 	return (
