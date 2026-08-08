@@ -69,7 +69,7 @@ export default function ContactoPage(): JSX.Element {
 									</p>
 
 									<a 
-										href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Quisiera%20obtener%20una%20cotizaci%C3%B3n%20para%20un%20proyecto%20de%20energ%C3%ADa%20solar%20con%20ABTEC." 
+										href="https://api.whatsapp.com/send/?phone=528132476565&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20Quisiera%20obtener%20una%20cotizaci%C3%B3n%20para%20un%20proyecto%20de%20energ%C3%ADa%20solar%20con%20ABTEC." 
 										target="_blank" 
 										rel="noopener noreferrer" 
 										className="inline-flex items-center justify-center gap-3 bg-[#25D366] hover:bg-[#20ba5a] text-white font-bold py-4 px-10 rounded-2xl shadow-md hover:shadow-lg hover:-translate-y-0.5 transition-all text-sm sm:text-base uppercase tracking-wider cursor-pointer w-full max-w-sm"
@@ -102,7 +102,7 @@ export default function ContactoPage(): JSX.Element {
 										<a href="https://www.instagram.com/abtecmx/?hl=es-la" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-abtec-green hover:scale-110 transition-all duration-300">
 											<Instagram className="w-5 h-5" />
 										</a>
-										<a href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-abtec-green hover:scale-110 transition-all duration-300">
+										<a href="https://api.whatsapp.com/send/?phone=528132476565&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-abtec-green hover:scale-110 transition-all duration-300">
 											<MessageCircle className="w-5 h-5 fill-current" />
 										</a>
 										<a href="https://mx.linkedin.com/company/abtec-soluciones-en-energ%C3%ADa" target="_blank" rel="noopener noreferrer" className="w-12 h-12 rounded-full bg-white/10 flex items-center justify-center text-white hover:bg-abtec-green hover:scale-110 transition-all duration-300">
@@ -159,12 +159,12 @@ export default function ContactoPage(): JSX.Element {
 											<div>
 												<p className="text-xs uppercase font-bold text-slate-500 tracking-wider mb-1">WhatsApp</p>
 												<a 
-													href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" 
+													href="https://api.whatsapp.com/send/?phone=528132476565&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" 
 													target="_blank" 
 													rel="noopener noreferrer" 
 													className="text-[#262660] font-bold text-lg hover:text-abtec-green transition-colors"
 												>
-													(81) 3129 2192
+													(81) 3247 6565
 												</a>
 											</div>
 										</div>

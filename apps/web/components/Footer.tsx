@@ -96,7 +96,7 @@ export default function Footer(): JSX.Element {
 								<a href="https://www.instagram.com/abtecmx/?hl=es-la" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#E4405F] hover:text-white transition-all duration-300">
 									<Instagram size={18} />
 								</a>
-								<a href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#25D366] hover:text-white transition-all duration-300">
+								<a href="https://api.whatsapp.com/send/?phone=528132476565&text=%C2%A1Hola%21%20%F0%9F%99%8B%F0%9F%8F%BB%E2%80%8D%E2%99%82%EF%B8%8F%20%0AQuisiera%20obtener%20una%20cotizaci%C3%B3n" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#25D366] hover:text-white transition-all duration-300">
 									<MessageCircle size={18} fill="currentColor" />
 								</a>
 								<a href="https://mx.linkedin.com/company/abtec-soluciones-en-energ%C3%ADa" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-gray-600 hover:bg-[#0A66C2] hover:text-white transition-all duration-300">

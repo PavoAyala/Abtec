@@ -436,7 +436,7 @@ export default function NosotrosPanelesSolares(): JSX.Element {
 									</h3>
 									
 									<p className="text-slate-700 text-sm md:text-base leading-relaxed mb-6 font-sans">
-										Recibir un presupuesto para tu proyecto es fácil y rápido a través de nuestros expertos con más de 15 años de experiencia en el mercado. Compártenos tus datos y pronto nos comunicaremos contigo para brindarte el estudio-cotización de paneles solares que más se adapte a tus necesidades.
+										Recibir un presupuesto para tu proyecto es fácil y rápido a través de nuestros expertos con más de 24 años de experiencia en el mercado. Compártenos tus datos y pronto nos comunicaremos contigo para brindarte el estudio-cotización de paneles solares que más se adapte a tus necesidades.
 									</p>
 								</div>
 

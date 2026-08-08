@@ -36,7 +36,7 @@ export default function ServiciosPage(): JSX.Element {
 
 	const services: ServiceOption[] = [
 		{
-			tag: "INGENIEROS CON MÁS DE 15 AÑOS DE EXPERIENCIA",
+			tag: "INGENIEROS CON MÁS DE 24 AÑOS DE EXPERIENCIA",
 			title: "PANELES SOLARES",
 			description: "Venta, Instalación y Mantenimiento de Paneles Solares con precios competitivos directos de fábrica e instaladores con certificación para proyectos residenciales, comerciales e industriales con servicio en todo México.",
 			image: "/images/solar_panel.png"
@@ -238,7 +238,7 @@ export default function ServiciosPage(): JSX.Element {
 								</h2>
 								<div className="w-16 h-[3.5px] bg-abtec-blue mb-6"></div>
 								<p className="text-slate-600 text-sm md:text-base leading-relaxed">
-									Con más de 15 años de experiencia en el mercado fotovoltaico nuestros clientes continuan confiando en nosotros. Al ofrecerles el servicio de calidad que nos caracteriza, nos recomiendan y continuan confiando en nosotros para la elaboración de nuevos proyectos.
+									Con más de 24 años de experiencia en el mercado fotovoltaico nuestros clientes continuan confiando en nosotros. Al ofrecerles el servicio de calidad que nos caracteriza, nos recomiendan y continuan confiando en nosotros para la elaboración de nuevos proyectos.
 								</p>
 							</div>
 							<div className="shrink-0 w-full lg:w-auto">
@@ -481,7 +481,7 @@ export default function ServiciosPage(): JSX.Element {
 									</h3>
 									
 									<p className="text-slate-700 text-sm md:text-base leading-relaxed mb-6 font-sans">
-										Recibe un estudio-cotización a través del apoyo de nuestros expertos en soluciones de energía con más de 15 años de experiencia en el mercado.
+										Recibe un estudio-cotización a través del apoyo de nuestros expertos en soluciones de energía con más de 24 años de experiencia en el mercado.
 									</p>
 								</div>
 
