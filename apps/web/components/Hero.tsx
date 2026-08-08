@@ -63,7 +63,7 @@ export default function Hero(): JSX.Element {
 									Cotizar
 								</a>
 								<a
-									href="https://api.whatsapp.com/send/?phone=528131292192&text=%C2%A1Hola%21%20Quisiera%20obtener%20una%20cotizaci%C3%B3n"
+									href="https://api.whatsapp.com/send/?phone=528132476565&text=%C2%A1Hola%21%20Quisiera%20obtener%20una%20cotizaci%C3%B3n"
 									target="_blank"
 									rel="noopener noreferrer"
 									className="inline-flex w-full sm:w-auto items-center justify-center rounded-full bg-[#262660] text-white px-8 py-4 font-semibold uppercase tracking-[0.15em] shadow-md hover:bg-[#1f2a5c] hover:shadow-lg hover:scale-[1.02] active:scale-[0.98] transition-all duration-300"
