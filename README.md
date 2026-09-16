@@ -1,55 +1,55 @@
 # Abtec Monorepo
 
-Monorepo del ecosistema Abtec. El estado actual del repositorio gira alrededor de cuatro superficies activas:
+Abtec ecosystem monorepo. The current state of the repository revolves around four active surfaces:
 
-- `CRM/`: CRM interno para operacion comercial y postventa.
-- `apps/web`: sitio publico y portal web para clientes.
-- `apps/mobile`: aplicacion movil de cliente con Expo.
-- `apps/firebase`: backend y configuracion de Firebase.
+- `CRM/`: Internal CRM for commercial and after-sales operations.
+- `apps/web`: Public site and customer web portal.
+- `apps/mobile`: Customer mobile application with Expo.
+- `apps/firebase`: Firebase backend and configuration.
 
-## Arquitectura actual
+## Current Architecture
 
-Decision vigente de estructura: el CRM interno se mantiene en `CRM/` durante el MVP. Una migracion futura a `apps/crm/` no se considera cambio cosmetico; requerira un refactor controlado de workspace, scripts, CI y documentacion.
+Current structure decision: the internal CRM is kept in `CRM/` during the MVP. A future migration to `apps/crm/` is not considered a cosmetic change; it will require a controlled refactor of the workspace, scripts, CI, and documentation.
 
 ### `CRM/`
 
-Aplicacion Next.js independiente para uso interno del equipo.
+Independent Next.js application for internal team use.
 
-- Dashboard operativo.
-- Modulos de `contacts`, `companies`, `deals`, `tickets` y `activities`.
-- Conexion a Firebase para datos y autenticacion.
-- Corre localmente en el puerto `3001`.
+- Operational dashboard.
+- Modules for `contacts`, `companies`, `deals`, `tickets`, and `activities`.
+- Firebase connection for data and authentication.
+- Runs locally on port `3001`.
 
 ### `apps/web`
 
-Aplicacion Next.js para la experiencia web externa.
+Next.js application for the external web experience.
 
-- Landing publica.
-- Base para portal autenticado de clientes.
-- Integracion con Firebase Auth, Firestore y Analytics.
-- Corre localmente en el puerto `3000`.
+- Public landing page.
+- Base for authenticated customer portal.
+- Integration with Firebase Auth, Firestore, and Analytics.
+- Runs locally on port `3000`.
 
 ### `apps/mobile`
 
-Aplicacion Expo / React Native para clientes.
+Expo / React Native application for customers.
 
-- Scaffold funcional con Expo Router.
-- Comparte el dominio funcional con el portal web.
-- Punto de partida para login, perfil y tickets del cliente.
+- Functional scaffold with Expo Router.
+- Shares the functional domain with the web portal.
+- Starting point for customer login, profile, and tickets.
 
 ### `apps/firebase`
 
-Backend y configuracion de Firebase del proyecto.
+Firebase backend and configuration for the project.
 
-- `firebase.json` para emuladores y despliegue local.
-- `functions/` con Cloud Functions en TypeScript.
-- Reglas e indices de Firestore.
+- `firebase.json` for emulators and local deployment.
+- `functions/` with Cloud Functions in TypeScript.
+- Firestore rules and indexes.
 
 ### `packages/*`
 
-Paquetes compartidos para UI y configuraciones del monorepo.
+Shared packages for UI and monorepo configurations.
 
-## Estructura
+## Structure
 
 ```text
 abtec/
@@ -67,22 +67,22 @@ abtec/
 └── turbo.json
 ```
 
-## Requisitos
+## Requirements
 
 - Node.js 20.x
 - pnpm 8.x
-- Firebase CLI para emuladores y despliegues locales
-- Expo CLI o herramientas equivalentes si trabajas en `apps/mobile`
+- Firebase CLI for emulators and local deployments
+- Expo CLI or equivalent tools if working in `apps/mobile`
 
-## Instalacion
+## Installation
 
-Desde la raiz:
+From the root:
 
 ```bash
 pnpm install
 ```
 
-## Desarrollo local
+## Local Development
 
 ### Monorepo
 
@@ -90,18 +90,18 @@ pnpm install
 pnpm dev
 ```
 
-Este comando levanta los proyectos configurados actualmente en Turbo:
+This command starts the projects currently configured in Turbo:
 
 - `apps/web`
 - `CRM/`
 
-### Web publica
+### Public Web
 
 ```bash
 pnpm --filter web dev
 ```
 
-### CRM interno
+### Internal CRM
 
 ```bash
 pnpm --filter abtec-crm dev
@@ -113,53 +113,53 @@ pnpm --filter abtec-crm dev
 pnpm --filter abtec-mobil start
 ```
 
-### Firebase emulators
+### Firebase Emulators
 
 ```bash
 pnpm firebase:dev
 ```
 
-Opciones adicionales:
+Additional options:
 
 - `pnpm firebase:dev:import`
 - `pnpm firebase:dev:ui`
 
-## Variables de entorno
+## Environment Variables
 
-### Raiz
+### Root
 
-La raiz del repo ya contiene variables publicas de Firebase en [`.env`](.env). Se usan como referencia comun del proyecto.
+The repo root already contains public Firebase variables in [`.env`](.env). They are used as a common reference for the project.
 
 ### `apps/web`
 
-La web usa variables `NEXT_PUBLIC_FIREBASE_*` y puede conectarse a emuladores con:
+The web app uses `NEXT_PUBLIC_FIREBASE_*` variables and can connect to emulators with:
 
 ```dotenv
 NEXT_PUBLIC_USE_FIREBASE_EMULATORS=false
 ```
 
-La plantilla actual vive en [`apps/web/.env`](apps/web/.env).
+The current template lives in [`apps/web/.env`](apps/web/.env).
 
 ### `CRM/`
 
-El CRM usa el mismo set de variables publicas de Firebase en `CRM/.env.local`.
+The CRM uses the same set of public Firebase variables in `CRM/.env.local`.
 
 ## Docker
 
-Actualmente el flujo principal del repo no depende de contenedores como parte obligatoria de desarrollo.
+Currently, the main repo workflow does not depend on containers as a mandatory part of development.
 
-- `docker-compose.yml` se conserva solo como placeholder para orquestacion futura.
-- El desarrollo activo se hace con `pnpm` y los emuladores de Firebase.
+- `docker-compose.yml` is kept only as a placeholder for future orchestration.
+- Active development is done using `pnpm` and Firebase emulators.
 
-## Scripts utiles
+## Useful Scripts
 
-- `pnpm dev`: inicia `apps/web` y `CRM/`.
-- `pnpm build`: compila los paquetes del monorepo.
-- `pnpm lint`: ejecuta lint en los proyectos configurados.
-- `pnpm format`: formatea archivos soportados.
-- `pnpm firebase:dev`: inicia emuladores de Firebase.
+- `pnpm dev`: starts `apps/web` and `CRM/`.
+- `pnpm build`: builds the monorepo packages.
+- `pnpm lint`: runs linting on configured projects.
+- `pnpm format`: formats supported files.
+- `pnpm firebase:dev`: starts Firebase emulators.
 
-## Documentacion relacionada
+## Related Documentation
 
 - [PLAN.md](PLAN.md)
 - [CRM.md](CRM.md)
